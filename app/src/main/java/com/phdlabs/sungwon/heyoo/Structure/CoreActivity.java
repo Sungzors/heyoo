@@ -18,6 +18,11 @@ import java.util.List;
 
 public class CoreActivity extends AppCompatActivity {
 
+    /**
+     * Sets up absolutely basic components to an Activity, assuming the Activity will mainly hold a fragment
+     * Contains methods to deal with fragments
+     */
+
     private List<OnBackPressListener> mOnBackPressListeners = new ArrayList<>();
 
     @SuppressLint("CommitTransaction")

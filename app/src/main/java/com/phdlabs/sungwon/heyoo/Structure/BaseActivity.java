@@ -5,16 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 
 /**
  * Created by SungWon on 4/13/2017.
  */
 
 public abstract class BaseActivity extends CoreActivity {
+
+    /**
+     *
+     */
     public final String TAG = getClass().getSimpleName();
 
     @LayoutRes
@@ -35,25 +37,6 @@ public abstract class BaseActivity extends CoreActivity {
 
     public void replaceFragment(@NonNull Fragment fragment, boolean addToBackStack) {
         super.replaceFragment(contentContainerId(), fragment, addToBackStack);
-    }
-
-    public class OnNavigationListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            onBackPressed();
-        }
-    }
-
-    public abstract static class OnTabListener implements TabLayout.OnTabSelectedListener {
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-
-        }
     }
 
     public Context getContext() {
