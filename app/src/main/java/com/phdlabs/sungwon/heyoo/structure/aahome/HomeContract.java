@@ -21,7 +21,7 @@ public interface HomeContract {
 
         void showFullCalendar();// TODO: 4/18/2017  
 
-        void showEmptyCalendar();// TODO: 4/18/2017  
+        void showPartialCalendar();// TODO: 4/18/2017
 
         int getSelectedTab();// TODO: 4/18/2017  
     }
