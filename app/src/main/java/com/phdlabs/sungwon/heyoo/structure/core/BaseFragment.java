@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.Structure.Core;
+package com.phdlabs.sungwon.heyoo.structure.core;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

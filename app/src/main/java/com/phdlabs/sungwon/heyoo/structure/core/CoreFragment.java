@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.Structure.Core;
+package com.phdlabs.sungwon.heyoo.structure.core;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

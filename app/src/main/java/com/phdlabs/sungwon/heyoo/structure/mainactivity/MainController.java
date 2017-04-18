@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.Structure.Mainactivity;
+package com.phdlabs.sungwon.heyoo.structure.mainactivity;
 
 import android.content.Context;
 

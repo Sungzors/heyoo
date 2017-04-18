@@ -1,6 +1,6 @@
-package com.phdlabs.sungwon.heyoo.Structure.Mainactivity;
+package com.phdlabs.sungwon.heyoo.structure.mainactivity;
 
-import com.phdlabs.sungwon.heyoo.Structure.Core.Contract;
+import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 
 /**
  * Created by SungWon on 4/13/2017.

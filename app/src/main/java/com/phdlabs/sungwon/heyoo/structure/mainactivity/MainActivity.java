@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.Structure.Mainactivity;
+package com.phdlabs.sungwon.heyoo.structure.mainactivity;
 
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -7,7 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.widget.Toolbar;
 
 import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.Structure.Core.BaseActivity;
+import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
