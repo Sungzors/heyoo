@@ -20,8 +20,8 @@ public abstract class MainController<View extends MainContract.View> implements 
     }
 
     @Override
-    public void onNewSelected() {
-        view.showNewPage();
+    public void onTasksSelected() {
+        view.showTasksPage();
     }
 
     @Override

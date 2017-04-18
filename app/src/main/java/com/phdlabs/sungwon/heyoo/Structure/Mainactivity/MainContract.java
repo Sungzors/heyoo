@@ -1,6 +1,6 @@
 package com.phdlabs.sungwon.heyoo.Structure.Mainactivity;
 
-import com.phdlabs.sungwon.heyoo.Structure.Contract;
+import com.phdlabs.sungwon.heyoo.Structure.Core.Contract;
 
 /**
  * Created by SungWon on 4/13/2017.
@@ -10,7 +10,7 @@ public interface MainContract {
     interface View extends Contract.BaseView{
         void showHomePage();
         void showCalendarPage();
-        void showNewPage();
+        void showTasksPage();
         void showMessagesPage();
         void showAlertsPage();
     }
@@ -18,7 +18,7 @@ public interface MainContract {
     interface Controller extends Contract.BaseController{
         void onHomeSelected();
         void onCalendarSelected();
-        void onNewSelected();
+        void onTasksSelected();
         void onMessagesSelected();
         void onAlertsSelected();
     }
