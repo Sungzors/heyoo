@@ -2,9 +2,13 @@ package com.phdlabs.sungwon.heyoo.structure.core;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.BuildConfig;
+import com.phdlabs.sungwon.heyoo.R;
 
 /**
  * Created by SungWon on 4/13/2017.
@@ -45,6 +49,7 @@ public abstract class BaseFragment<Controller extends Contract.BaseController> e
         controller.onStop();
         super.onStop();
     }
+
 
     public BaseActivity getBaseActivity() {
         if (getActivity() instanceof BaseActivity) {

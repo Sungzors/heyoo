@@ -5,8 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.TextView;
+
+import com.phdlabs.sungwon.heyoo.R;
 
 /**
  * Created by SungWon on 4/13/2017.
@@ -48,16 +53,16 @@ public abstract class BaseActivity extends CoreActivity {
                 .setPositiveButton(android.R.string.ok, null).show();
     }
 
-//    public void setToolbarTitle(@StringRes int title) {
-//        setToolbarTitle(getString(title));
-//    }
-//
-//    public void setToolbarTitle(String title) {
-//        View view = findById(R.id.toolbar_title);
-//        if (view != null) {
-//            ((TextView) view).setText(title);
-//        }
-//    }
+    public void setToolbarTitle(@StringRes int title) {
+        setToolbarTitle(getString(title));
+    }
+
+    public void setToolbarTitle(String title) {
+        View view = findById(R.id.toolbar_title);
+        if (view != null) {
+            ((TextView) view).setText(title);
+        }
+    }
 //
 //    public void showProgress() {
 //        View progress = findById(R.id.progress_view);
