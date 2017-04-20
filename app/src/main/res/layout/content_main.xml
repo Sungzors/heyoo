@@ -12,7 +12,8 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="64dp"/>
+        android:layout_marginBottom="64dp">
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -23,10 +24,14 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            app:itemBackground="@color/white"
-            app:itemIconTint="@color/menu_highlight"
-            app:itemTextColor="@color/menu_highlight"
-            app:tabIndicatorColor="@color/menu_highlight"
-            app:menu="@menu/bottom_navigation_main"></android.support.design.widget.TabLayout>
+            android:background="@color/white"
+            app:elevation="2dp"
+            app:tabSelectedTextColor="@color/tabselected"
+            app:tabMode="fixed"
+            app:tabIndicatorHeight="4dp"
+            app:tabIndicatorColor="@color/tabselected"
+            app:tabTextAppearance="@style/TextAppearance.Tab"
+            />
+
     </FrameLayout>
 </FrameLayout>

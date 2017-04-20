@@ -10,5 +10,12 @@
 
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    
+    <style name="TextAppearance"/>
+    
+    <style name="TextAppearance.Tab">
+        <item name="android:textSize">@dimen/tab_text_size</item>
+        <item name="android:textColor">@color/menu_highlight</item>
+    </style>
 
 </resources>

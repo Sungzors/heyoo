@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.phdlabs.sungwon.heyoo.R;
@@ -38,6 +39,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
     private Controller mController;
 
     private TabLayout mTabLayout;
+    private TextView mTestText;
 
     /**
      * view set up
@@ -60,22 +62,46 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mController = createController();
-
+        mTestText = (TextView)findViewById(R.id.test_text);
         mTabLayout = findById(R.id.tab_layout);
+        setupTabs(mTabLayout);
         mTabLayout.addOnTabSelectedListener(this);
+
     }
+
+    private void setupTabs(TabLayout mTabLayout) {
+        TabLayout.Tab home = mTabLayout.newTab().setText(R.string.home).setIcon(R.drawable.tab_home_icon_setup);
+        TabLayout.Tab calendar = mTabLayout.newTab().setText(R.string.calendar).setIcon(R.drawable.tab_calendar_icon_setup);
+        TabLayout.Tab tasks = mTabLayout.newTab().setText(R.string.task).setIcon(R.drawable.tab_task_icon_setup);
+        TabLayout.Tab messages = mTabLayout.newTab().setText(R.string.message).setIcon(R.drawable.tab_message_icon_setup);
+        TabLayout.Tab alerts = mTabLayout.newTab().setText(R.string.alerts).setIcon(R.drawable.tab_alert_icon_setup);
+        mTabLayout.setTabTextColors(R.color.tabnotselected,R.color.tabselected);
+        mTabLayout.addTab(home);
+        mTabLayout.addTab(calendar);
+        mTabLayout.addTab(tasks);
+        mTabLayout.addTab(messages);
+        mTabLayout.addTab(alerts);
+        TabLayout.Tab tab = mTabLayout.getTabAt(0);
+        tab.select();
+    }
+
+    @Tab
+    protected abstract int tabIndex();
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         switch (tab.getPosition()){
             case TAB_HOME:
                 mController.onHomeSelected();
+                mTestText.setText("Home selected");
                 break;
             case TAB_CALENDAR:
                 mController.onCalendarSelected();
+                mTestText.setText("Calendar selecto");
                 break;
             case TAB_TASKS:
                 mController.onTasksSelected();
+                mTestText.setText("Tasks");
                 break;
             case TAB_MESSAGES:
                 mController.onMessagesSelected();
