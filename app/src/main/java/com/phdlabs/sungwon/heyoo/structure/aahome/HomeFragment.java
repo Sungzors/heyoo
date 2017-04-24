@@ -80,12 +80,12 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        return false;
+        return true;
     }
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.setSelectionDrawable(ResourcesCompat.getDrawable(getResources(),R.drawable.red_circle,null));
+        view.setSelectionDrawable(ResourcesCompat.getDrawable(getResources(),R.drawable.red_circle_selector,null));
     }
 
     @Override
