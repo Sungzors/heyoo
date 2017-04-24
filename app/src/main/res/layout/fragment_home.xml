@@ -15,6 +15,10 @@
         app:mcv_dateTextAppearance="@color/black"
         app:mcv_showOtherDates="other_months"
         android:elevation="5dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/test_text2"/>
 
 
 </LinearLayout>

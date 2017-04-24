@@ -6,4 +6,7 @@
     <string name="message">Messages</string>
     <string name="alerts">Alerts</string>
     <string name="test">test</string>
+    <string name="month_view">Month View</string>
+    <string name="week_view">Week View</string>
+    <string name="new_event">New Event</string>
 </resources>

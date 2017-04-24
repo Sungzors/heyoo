@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group
+        android:id="@+id/menu_group_calendar">
+        <item
+            android:id="@+id/action_full_cal"
+            android:title="@string/month_view"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_partial_cal"
+            android:title="@string/week_view"
+            app:showAsAction="never"/>
+    </group>
+
+    <group
+        android:id="@+id/menu_group_calendar2">
+        <item
+            android:id="@+id/action_new_event"
+            android:title="@string/new_event"
+            app:showAsAction="never"
+            android:checkable="false"/>
+    </group>
+
+
+
+</menu>

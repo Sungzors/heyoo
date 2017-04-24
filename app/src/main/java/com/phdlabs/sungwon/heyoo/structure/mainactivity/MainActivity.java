@@ -5,7 +5,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
@@ -25,7 +25,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
     public static final int TAB_TASKS = 2;
     public static final int TAB_MESSAGES = 3;
     public static final int TAB_ALERTS = 4;
-    private Toolbar mToolbar;
+
 
     /**
      * Limits selectable tab to the 5 listed in IntDef
@@ -36,6 +36,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     }
 
+    private Toolbar mToolbar;
     private Controller mController;
 
     private TabLayout mTabLayout;
@@ -66,6 +67,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         mTabLayout = findById(R.id.tab_layout);
         setupTabs(mTabLayout);
         mTabLayout.addOnTabSelectedListener(this);
+        mToolbar = (Toolbar)findViewById(R.id.toolbar);
 
     }
 
@@ -112,6 +114,10 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         }
     }
 
+    public Toolbar getToolbar(){
+        return mToolbar;
+    }
+
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -124,7 +130,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showHomePage() {
-
+        //TODO: insert intent to start home after calendaractivity
     }
 
     @Override
