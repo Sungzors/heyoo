@@ -10,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
+import com.phdlabs.sungwon.heyoo.utility.EventDecorator;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -21,6 +23,7 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.util.Calendar;
+import java.util.HashSet;
 
 /**
  * Created by SungWon on 4/18/2017.
@@ -44,6 +47,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     private MaterialCalendarView.StateBuilder mStateBuilder;
     private Toolbar mToolbar;
     private Menu mMenu;
+    private HashSet<CalendarDay> mDayHash;
 
     @NonNull
     @Override
@@ -76,6 +80,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mTabLayout = findById(R.id.tab_layout);
         mCalendarView = findById(R.id.material_calendar_view);
         mCalendarView.addDecorator(this);
+        mCalendarView.addDecorator(decorateBackground(getDummyDates()));
         mStateBuilder = mCalendarView.newState();
         mToolbar = ((MainActivity)getActivity()).getToolbar();
         mMenu = mToolbar.getMenu();
@@ -109,6 +114,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.action_calendar_btn:
+                        Toast.makeText(getContext(), "What is this supposed to do?", Toast.LENGTH_SHORT).show();
+                        return true;
                     case R.id.action_full_cal:
                         showFullCalendar();
                         item.setChecked(!item.isChecked());
@@ -138,6 +146,18 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         view.setSelectionDrawable(ResourcesCompat.getDrawable(getResources(),R.drawable.red_circle_selector,null));
     }
 
+    public HashSet<CalendarDay> getDummyDates(){
+        HashSet<CalendarDay> dates = new HashSet<>();
+        dates.add(CalendarDay.from(2017, 6, 1));
+        dates.add(CalendarDay.from(2017, 6, 4));
+        dates.add(CalendarDay.from(2017, 6, 5));
+        return dates;
+    }
+
+    public EventDecorator decorateBackground(HashSet<CalendarDay> hashSet){
+        return new EventDecorator(ResourcesCompat.getDrawable(getResources(),R.drawable.calendar_backlight,null), hashSet);
+    }
+
     @Override
     public void showFullCalendar() {
         mTestText.setText("Full Calendar mode");
@@ -149,7 +169,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     public void showPartialCalendar() {
         mTestText.setText("Partial Calendar mode");
         mStateBuilder.setCalendarDisplayMode(CalendarMode.WEEKS);
-
         mStateBuilder.commit();
     }
 
