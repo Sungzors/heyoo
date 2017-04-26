@@ -1,11 +1,14 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends MainActivity<HomeContract.Activity.Controller>
         implements HomeContract.Activity.View{
@@ -36,5 +39,10 @@ public class HomeActivity extends MainActivity<HomeContract.Activity.Controller>
         }
         fragment = mHomeFragment;
         return fragment;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

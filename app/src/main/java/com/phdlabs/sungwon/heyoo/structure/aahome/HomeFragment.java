@@ -146,6 +146,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         view.setSelectionDrawable(ResourcesCompat.getDrawable(getResources(),R.drawable.red_circle_selector,null));
     }
 
+    /**
+     * month based on Calendar, meaning it starts from 0
+     * @return
+     */
     public HashSet<CalendarDay> getDummyDates(){
         HashSet<CalendarDay> dates = new HashSet<>();
         dates.add(CalendarDay.from(2017, 6, 1));

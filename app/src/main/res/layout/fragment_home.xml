@@ -12,13 +12,17 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingEnd="15dp"
-        app:mcv_dateTextAppearance="@color/black"
         app:mcv_showOtherDates="other_months"
         android:elevation="5dp"/>
+        <!--app:mcv_dateTextAppearance="@color/black"-->
+    <!--TODO: put back the text appearance when done-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/test_text2"/>
-
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </LinearLayout>
