@@ -5,25 +5,36 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.model.Event;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
+import com.phdlabs.sungwon.heyoo.utility.BaseListRecyclerAdapter;
+import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.EventDecorator;
+import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by SungWon on 4/18/2017.
@@ -48,6 +59,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     private Toolbar mToolbar;
     private Menu mMenu;
     private HashSet<CalendarDay> mDayHash;
+    private BaseListRecyclerAdapter<Event, BaseViewHolder> mRecyclerAdapter;
+    private Event mLastEvent;
+    private Calendar mToday;
+    private RecyclerView mEventList;
 
     @NonNull
     @Override
@@ -75,8 +90,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mTestText = findById(R.id.test_text2);
-        mTestText.setText("hello");
+//        mTestText = findById(R.id.test_text2);
+//        mTestText.setText("hello");
         mTabLayout = findById(R.id.tab_layout);
         mCalendarView = findById(R.id.material_calendar_view);
         mCalendarView.addDecorator(this);
@@ -84,8 +99,16 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mStateBuilder = mCalendarView.newState();
         mToolbar = ((MainActivity)getActivity()).getToolbar();
         mMenu = mToolbar.getMenu();
+        Date dummydate = new Date();
+        dummydate.setTime(10000);
+        mLastEvent = new Event(0, "dummy", dummydate, dummydate, false, 9999);
+        mToday = Calendar.getInstance();
         showCalendarOption();
         showAddOption();
+        setupRecyclerAdapter();
+        mEventList = findById(R.id.event_list);
+        mEventList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mEventList.setAdapter(mRecyclerAdapter);
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -134,6 +157,47 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         });
     }
 
+    public void setupRecyclerAdapter(){
+        mRecyclerAdapter = new BaseListRecyclerAdapter<Event, BaseViewHolder>() {
+            @Override
+            protected void onBindItemViewHolder(BaseViewHolder viewHolder, Event data, int position, int type) {
+                bindItemViewHolder(viewHolder, data);
+            }
+
+            @Override
+            protected BaseViewHolder viewHolder(LayoutInflater inflater, ViewGroup parent, int type) {
+                return new BaseViewHolder(R.layout.card_view_home, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                        super.addClicks(views);
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvh_top_date_text, R.id.cvh_time, R.id.cvh_event_title);
+                    }
+                };
+            }
+        };
+    }
+
+    private void bindItemViewHolder(BaseViewHolder viewHolder, Event event){
+        if(event.getStartTimeHash() == mLastEvent.getStartTimeHash()){
+            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.GONE);
+        } else if (event.getStartTimeHash()== Event.hashCode(mToday)){
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd");
+            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText("Today - " + formatter.format(event.getStartCalendar().getTime()));
+        } else {
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE - MMM dd");
+            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText(formatter.format(event.getStartCalendar().getTime()));
+        }
+        mLastEvent = event;
+        SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
+        ((TextView)viewHolder.get(R.id.cvh_time)).setText(formatter.format(event.getStartCalendar().getTime()) + getAMPM(event.getStartCalendar()));
+        ((TextView)viewHolder.get(R.id.cvh_event_title)).setText(event.getName());
+
+    }
+
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
@@ -162,16 +226,27 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         return new EventDecorator(ResourcesCompat.getDrawable(getResources(),R.drawable.calendar_backlight,null), hashSet);
     }
 
+    public String getAMPM(Calendar calendar){
+        String ampm = "a";
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        if(hourOfDay>12) {
+            ampm = "p";
+        } else if(hourOfDay==12) {
+            ampm = "p";
+        }
+        return ampm;
+    }
+
     @Override
     public void showFullCalendar() {
-        mTestText.setText("Full Calendar mode");
+//        mTestText.setText("Full Calendar mode");
         mStateBuilder.setCalendarDisplayMode(CalendarMode.MONTHS);
         mStateBuilder.commit();
     }
 
     @Override
     public void showPartialCalendar() {
-        mTestText.setText("Partial Calendar mode");
+//        mTestText.setText("Partial Calendar mode");
         mStateBuilder.setCalendarDisplayMode(CalendarMode.WEEKS);
         mStateBuilder.commit();
     }
@@ -200,6 +275,16 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void showEvents(List<Event> events) {
+        mRecyclerAdapter.setItems(events);
+        HashSet set = new HashSet();
+        for (int i = 0; i < events.size(); i++) {
+            set.add(CalendarDay.from(events.get(i).getStart_time()));
+        }
+        mCalendarView.addDecorator(decorateBackground(set));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.phdlabs.sungwon.heyoo.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by SungWon on 4/25/2017.
@@ -13,6 +14,15 @@ public class HeyooCalendar {
     private String color;
     private Date created_at;
     private Date updated_at;
+    private transient List<Event> eventsList;
+
+    public List<Event> getEventsList() {
+        return eventsList;
+    }
+
+    public void setEventsList(List<Event> eventsList) {
+        this.eventsList = eventsList;
+    }
 
     public HeyooCalendar(int id, String name, String color, Date created_at, Date updated_at) {
         this.id = id;
