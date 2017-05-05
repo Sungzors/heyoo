@@ -70,7 +70,7 @@ public class HomeController implements HomeContract.Controller{
         Date date3e = cal3e.getTime();
         Event event1 = new Event(0, "Test Event 1", date1s, date1e, true, 0);
         Event event2 = new Event(0, "Test Event 2", date2s, date2e, true, 0);
-        Event event3 = new Event(0, "Test Event 3", date3s, date3e, true, 0);
+        Event event3 = new Event(0, "Test Event 3", date3s, date3e, true, 1);
         eventList.add(event1);
         eventList.add(event2);
         eventList.add(event3);

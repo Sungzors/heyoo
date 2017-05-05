@@ -9,10 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:paddingTop="0dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingEnd="15dp"
         app:mcv_showOtherDates="other_months"
+        app:mcv_dateTextAppearance="@color/black"
         android:elevation="5dp"/>
         <!--app:mcv_dateTextAppearance="@color/black"-->
     <!--TODO: put back the text appearance when done-->

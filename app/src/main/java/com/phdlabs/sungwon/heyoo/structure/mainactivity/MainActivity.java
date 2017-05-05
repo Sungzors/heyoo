@@ -63,7 +63,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mController = createController();
-        mTestText = (TextView)findViewById(R.id.test_text);
+//        mTestText = (TextView)findViewById(R.id.test_text);
         mTabLayout = findById(R.id.tab_layout);
         setupTabs(mTabLayout);
         mTabLayout.addOnTabSelectedListener(this);
@@ -95,15 +95,15 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         switch (tab.getPosition()){
             case TAB_HOME:
                 mController.onHomeSelected();
-                mTestText.setText("Home selected");
+//                mTestText.setText("Home selected");
                 break;
             case TAB_CALENDAR:
                 mController.onCalendarSelected();
-                mTestText.setText("Calendar selecto");
+//                mTestText.setText("Calendar selecto");
                 break;
             case TAB_TASKS:
                 mController.onTasksSelected();
-                mTestText.setText("Tasks");
+//                mTestText.setText("Tasks");
                 break;
             case TAB_MESSAGES:
                 mController.onMessagesSelected();

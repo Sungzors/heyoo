@@ -1,5 +1,7 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,6 +58,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     private View mEmptyView;
     private TabLayout mTabLayout;
     private TextView mTestText;
+    private ImageView mTabLeft;
     private MaterialCalendarView mCalendarView;
     private MaterialCalendarView.StateBuilder mStateBuilder;
     private Toolbar mToolbar;
@@ -61,6 +66,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     private HashSet<CalendarDay> mDayHash;
     private BaseListRecyclerAdapter<Event, BaseViewHolder> mRecyclerAdapter;
     private Event mLastEvent;
+    private Event mDummyEvent;
     private Calendar mToday;
     private RecyclerView mEventList;
 
@@ -101,7 +107,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mMenu = mToolbar.getMenu();
         Date dummydate = new Date();
         dummydate.setTime(10000);
-        mLastEvent = new Event(0, "dummy", dummydate, dummydate, false, 9999);
+        mDummyEvent = new Event(0, "dummy", dummydate, dummydate, false, 9999);
+        mLastEvent = mDummyEvent;
         mToday = Calendar.getInstance();
         showCalendarOption();
         showAddOption();
@@ -132,7 +139,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mMenu.clear();
         mToolbar.inflateMenu(R.menu.menu_calendar);
         mMenu.setGroupCheckable(R.id.menu_group_calendar, true, true);
-        mMenu.getItem(0).setChecked(true);
+        mMenu.getItem(1).setChecked(true);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -181,7 +188,14 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         };
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mLastEvent = mDummyEvent;
+    }
+
     private void bindItemViewHolder(BaseViewHolder viewHolder, Event event){
+        mTabLeft = viewHolder.get(R.id.cvh_tab_left);
         if(event.getStartTimeHash() == mLastEvent.getStartTimeHash()){
             ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.GONE);
         } else if (event.getStartTimeHash()== Event.hashCode(mToday)){
@@ -195,7 +209,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
         ((TextView)viewHolder.get(R.id.cvh_time)).setText(formatter.format(event.getStartCalendar().getTime()) + getAMPM(event.getStartCalendar()));
         ((TextView)viewHolder.get(R.id.cvh_event_title)).setText(event.getName());
-
+        if(event.getCalendar_id() == 1){
+            changeTabColor();
+        }
     }
 
 
@@ -208,6 +224,13 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     @Override
     public void decorate(DayViewFacade view) {
         view.setSelectionDrawable(ResourcesCompat.getDrawable(getResources(),R.drawable.red_circle_selector,null));
+        DayFormatter formatter = new DayFormatter() {
+            @NonNull
+            @Override
+            public String format(@NonNull CalendarDay day) {
+                return null;
+            }
+        };
     }
 
     /**
@@ -223,7 +246,18 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     }
 
     public EventDecorator decorateBackground(HashSet<CalendarDay> hashSet){
-        return new EventDecorator(ResourcesCompat.getDrawable(getResources(),R.drawable.calendar_backlight,null), hashSet);
+        return new EventDecorator(ResourcesCompat.getDrawable(getResources(),R.drawable.calendar_backlight_selector,null), hashSet){
+            @Override
+            public boolean shouldDecorate(CalendarDay day) {
+                return super.shouldDecorate(day);
+            }
+
+            @Override
+            public void decorate(DayViewFacade view) {
+                super.decorate(view);
+            }
+        };
+
     }
 
     public String getAMPM(Calendar calendar){
@@ -235,6 +269,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
             ampm = "p";
         }
         return ampm;
+    }
+
+    public void changeTabColor(/*Calendar calendar*/){//TODO: implement dynamically changing color based on heyoocalendar's color id
+        GradientDrawable bgshape = (GradientDrawable)mTabLeft.getBackground();
+        bgshape.setColor(Color.BLUE);
     }
 
     @Override

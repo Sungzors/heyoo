@@ -30,6 +30,6 @@ public class EventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.setBackgroundDrawable(drawable);
+        view.setSelectionDrawable(drawable);
     }
 }
