@@ -14,13 +14,13 @@ public class HeyooCalendar {
     private String color;
     private Date created_at;
     private Date updated_at;
-    private transient List<Event> eventsList;
+    private transient List<HeyooEvent> eventsList;
 
-    public List<Event> getEventsList() {
+    public List<HeyooEvent> getEventsList() {
         return eventsList;
     }
 
-    public void setEventsList(List<Event> eventsList) {
+    public void setEventsList(List<HeyooEvent> eventsList) {
         this.eventsList = eventsList;
     }
 

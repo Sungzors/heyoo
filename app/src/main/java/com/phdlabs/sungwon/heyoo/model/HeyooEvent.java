@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by SungWon on 4/25/2017.
  */
 
-public class Event {
+public class HeyooEvent {
 
     private int id;
     private String name;
@@ -24,7 +24,7 @@ public class Event {
         return (calendar.get(Calendar.YEAR) * 10000) + ((calendar.get(Calendar.MONTH)+1) * 100) + calendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    public Event(int id, String name, Date start_time, Date end_time, boolean allDay, int calendar_id) {
+    public HeyooEvent(int id, String name, Date start_time, Date end_time, boolean allDay, int calendar_id) {
         this.id = id;
         this.name = name;
         this.start_time = start_time;

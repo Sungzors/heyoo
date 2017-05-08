@@ -1,6 +1,6 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome;
 
-import com.phdlabs.sungwon.heyoo.model.Event;
+import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,8 +21,8 @@ public class HomeController implements HomeContract.Controller{
 
     @Override
     public void onStart() {
-        List<Event> events = getTestEvents();
-        view.showEvents(events);
+        List<HeyooEvent> heyooEvents = getTestEvents();
+        view.showEvents(heyooEvents);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class HomeController implements HomeContract.Controller{
 
     }
 
-    private List<Event> getTestEvents(){
-        ArrayList<Event> eventList = new ArrayList<>();
+    private List<HeyooEvent> getTestEvents(){
+        ArrayList<HeyooEvent> heyooEventList = new ArrayList<>();
         Calendar cal1s = Calendar.getInstance();
         Date date1s = cal1s.getTime();
         Calendar cal2s = Calendar.getInstance();
@@ -68,12 +68,12 @@ public class HomeController implements HomeContract.Controller{
         Calendar cal3e = Calendar.getInstance();
         cal3e.add(Calendar.DATE, 3);
         Date date3e = cal3e.getTime();
-        Event event1 = new Event(0, "Test Event 1", date1s, date1e, true, 0);
-        Event event2 = new Event(0, "Test Event 2", date2s, date2e, true, 0);
-        Event event3 = new Event(0, "Test Event 3", date3s, date3e, true, 1);
-        eventList.add(event1);
-        eventList.add(event2);
-        eventList.add(event3);
-        return eventList;
+        HeyooEvent heyooEvent1 = new HeyooEvent(0, "Test HeyooEvent 1", date1s, date1e, true, 0);
+        HeyooEvent heyooEvent2 = new HeyooEvent(0, "Test HeyooEvent 2", date2s, date2e, true, 0);
+        HeyooEvent heyooEvent3 = new HeyooEvent(0, "Test HeyooEvent 3", date3s, date3e, true, 1);
+        heyooEventList.add(heyooEvent1);
+        heyooEventList.add(heyooEvent2);
+        heyooEventList.add(heyooEvent3);
+        return heyooEventList;
     }
 }

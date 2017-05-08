@@ -1,6 +1,6 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome;
 
-import com.phdlabs.sungwon.heyoo.model.Event;
+import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainContract;
 
@@ -28,7 +28,7 @@ public interface HomeContract {
 
         int getSelectedTab();// TODO: 4/18/2017
 
-        void showEvents(List<Event> events);
+        void showEvents(List<HeyooEvent> heyooEvents);
     }
 
     interface Controller extends Contract.BaseController{

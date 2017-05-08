@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.structure.login;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
@@ -20,6 +21,11 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
     @Override
     protected int layoutId() {
         return 0;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override

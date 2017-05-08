@@ -25,9 +25,10 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showLoginFragment();
     }
 
-    private void getLoginFragment(){
+    private void showLoginFragment(){
         replaceFragment(new LoginFragment(), false);
     }
 }

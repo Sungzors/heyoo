@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.model.Event;
+import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseListRecyclerAdapter;
@@ -62,9 +62,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     private Toolbar mToolbar;
     private Menu mMenu;
     private HashSet<CalendarDay> mDayHash;
-    private BaseListRecyclerAdapter<Event, BaseViewHolder> mRecyclerAdapter;
-    private Event mLastEvent;
-    private Event mDummyEvent;
+    private BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder> mRecyclerAdapter;
+    private HeyooEvent mLastHeyooEvent;
+    private HeyooEvent mDummyHeyooEvent;
     private Calendar mToday;
     private RecyclerView mEventList;
 
@@ -105,8 +105,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mMenu = mToolbar.getMenu();
         Date dummydate = new Date();
         dummydate.setTime(10000);
-        mDummyEvent = new Event(0, "dummy", dummydate, dummydate, false, 9999);
-        mLastEvent = mDummyEvent;
+        mDummyHeyooEvent = new HeyooEvent(0, "dummy", dummydate, dummydate, false, 9999);
+        mLastHeyooEvent = mDummyHeyooEvent;
         mToday = Calendar.getInstance();
         showCalendarOption();
         showAddOption();
@@ -163,9 +163,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     }
 
     public void setupRecyclerAdapter(){
-        mRecyclerAdapter = new BaseListRecyclerAdapter<Event, BaseViewHolder>() {
+        mRecyclerAdapter = new BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder>() {
             @Override
-            protected void onBindItemViewHolder(BaseViewHolder viewHolder, Event data, int position, int type) {
+            protected void onBindItemViewHolder(BaseViewHolder viewHolder, HeyooEvent data, int position, int type) {
                 bindItemViewHolder(viewHolder, data);
             }
 
@@ -189,25 +189,25 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     @Override
     public void onPause() {
         super.onPause();
-        mLastEvent = mDummyEvent;
+        mLastHeyooEvent = mDummyHeyooEvent;
     }
 
-    private void bindItemViewHolder(BaseViewHolder viewHolder, Event event){
+    private void bindItemViewHolder(BaseViewHolder viewHolder, HeyooEvent heyooEvent){
         mTabLeft = viewHolder.get(R.id.cvh_tab_left);
-        if(event.getStartTimeHash() == mLastEvent.getStartTimeHash()){
+        if(heyooEvent.getStartTimeHash() == mLastHeyooEvent.getStartTimeHash()){
             ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.GONE);
-        } else if (event.getStartTimeHash()== Event.hashCode(mToday)){
+        } else if (heyooEvent.getStartTimeHash()== HeyooEvent.hashCode(mToday)){
             SimpleDateFormat formatter = new SimpleDateFormat("MMM dd");
-            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText("Today - " + formatter.format(event.getStartCalendar().getTime()));
+            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText("Today - " + formatter.format(heyooEvent.getStartCalendar().getTime()));
         } else {
             SimpleDateFormat formatter = new SimpleDateFormat("EEE - MMM dd");
-            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText(formatter.format(event.getStartCalendar().getTime()));
+            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText(formatter.format(heyooEvent.getStartCalendar().getTime()));
         }
-        mLastEvent = event;
+        mLastHeyooEvent = heyooEvent;
         SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
-        ((TextView)viewHolder.get(R.id.cvh_time)).setText(formatter.format(event.getStartCalendar().getTime()) + getAMPM(event.getStartCalendar()));
-        ((TextView)viewHolder.get(R.id.cvh_event_title)).setText(event.getName());
-        if(event.getCalendar_id() == 1){
+        ((TextView)viewHolder.get(R.id.cvh_time)).setText(formatter.format(heyooEvent.getStartCalendar().getTime()) + getAMPM(heyooEvent.getStartCalendar()));
+        ((TextView)viewHolder.get(R.id.cvh_event_title)).setText(heyooEvent.getName());
+        if(heyooEvent.getCalendar_id() == 1){
             changeTabColor();
         }
     }
@@ -327,11 +327,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 
 
     @Override
-    public void showEvents(List<Event> events) {
-        mRecyclerAdapter.setItems(events);
+    public void showEvents(List<HeyooEvent> heyooEvents) {
+        mRecyclerAdapter.setItems(heyooEvents);
         HashSet set = new HashSet();
-        for (int i = 0; i < events.size(); i++) {
-            set.add(CalendarDay.from(events.get(i).getStart_time()));
+        for (int i = 0; i < heyooEvents.size(); i++) {
+            set.add(CalendarDay.from(heyooEvents.get(i).getStart_time()));
         }
         mCalendarView.addDecorator(decorateBackground(set));
     }
