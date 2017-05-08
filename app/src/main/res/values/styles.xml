@@ -18,4 +18,8 @@
         <item name="android:textColor">@color/menu_highlight</item>
     </style>
 
+    <style name="TextAppearance.LoginSubtext">
+        <item name="android:fontFamily"></item>
+    </style>
+
 </resources>
