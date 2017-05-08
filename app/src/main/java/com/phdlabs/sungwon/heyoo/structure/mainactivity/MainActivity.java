@@ -74,7 +74,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
     private void setupTabs(TabLayout mTabLayout) {
         TabLayout.Tab home = mTabLayout.newTab().setText(R.string.home).setIcon(R.drawable.tab_home_icon_setup);
         TabLayout.Tab calendar = mTabLayout.newTab().setText(R.string.calendar).setIcon(R.drawable.tab_calendar_icon_setup);
-        TabLayout.Tab tasks = mTabLayout.newTab().setText(R.string.task).setIcon(R.drawable.tab_task_icon_setup);
+        TabLayout.Tab tasks = mTabLayout.newTab().setText(R.string.new_event).setIcon(R.drawable.tab_task_icon_setup);
         TabLayout.Tab messages = mTabLayout.newTab().setText(R.string.message).setIcon(R.drawable.tab_message_icon_setup);
         TabLayout.Tab alerts = mTabLayout.newTab().setText(R.string.alerts).setIcon(R.drawable.tab_alert_icon_setup);
         mTabLayout.setTabTextColors(R.color.tabnotselected,R.color.tabselected);
