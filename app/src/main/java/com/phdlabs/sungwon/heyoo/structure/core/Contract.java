@@ -12,9 +12,9 @@ public interface Contract {
 
         void showError(String errorMessage);
 
-//        void showProgress();
-//
-//        void hideProgress();
+        void showProgress();
+
+        void hideProgress();
 
         void close();
     }

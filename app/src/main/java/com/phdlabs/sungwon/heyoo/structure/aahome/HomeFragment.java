@@ -47,8 +47,6 @@ import java.util.List;
 public class HomeFragment extends BaseFragment<HomeContract.Controller>
         implements HomeContract.View, View.OnClickListener, TabLayout.OnTabSelectedListener, DayViewDecorator{
 
-
-
     /**
      * Fragment for Home tab, includes calendar
      */
@@ -315,6 +313,18 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     public void onClick(View view) {
 
     }
+
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
 
     @Override
     public void showEvents(List<Event> events) {

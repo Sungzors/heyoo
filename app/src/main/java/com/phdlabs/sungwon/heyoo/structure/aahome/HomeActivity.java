@@ -13,6 +13,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class HomeActivity extends MainActivity<HomeContract.Activity.Controller>
         implements HomeContract.Activity.View{
 
+
     private HomeFragment mHomeFragment;
 
     @NonNull
@@ -39,6 +40,16 @@ public class HomeActivity extends MainActivity<HomeContract.Activity.Controller>
         }
         fragment = mHomeFragment;
         return fragment;
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
     }
 
     @Override
