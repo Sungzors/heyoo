@@ -10,4 +10,10 @@
     <string name="week_view">Week View</string>
     <string name="new_event">New Event</string>
     <string name="create_your_account">Create Your Account</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Your Email</string>
+    <string name="phone_number_enter">Enter Your Phone Number</string>
+    <string name="phone_number_hint">Your Number</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in_inquiry">Already have an account? Sign in Here</string>
 </resources>

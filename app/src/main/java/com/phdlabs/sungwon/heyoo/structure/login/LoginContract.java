@@ -9,8 +9,10 @@ import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 public interface LoginContract {
 
     interface View extends Contract.BaseView{
-//        String getUser();
-//        String getPassword();
+        String getEmail();
+        String getCountryCode();
+        String getPhone();
+
         void showLogin();
 
         void showRegister();
