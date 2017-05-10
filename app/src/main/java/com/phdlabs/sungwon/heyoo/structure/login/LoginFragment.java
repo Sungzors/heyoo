@@ -84,6 +84,11 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
     }
 
     @Override
+    public void showVerify() {
+
+    }
+
+    @Override
     public void showPasswordError() {
 
     }

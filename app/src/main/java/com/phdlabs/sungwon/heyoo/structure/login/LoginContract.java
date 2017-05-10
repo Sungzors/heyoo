@@ -17,6 +17,8 @@ public interface LoginContract {
 
         void showRegister();
 
+        void showVerify();
+
         void showLoginError();
 
         void showPasswordError();

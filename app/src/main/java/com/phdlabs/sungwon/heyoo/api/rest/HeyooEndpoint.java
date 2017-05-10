@@ -1,6 +1,7 @@
 package com.phdlabs.sungwon.heyoo.api.rest;
 
 import com.phdlabs.sungwon.heyoo.api.data.LoginData;
+import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
 
 import retrofit2.Call;
@@ -16,6 +17,12 @@ public interface HeyooEndpoint {
         Interface containing all of the endpoints for api calls
      */
 
+    final String AUTHORIZATION = "x-access-token";
+
     @POST("/users")
-    Call<UserDataResponse> login(@Body LoginData loginData);
+    Call<UserDataResponse> register(@Body LoginData loginData);
+
+    @POST("/auth/verify")
+    Call<UserDataResponse> verify(@Body VerifyData verifyData);
+
 }
