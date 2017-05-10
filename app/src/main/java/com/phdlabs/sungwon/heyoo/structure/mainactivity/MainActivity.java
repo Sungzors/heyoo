@@ -1,14 +1,17 @@
 package com.phdlabs.sungwon.heyoo.structure.mainactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
+import com.phdlabs.sungwon.heyoo.structure.login.LoginActivity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -130,7 +133,8 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showHomePage() {
-        //TODO: insert intent to start home after calendaractivity
+        Intent intent = new Intent(this, HomeActivity.class);
+        this.startActivity(intent);
     }
 
     @Override
@@ -140,7 +144,8 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showTasksPage() {
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        this.startActivity(intent);
     }
 
     @Override

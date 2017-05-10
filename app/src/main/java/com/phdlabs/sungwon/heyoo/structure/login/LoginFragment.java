@@ -39,6 +39,8 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
         return R.layout.fragment_login;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +87,7 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
 
     @Override
     public void showVerify() {
-
+//        getBaseActivity().replaceFragment();
     }
 
     @Override
