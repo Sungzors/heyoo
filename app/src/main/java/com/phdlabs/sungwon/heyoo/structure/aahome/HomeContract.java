@@ -26,6 +26,8 @@ public interface HomeContract {
 
         void showPartialCalendar();
 
+        void refreshList();
+
         int getSelectedTab();// TODO: 4/18/2017
 
         void showEvents(List<HeyooEvent> heyooEvents);

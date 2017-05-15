@@ -17,7 +17,7 @@ public interface HeyooEndpoint {
         Interface containing all of the endpoints for api calls
      */
 
-    final String AUTHORIZATION = "x-access-token";
+
 
     @POST("/users")
     Call<UserDataResponse> register(@Body LoginData loginData);

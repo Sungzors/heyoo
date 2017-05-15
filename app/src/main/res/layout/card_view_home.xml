@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fontPath="fonts/Avenir-Black-webfoot"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="12dp"
         android:text="Today * bongo 8"
         />
 
@@ -60,17 +60,20 @@
                 android:text="I AM AN EVENT HELLO - hello"
                 android:textSize="14sp"
                 fontPath="fonts/Avenir-Oblique-webfont"/>
-            <ImageView
+            <FrameLayout
                 android:id="@+id/cvh_event_message_icon"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/something"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_below="@id/cvh_event_title"
                 android:layout_toEndOf="@id/cvh_time"
                 android:layout_toRightOf="@id/cvh_time"
-                android:layout_marginTop="7dp"/>
+                android:layout_marginTop="7dp">
+                <include layout="@layout/draw_circle_chat_double"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"/>
+            </FrameLayout>
             <TextView
                 android:id="@+id/cvh_event_message_number"
                 android:layout_width="wrap_content"

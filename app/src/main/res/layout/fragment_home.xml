@@ -14,7 +14,8 @@
         android:paddingRight="15dp"
         android:paddingEnd="15dp"
         app:mcv_showOtherDates="other_months"
-        app:mcv_dateTextAppearance="@color/black"
+        app:mcv_dateTextAppearance="@style/TextAppearance.MaterialCalDate"
+        app:mcv_headerTextAppearance="@style/TextAppearance.MaterialCalHeader"
         android:elevation="5dp"/>
         <!--app:mcv_dateTextAppearance="@color/black"-->
     <!--TODO: put back the text appearance when done-->

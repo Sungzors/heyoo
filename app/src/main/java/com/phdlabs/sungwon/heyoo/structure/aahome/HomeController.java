@@ -42,7 +42,8 @@ public class HomeController implements HomeContract.Controller{
 
     @Override
     public void onDaySelected() {
-
+        view.showEvents(getTestEvents());
+        view.refreshList();
     }
 
     @Override

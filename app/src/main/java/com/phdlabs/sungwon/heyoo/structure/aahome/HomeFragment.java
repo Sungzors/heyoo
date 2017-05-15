@@ -32,9 +32,11 @@ import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -62,6 +64,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     private Toolbar mToolbar;
     private Menu mMenu;
     private HashSet<CalendarDay> mDayHash;
+    private HashSet mSet;
     private BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder> mRecyclerAdapter;
     private HeyooEvent mLastHeyooEvent;
     private HeyooEvent mDummyHeyooEvent;
@@ -108,12 +111,21 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mDummyHeyooEvent = new HeyooEvent(0, "dummy", dummydate, dummydate, false, 9999);
         mLastHeyooEvent = mDummyHeyooEvent;
         mToday = Calendar.getInstance();
+        mCalendarView.setDateSelected(mToday, true);
+        mCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                controller.onDaySelected();
+                mLastHeyooEvent = mDummyHeyooEvent;
+            }
+        });
         showCalendarOption();
         showAddOption();
         setupRecyclerAdapter();
         mEventList = findById(R.id.event_list);
         mEventList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mEventList.setAdapter(mRecyclerAdapter);
+
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -187,21 +199,28 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mLastHeyooEvent = mDummyHeyooEvent;
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
-        mLastHeyooEvent = mDummyHeyooEvent;
     }
 
     private void bindItemViewHolder(BaseViewHolder viewHolder, HeyooEvent heyooEvent){
         mTabLeft = viewHolder.get(R.id.cvh_tab_left);
         if(heyooEvent.getStartTimeHash() == mLastHeyooEvent.getStartTimeHash()){
-            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.GONE);
+            (viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.GONE);
         } else if (heyooEvent.getStartTimeHash()== HeyooEvent.hashCode(mToday)){
             SimpleDateFormat formatter = new SimpleDateFormat("MMM dd");
             ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText("Today - " + formatter.format(heyooEvent.getStartCalendar().getTime()));
+            (viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.VISIBLE);
         } else {
             SimpleDateFormat formatter = new SimpleDateFormat("EEE - MMM dd");
             ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText(formatter.format(heyooEvent.getStartCalendar().getTime()));
+            (viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.VISIBLE);
         }
         mLastHeyooEvent = heyooEvent;
         SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
@@ -215,7 +234,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        mCalendarView.setDateSelected(Calendar.getInstance(),true);
         return true;
     }
 
@@ -256,6 +274,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
             }
         };
 
+    }
+
+    @Override
+    public void refreshList(){
+        mRecyclerAdapter.notifyDataSetChanged();
     }
 
     public String getAMPM(Calendar calendar){
@@ -328,12 +351,20 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 
     @Override
     public void showEvents(List<HeyooEvent> heyooEvents) {
-        mRecyclerAdapter.setItems(heyooEvents);
-        HashSet set = new HashSet();
+        List<HeyooEvent> heyooFiltered = new ArrayList<>();
         for (int i = 0; i < heyooEvents.size(); i++) {
-            set.add(CalendarDay.from(heyooEvents.get(i).getStart_time()));
+            if(CalendarDay.from(heyooEvents.get(i).getStart_time()).isAfter(mCalendarView.getSelectedDate())){
+                heyooFiltered.add(heyooEvents.get(i));
+            } else if (CalendarDay.from(heyooEvents.get(i).getStart_time()).equals(mCalendarView.getSelectedDate())){
+                heyooFiltered.add(heyooEvents.get(i));
+            }
         }
-        mCalendarView.addDecorator(decorateBackground(set));
+        mRecyclerAdapter.setItems(heyooFiltered);
+        mSet = new HashSet();
+        for (int i = 0; i < heyooEvents.size(); i++) {
+            mSet.add(CalendarDay.from(heyooEvents.get(i).getStart_time()));
+        }
+        mCalendarView.addDecorator(decorateBackground(mSet));
     }
 
     @Override

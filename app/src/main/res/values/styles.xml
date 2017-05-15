@@ -46,4 +46,16 @@
         <item name="android:paddingBottom">7dp</item>
     </style>
 
+    <style name="TextAppearance.MaterialCalDate" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="fontPath">fonts/NunitoSans-Bold.ttf</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.MaterialCalHeader" parent="TextAppearance.MaterialCalendarWidget.Header">
+        <item name="fontPath">fonts/NunitoSans-Bold.ttf</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
 </resources>
