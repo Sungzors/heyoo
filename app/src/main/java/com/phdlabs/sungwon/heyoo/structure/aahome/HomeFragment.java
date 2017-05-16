@@ -23,10 +23,10 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
-import com.phdlabs.sungwon.heyoo.utility.BaseListRecyclerAdapter;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.EventDecorator;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
+import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -119,6 +119,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
                 mLastHeyooEvent = mDummyHeyooEvent;
             }
         });
+
         showCalendarOption();
         showAddOption();
         setupRecyclerAdapter();

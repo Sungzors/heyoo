@@ -1,11 +1,10 @@
-package com.phdlabs.sungwon.heyoo.utility;
+package com.phdlabs.sungwon.heyoo.utility.adapter;
 
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -13,21 +12,24 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Checkable;
+import android.widget.Filter;
 import android.widget.Filterable;
 
-import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.phdlabs.sungwon.heyoo.utility.Function;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by SungWon on 4/25/2017.
+ * Created by SungWon on 4/29/2017.
  */
 
-public abstract class BaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
+public abstract class BaseListRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH>
         implements Filterable {
 
@@ -41,7 +43,7 @@ public abstract class BaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
 
     }
 
-    private SparseArray<T> mOriginalValues, mFilteredValues;
+    private List<T> mOriginalValues, mFilteredValues;
 
     private Comparator<? super T> mSortComparator;
 
@@ -66,13 +68,13 @@ public abstract class BaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
      */
     private final Object mLock = new Object();
 
-    public BaseRecyclerAdapter() {
-        mOriginalValues = new SparseArray<>();
-        mFilteredValues = new SparseArray<>();
+    public BaseListRecyclerAdapter() {
+        mOriginalValues = new ArrayList<>();
+        mFilteredValues = new ArrayList<>();
         selectedItems = new SparseBooleanArray();
     }
 
-    public BaseRecyclerAdapter(@NonNull SparseArray<T> values) {
+    public BaseListRecyclerAdapter(@NonNull List<T> values) {
         this();
         addAll(values);
     }
@@ -244,39 +246,35 @@ public abstract class BaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         this.itemSelectedListener = itemSelectedListener;
     }
 
-//    public void setSortComparator(Comparator<? super T> mSortComparator) {
-//        this.mSortComparator = mSortComparator;
-//        if (mFilter == null) {
-//            Collections.sort(mOriginalValues, mSortComparator);
-//        } else {
-//            Collections.sort(mFilteredValues, mSortComparator);
-//        }
-//        notifyDataSetChanged();
-//    }
+    public void setSortComparator(Comparator<? super T> mSortComparator) {
+        this.mSortComparator = mSortComparator;
+        if (mFilter == null) {
+            Collections.sort(mOriginalValues, mSortComparator);
+        } else {
+            Collections.sort(mFilteredValues, mSortComparator);
+        }
+        notifyDataSetChanged();
+    }
 
     public void add(int position, T item) {
-        mOriginalValues.put(position, item);
+        mOriginalValues.add(position, item);
         notifyItemInserted(position);
         int itemCount = mOriginalValues.size() - position;
         notifyItemRangeChanged(position, itemCount);
     }
 
     public void add(T item) {
-        mOriginalValues.append(CalendarDay.today().hashCode(), item);
+        mOriginalValues.add(item);
         notifyItemInserted(mOriginalValues.size() - 1);
     }
 
-    public void addAll(SparseArray<? extends T> items) {
+    public void addAll(List<? extends T> items) {
         final int size = this.mOriginalValues.size();
-        for (int i = 0; i < items.size(); i++) {
-            int key = items.keyAt(i);
-            T obj = items.get(key);
-            add(key, obj);
-        }
+        this.mOriginalValues.addAll(items);
         notifyItemRangeInserted(size, items.size());
     }
 
-    public void setItems(SparseArray<? extends T> items) {
+    public void setItems(List<? extends T> items) {
         clear();
 
         if (items != null) {
@@ -286,13 +284,13 @@ public abstract class BaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         if (mFilter == null) {
             notifyDataSetChanged();
         } else {
-//            getFilter().filter("");
+            getFilter().filter("");
         }
 
     }
 
     public void set(int position, T item) {
-        mOriginalValues.append(position, item);
+        mOriginalValues.set(position, item);
         int itemCount = mOriginalValues.size() - position;
         notifyItemRangeChanged(position, itemCount);
     }
@@ -311,76 +309,80 @@ public abstract class BaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
     }
 
     public void moveChildTo(int fromPosition, int toPosition) {
-        T obj = mOriginalValues.get(fromPosition);
-        mOriginalValues.remove(fromPosition);
-        add(toPosition, obj);
-        notifyDataSetChanged();
+        if (toPosition != -1 && toPosition < mOriginalValues.size()) {
+            final T item = mOriginalValues.remove(fromPosition);
+            mOriginalValues.add(toPosition, item);
+            notifyItemMoved(fromPosition, toPosition);
+            int positionStart = fromPosition < toPosition ? fromPosition : toPosition;
+            int itemCount = Math.abs(fromPosition - toPosition) + 1;
+            notifyItemRangeChanged(positionStart, itemCount);
+        }
     }
 
-//    public void sort(Comparator<? super T> comparator) {
-//        synchronized (mLock) {
-//            if (mOriginalValues != null) {
-//                Collections.sort(mOriginalValues, comparator);
-//                notifyDataSetChanged();
-//            }
-//        }
-//    }
+    public void sort(Comparator<? super T> comparator) {
+        synchronized (mLock) {
+            if (mOriginalValues != null) {
+                Collections.sort(mOriginalValues, comparator);
+                notifyDataSetChanged();
+            }
+        }
+    }
 
-//    @Override
-//    public Filter getFilter() {
-//        return new Filter() {
-//            @Override
-//            protected FilterResults performFiltering(CharSequence prefix) {
-//                FilterResults results = new FilterResults();
-//                ArrayList<T> newValues;
-//                if (mFilter == null) {
-//
-//                    synchronized (mLock) {
-//                        newValues = new ArrayList<T>(mOriginalValues);
-//                    }
-//
-//                } else {
-//
-//                    ArrayList<T> values;
-//                    synchronized (mLock) {
-//                        values = new ArrayList<T>(mOriginalValues);
-//                    }
-//
-//                    final int count = values.size();
-//                    newValues = new ArrayList<T>();
-//
-//                    for (int i = 0; i < count; i++) {
-//                        final T value = values.get(i);
-//                        if (mFilter.apply(value)) {
-//                            newValues.add(value);
-//                        }
-//                    }
-//                }
-//                results.values = newValues;
-//                results.count = newValues.size();
-//                return results;
-//            }
-//
-//            @Override
-//            protected void publishResults(CharSequence constraint, FilterResults results) {
-//
-//                mFilteredValues.clear();
-//                mFilteredValues.addAll((Collection<? extends T>) results.values);
-//                notifyDataSetChanged();
-//
-//            }
-//        };
-//    }
-//
-//    public void setFilter(Function<T, Boolean> filter) {
-//        mFilter = filter;
-//
-//        if (mFilter == null) {
-//            setItems(mOriginalValues);
-//        } else {
-//            getFilter().filter("");
-//        }
-//    }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence prefix) {
+                FilterResults results = new FilterResults();
+                ArrayList<T> newValues;
+                if (mFilter == null) {
+
+                    synchronized (mLock) {
+                        newValues = new ArrayList<T>(mOriginalValues);
+                    }
+
+                } else {
+
+                    ArrayList<T> values;
+                    synchronized (mLock) {
+                        values = new ArrayList<T>(mOriginalValues);
+                    }
+
+                    final int count = values.size();
+                    newValues = new ArrayList<T>();
+
+                    for (int i = 0; i < count; i++) {
+                        final T value = values.get(i);
+                        if (mFilter.apply(value)) {
+                            newValues.add(value);
+                        }
+                    }
+                }
+                results.values = newValues;
+                results.count = newValues.size();
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                mFilteredValues.clear();
+                mFilteredValues.addAll((Collection<? extends T>) results.values);
+                notifyDataSetChanged();
+
+            }
+        };
+    }
+
+    public void setFilter(Function<T, Boolean> filter) {
+        mFilter = filter;
+
+        if (mFilter == null) {
+            setItems(mOriginalValues);
+        } else {
+            getFilter().filter("");
+        }
+    }
 
     public int getChoiceMode() {
         return choiceMode;
@@ -396,4 +398,5 @@ public abstract class BaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
     protected abstract void onBindItemViewHolder(VH viewHolder, T data, int position, int type);
 
     protected abstract VH viewHolder(LayoutInflater inflater, ViewGroup parent, int type);
+
 }
