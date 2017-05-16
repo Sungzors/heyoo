@@ -8,5 +8,7 @@
     <color name="tabselected">#4dd0e1</color>
     <color name="tabnotselected">#000000</color>
     <color name="lightGrey">#f4f5f5</color>
+    <color name="unselectGrey">#40cfcfcf</color>
+    <color name="unselectfullGrey">#cfcfcf</color>
     <color name="shadow">#e0e0e0</color>
 </resources>
