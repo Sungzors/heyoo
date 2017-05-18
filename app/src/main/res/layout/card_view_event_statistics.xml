@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingPrefix">
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_event_statistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:contentPadding="0dp"
+        android:layout_margin="2dp"
+        app:cardCornerRadius="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:id="@+id/cves_location_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp">
+                <include layout="@layout/draw_circle_location_orange"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/cves_event_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/cves_location_icon"
+                android:layout_toEndOf="@id/cves_location_icon"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:text="4515 Portola Pkwy \nIrvine, CA 92620"
+                fontPath="fonts/NunitoSans-Regular.ttf"
+                android:textSize="12sp"/>
+
+            <View
+                android:id="@+id/cves_divider_1"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/cves_event_address"
+                android:background="@color/shadow"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"/>
+
+            <FrameLayout
+                android:id="@+id/cves_description_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/cves_divider_1">
+                <include layout="@layout/draw_circle_description_orange"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/cves_event_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/cves_location_icon"
+                android:layout_toEndOf="@id/cves_location_icon"
+                android:layout_below="@id/cves_divider_1"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:text="Day 1 of the West Coast Swim \nTournament"
+                android:textSize="12sp"
+                fontPath="fonts/NunitoSans-Regular.ttf"/>
+
+            <View
+                android:id="@+id/cves_divider_2"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/cves_event_status"
+                android:background="@color/shadow"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"/>
+
+            <FrameLayout
+                android:id="@+id/cves_calendar_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/cves_divider_2">
+                <include layout="@layout/draw_circle_calendar_orange"/>
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/cves_blue_dot_of_death_knell"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/shape_circle_blue"
+                android:layout_below="@id/cves_divider_2"
+                android:layout_toRightOf="@id/cves_calendar_icon"
+                android:layout_toEndOf="@id/cves_calendar_icon"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="22dp"/>
+
+            <TextView
+                android:id="@+id/cves_calendar_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/cves_blue_dot_of_death_knell"
+                android:layout_toEndOf="@id/cves_blue_dot_of_death_knell"
+                android:layout_below="@id/cves_divider_2"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="19dp"
+                android:text="Swim 2016 (Shared)"
+                android:textSize="12sp"/>
+
+            <View
+                android:id="@+id/cves_divider_3"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/cves_calendar_icon"
+                android:background="@color/shadow"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"/>
+
+            <FrameLayout
+                android:id="@+id/cves_reminder_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_below="@id/cves_divider_3">
+                <include layout="@layout/draw_circle_reminder_orange"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/cves_reminder_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/cves_reminder_icon"
+                android:layout_toEndOf="@id/cves_reminder_icon"
+                android:layout_below="@id/cves_divider_3"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="18dp"
+                android:text="Reminders"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:id="@+id/cves_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/cves_divider_3"
+                android:text="+"
+                android:textSize="30sp"
+                android:gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:id="@+id/cves_reminder_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/cves_reminder_text"
+                android:layout_toRightOf="@id/cves_reminder_icon"
+                android:layout_toEndOf="@id/cves_reminder_icon"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp">
+
+            </LinearLayout>
+        </RelativeLayout>
+        
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

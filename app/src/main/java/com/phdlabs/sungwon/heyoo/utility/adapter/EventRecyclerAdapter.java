@@ -1,6 +1,5 @@
 package com.phdlabs.sungwon.heyoo.utility.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.phdlabs.sungwon.heyoo.utility.ViewMap;
  * Created by SungWon on 5/15/2017.
  */
 
-public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, RecyclerView.ViewHolder> {
+public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder> {
 
 
     @Override
@@ -26,23 +25,29 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Re
 
 
     @Override
-    protected void onBindItemViewHolder(RecyclerView.ViewHolder viewHolder, HeyooEvent data, int position, int type) {
+    protected void onBindItemViewHolder(BaseViewHolder viewHolder, HeyooEvent data, int position, int type) {
         switch (viewHolder.getItemViewType()){
             case 0:/*Title*/
+                bindTitleHolder(viewHolder, data);
                 break;
             case 1:/*Image*/
+                bindImageHolder(viewHolder, data);
                 break;
             case 2:/*Statistics?*/
+                bindStatisticsHolder(viewHolder, data);
                 break;
             case 3:/*People*/
+                bindPeopleHolder(viewHolder, data);
                 break;
-            case 4:/*Attachementes*/
+            case 4:/*Attachémentes*/
                 break;
         }
     }
 
+
+
     @Override
-    protected RecyclerView.ViewHolder viewHolder(LayoutInflater inflater, final ViewGroup parent, int type) {
+    protected BaseViewHolder viewHolder(LayoutInflater inflater, final ViewGroup parent, int type) {
         switch (type){
             case 0:/*Title*/
                 return new BaseViewHolder(R.layout.card_view_event_title, inflater, parent){
@@ -72,11 +77,58 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Re
                     }
                 };
             case 1:/*Image*/
-                break;
+                return new BaseViewHolder(R.layout.card_view_event_images, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                        views.click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                switch(view.getId()){
+                                    case R.id.cvei_add_button:
+                                        Toast.makeText(parent.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvei_image_title, R.id.cvei_add_button, R.id.cvei_container);
+                    }
+                };
             case 2:/*Statistics?*/
-                break;
+                return new BaseViewHolder(R.layout.card_view_event_statistics, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                        views.click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                switch(view.getId()){
+                                    case R.id.cvei_add_button:
+                                        Toast.makeText(parent.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cves_event_address, R.id.cves_event_status, R.id.cves_calendar_name, R.id.cves_add_button, R.id.cves_reminder_container);
+                    }
+                };
             case 3:/*People*/
-                break;
+                return new BaseViewHolder(R.layout.card_view_event_people, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvep_going_text, R.id.cvep_going_list, R.id.cvep_maybe_list, R.id.cvep_maybe_text, R.id.cvep_no_list, R.id.cvep_no_text, R.id.cvep_noreply_list, R.id.cvep_noreply_text);
+                    }
+                };
             case 4:/*Attachementes*/
                 break;
         }
@@ -84,6 +136,18 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Re
     }
 
     private void bindTitleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
+
+    }
+
+    private void bindImageHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
+
+    }
+
+    private void bindStatisticsHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
+
+    }
+
+    private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
 
     }
 }

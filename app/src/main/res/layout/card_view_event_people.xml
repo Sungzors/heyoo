@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingPrefix">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_event_people"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:contentPadding="0dp"
+        android:layout_margin="2dp"
+        app:cardCornerRadius="3dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:id="@+id/cvep_people_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp">
+                <include layout="@layout/draw_circle_people_orange"/>
+            </FrameLayout>
+            <TextView
+                android:id="@+id/cvep_people_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Invited"
+                android:layout_toRightOf="@id/cvep_people_icon"
+                android:layout_toEndOf="@id/cvep_people_icon"
+                android:layout_marginTop="19dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                fontPath="fonts/NunitoSans-ExtraBold.ttf"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/cvep_going_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Going (#)"
+                android:layout_below="@id/cvep_people_icon"
+                android:layout_marginTop="19dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cvep_going_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvep_going_text"
+                android:padding="15dp"/>
+
+            <View
+                android:id="@+id/cvep_divider_1"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/cvep_going_list"
+                android:background="@color/shadow"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/cvep_maybe_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maybe (#)"
+                android:layout_below="@id/cvep_divider_1"
+                android:layout_marginTop="19dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cvep_maybe_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvep_maybe_text"
+                android:padding="15dp"/>
+
+            <View
+                android:id="@+id/cvep_divider_2"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/cvep_maybe_list"
+                android:background="@color/shadow"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/cvep_no_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No (#)"
+                android:layout_below="@id/cvep_divider_2"
+                android:layout_marginTop="19dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cvep_no_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvep_no_text"
+                android:padding="15dp"/>
+
+            <View
+                android:id="@+id/cvep_divider_3"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/cvep_no_list"
+                android:background="@color/shadow"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/cvep_noreply_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Have not Replied (#)"
+                android:layout_below="@id/cvep_divider_3"
+                android:layout_marginTop="19dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cvep_noreply_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvep_noreply_text"
+                android:padding="15dp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
