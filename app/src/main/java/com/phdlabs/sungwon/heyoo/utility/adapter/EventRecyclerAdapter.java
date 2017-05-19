@@ -40,6 +40,7 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                 bindPeopleHolder(viewHolder, data);
                 break;
             case 4:/*Attachémentes*/
+                bindAttachmentHolder(viewHolder, data);
                 break;
         }
     }
@@ -94,7 +95,7 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
 
                     @Override
                     protected void putViewsIntoMap(ViewMap views) {
-                        views.put(R.id.cvei_image_title, R.id.cvei_add_button, R.id.cvei_container);
+                        views.put(R.id.cvei_image_title, R.id.cvei_add_button, R.id.cvei_container, R.id.cvei_record_orange);
                     }
                 };
             case 2:/*Statistics?*/
@@ -115,7 +116,7 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
 
                     @Override
                     protected void putViewsIntoMap(ViewMap views) {
-                        views.put(R.id.cves_event_address, R.id.cves_event_status, R.id.cves_calendar_name, R.id.cves_add_button, R.id.cves_reminder_container);
+                        views.put(R.id.cves_event_address, R.id.cves_event_status, R.id.cves_calendar_name, R.id.cves_add_button, R.id.cves_reminder_container, R.id.cves_calendar_icon, R.id.cves_description_icon, R.id.cves_location_icon, R.id.cves_reminder_icon);
                     }
                 };
             case 3:/*People*/
@@ -126,11 +127,20 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
 
                     @Override
                     protected void putViewsIntoMap(ViewMap views) {
-                        views.put(R.id.cvep_going_text, R.id.cvep_going_list, R.id.cvep_maybe_list, R.id.cvep_maybe_text, R.id.cvep_no_list, R.id.cvep_no_text, R.id.cvep_noreply_list, R.id.cvep_noreply_text);
+                        views.put(R.id.cvep_going_text, R.id.cvep_going_list, R.id.cvep_maybe_list, R.id.cvep_maybe_text, R.id.cvep_no_list, R.id.cvep_no_text, R.id.cvep_noreply_list, R.id.cvep_noreply_text, R.id.cvep_people_icon);
                     }
                 };
             case 4:/*Attachementes*/
-                break;
+                return new BaseViewHolder(R.layout.card_view_event_attachment, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvea_attachment_title, R.id.cvea_add_button, R.id.cvea_attachment_list, R.id.cvea_attachment_icon);
+                    }
+                };
         }
         return null;
     }
@@ -148,6 +158,10 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
     }
 
     private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
+
+    }
+
+    private void bindAttachmentHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
 
     }
 }
