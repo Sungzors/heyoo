@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome;
+package com.phdlabs.sungwon.heyoo.structure.aahome.home;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 
@@ -13,16 +13,16 @@ import java.util.List;
 
 public class HomeController implements HomeContract.Controller{
 
-    private HomeContract.View view;
+    private HomeContract.View mView;
 
-    HomeController(HomeContract.View view){
-        this.view = view;
+    HomeController(HomeContract.View mView){
+        this.mView = mView;
     }
 
     @Override
     public void onStart() {
         List<HeyooEvent> heyooEvents = getTestEvents();
-        view.showEvents(heyooEvents);
+        mView.showEvents(heyooEvents);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class HomeController implements HomeContract.Controller{
 
     @Override
     public void onDaySelected() {
-        view.showEvents(getTestEvents());
-        view.refreshList();
+        mView.showEvents(getTestEvents());
+        mView.refreshList();
     }
 
     @Override

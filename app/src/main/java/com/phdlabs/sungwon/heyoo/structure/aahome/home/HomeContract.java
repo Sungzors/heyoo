@@ -1,8 +1,7 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome;
+package com.phdlabs.sungwon.heyoo.structure.aahome.home;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
-import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainContract;
 
 import java.util.List;
 
@@ -12,10 +11,6 @@ import java.util.List;
 
 public interface HomeContract {
 
-    interface Activity {
-        interface View extends MainContract.View{}
-        interface Controller extends MainContract.Controller{}
-    }
 
     interface View extends Contract.BaseView{
         void showAddEvent(); // TODO: 4/18/2017

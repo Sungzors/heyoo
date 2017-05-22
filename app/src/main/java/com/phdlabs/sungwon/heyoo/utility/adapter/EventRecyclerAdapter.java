@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.utility.adapter;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,8 +8,11 @@ import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
+import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventController;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
+
+import java.util.List;
 
 /**
  * Created by SungWon on 5/15/2017.
@@ -16,6 +20,13 @@ import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 
 public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder> {
 
+    EventController mController;
+
+    public EventRecyclerAdapter(@NonNull List<HeyooEvent> values, EventController mController) {
+        super(values);
+        this.mController = mController;
+
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -60,12 +71,15 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                                 switch(view.getId()){
                                     case R.id.cvet_yes_button:
                                         Toast.makeText(parent.getContext(), "Yes button clicked", Toast.LENGTH_SHORT).show();
+                                        mController.onTitleYesClicked();
                                         break;
                                     case R.id.cvet_maybe_button:
                                         Toast.makeText(parent.getContext(), "Maybe button clicked", Toast.LENGTH_SHORT).show();
+                                        mController.onTitleMaybeClicked();
                                         break;
                                     case R.id.cvet_no_button:
                                         Toast.makeText(parent.getContext(), "No button clicked", Toast.LENGTH_SHORT).show();
+                                        mController.onTitleNoClicked();
                                         break;
                                 }
                             }
@@ -87,6 +101,7 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                                 switch(view.getId()){
                                     case R.id.cvei_add_button:
                                         Toast.makeText(parent.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
+                                        mController.onMediaAddClicked();
                                         break;
                                 }
                             }
@@ -105,11 +120,6 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                         views.click(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                switch(view.getId()){
-                                    case R.id.cvei_add_button:
-                                        Toast.makeText(parent.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
-                                        break;
-                                }
                             }
                         });
                     }

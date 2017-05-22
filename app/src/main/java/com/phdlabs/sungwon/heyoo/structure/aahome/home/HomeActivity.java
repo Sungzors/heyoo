@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome;
+package com.phdlabs.sungwon.heyoo.structure.aahome.home;
 
 import android.content.Context;
 import android.os.Bundle;

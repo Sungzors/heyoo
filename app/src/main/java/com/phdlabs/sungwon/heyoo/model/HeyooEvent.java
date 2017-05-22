@@ -17,14 +17,17 @@ public class HeyooEvent {
     private Calendar endCalendar;
     private Date end_time;
     private boolean allDay;
-    private int calendar_id;
+    private int calendars;
+    private String privacy;
+    private String description;
+    private int recurrence_id;
 
     public static int hashCode(Calendar calendar) {
             //Should produce hashes like "20170401"
         return (calendar.get(Calendar.YEAR) * 10000) + ((calendar.get(Calendar.MONTH)+1) * 100) + calendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    public HeyooEvent(int id, String name, Date start_time, Date end_time, boolean allDay, int calendar_id) {
+    public HeyooEvent(int id, String name, Date start_time, Date end_time, boolean allDay, int calendars) {
         this.id = id;
         this.name = name;
         this.start_time = start_time;
@@ -35,7 +38,7 @@ public class HeyooEvent {
         endCalendar = Calendar.getInstance();
         endCalendar.setTime(end_time);
         this.allDay = allDay;
-        this.calendar_id = calendar_id;
+        this.calendars = calendars;
     }
 
 
@@ -92,11 +95,11 @@ public class HeyooEvent {
         this.allDay = allDay;
     }
 
-    public int getCalendar_id() {
-        return calendar_id;
+    public int getCalendars() {
+        return calendars;
     }
 
-    public void setCalendar_id(int calendar_id) {
-        this.calendar_id = calendar_id;
+    public void setCalendars(int calendars) {
+        this.calendars = calendars;
     }
 }

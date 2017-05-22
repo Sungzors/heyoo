@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome;
+package com.phdlabs.sungwon.heyoo.structure.aahome.home;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -227,7 +227,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
         ((TextView)viewHolder.get(R.id.cvh_time)).setText(formatter.format(heyooEvent.getStartCalendar().getTime()) + getAMPM(heyooEvent.getStartCalendar()));
         ((TextView)viewHolder.get(R.id.cvh_event_title)).setText(heyooEvent.getName());
-        if(heyooEvent.getCalendar_id() == 1){
+        if(heyooEvent.getCalendars() == 1){
             changeTabColor();
         }
     }

@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
+import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.LoginActivity;
 
