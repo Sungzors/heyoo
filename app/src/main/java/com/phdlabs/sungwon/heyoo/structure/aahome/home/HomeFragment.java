@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
+import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
@@ -108,7 +109,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mMenu = mToolbar.getMenu();
         Date dummydate = new Date();
         dummydate.setTime(10000);
-        mDummyHeyooEvent = new HeyooEvent(0, "dummy", dummydate, dummydate, false, 9999);
+        mDummyHeyooEvent = new HeyooEvent(0, "dummy", dummydate, dummydate, "dummy event. If you see this, something has gone wrong", false, 9999, null);
         mLastHeyooEvent = mDummyHeyooEvent;
         mToday = Calendar.getInstance();
         mCalendarView.setDateSelected(mToday, true);
@@ -187,7 +188,13 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
                 return new BaseViewHolder(R.layout.card_view_home, inflater, parent){
                     @Override
                     protected void addClicks(ViewMap views) {
-                        super.addClicks(views);
+                        views.click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                HeyooEvent event = getItem(getAdapterPosition());
+                                showEventDetail(event);
+                            }
+                        });
                     }
 
                     @Override
@@ -374,8 +381,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     }
 
     @Override
-    public void showEventDetail() {
-
+    public void showEventDetail(HeyooEvent event) {
+        getBaseActivity().replaceFragment(EventFragment.newInstance(event), true);
     }
 
 

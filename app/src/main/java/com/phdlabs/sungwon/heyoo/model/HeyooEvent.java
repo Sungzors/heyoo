@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ import java.util.Date;
  * Created by SungWon on 4/25/2017.
  */
 
-public class HeyooEvent {
+public class HeyooEvent implements Serializable{
 
     private int id;
     private String name;
@@ -20,6 +21,7 @@ public class HeyooEvent {
     private int calendars;
     private String privacy;
     private String description;
+    private String address;
     private int recurrence_id;
 
     public static int hashCode(Calendar calendar) {
@@ -27,7 +29,7 @@ public class HeyooEvent {
         return (calendar.get(Calendar.YEAR) * 10000) + ((calendar.get(Calendar.MONTH)+1) * 100) + calendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    public HeyooEvent(int id, String name, Date start_time, Date end_time, boolean allDay, int calendars) {
+    public HeyooEvent(int id, String name, Date start_time, Date end_time, String description, boolean allDay, int calendars, String address) {
         this.id = id;
         this.name = name;
         this.start_time = start_time;
@@ -37,11 +39,19 @@ public class HeyooEvent {
         this.end_time = end_time;
         endCalendar = Calendar.getInstance();
         endCalendar.setTime(end_time);
+        this.description = description;
         this.allDay = allDay;
         this.calendars = calendars;
+        this.address = address;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Calendar getStartCalendar() {
         return startCalendar;
@@ -101,5 +111,13 @@ public class HeyooEvent {
 
     public void setCalendars(int calendars) {
         this.calendars = calendars;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

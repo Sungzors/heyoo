@@ -83,6 +83,30 @@ public class EventController implements EventContract.Controller{
 
     }
 
+    @Override
+    public List<HeyooAttendee> getAssociatedAttendees() {
+        List<HeyooAttendee> list = getDummyAttendee();
+        List<HeyooAttendee> asslist = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getEventidlist().contains(mView.getEventid())){
+                asslist.add(list.get(i));
+            }
+        }
+        return asslist;
+    }
+
+    @Override
+    public List<HeyooMedia> getAssociatedMedia() {
+        List<HeyooMedia> list = getDummyMedia();
+        List<HeyooMedia> asslist = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getEvent_id() == mView.getEventid()){
+                asslist.add(list.get(i));
+            }
+        }
+        return asslist;
+    }
+
     public List<HeyooAttendee> getDummyAttendee(){
         List<HeyooAttendee> list = new ArrayList<>();
         HeyooAttendee guy1 = new HeyooAttendee(0, "Guy", "One", "http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/prototypen/m_sexy_gr.jpg", "Heyoo Member");

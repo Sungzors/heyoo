@@ -4,14 +4,18 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
-import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventController;
+import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
+import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -20,9 +24,9 @@ import java.util.List;
 
 public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder> {
 
-    EventController mController;
+    EventContract.Controller mController;
 
-    public EventRecyclerAdapter(@NonNull List<HeyooEvent> values, EventController mController) {
+    public EventRecyclerAdapter(@NonNull List<HeyooEvent> values, EventContract.Controller mController) {
         super(values);
         this.mController = mController;
 
@@ -156,15 +160,28 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
     }
 
     private void bindTitleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
-
+        ((TextView)baseViewHolder.get(R.id.cvet_event_title)).setText(event.getDescription());
+        if (event.getStartTimeHash() == HeyooEvent.hashCode(Calendar.getInstance())) {
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd");
+            ((TextView) baseViewHolder.get(R.id.cvet_event_date)).setText("Today - " + formatter.format(event.getStartCalendar().getTime()));
+        } else if(event.getStartTimeHash() == HeyooEvent.hashCode(Calendar.getInstance()) + 1){
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd");
+            ((TextView) baseViewHolder.get(R.id.cvet_event_date)).setText("Tomorrow - " + formatter.format(event.getStartCalendar().getTime()));
+        } else {
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE - MMM dd");
+            ((TextView)baseViewHolder.get(R.id.cvet_event_date)).setText(formatter.format(event.getStartCalendar().getTime()));
+        }
     }
 
     private void bindImageHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
-
+        List<HeyooMedia> mediaList = mController.getAssociatedMedia();
+        ((TextView) baseViewHolder.get(R.id.cvei_image_title)).setText("Event Media (" +mediaList.size() +")");
     }
 
     private void bindStatisticsHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
-
+        ((TextView) baseViewHolder.get(R.id.cves_event_address)).setText(event.getAddress());
+        ((TextView) baseViewHolder.get(R.id.cves_event_status)).setText(event.getDescription());
+        ((TextView) baseViewHolder.get(R.id.cves_calendar_name)).setText("Main Calendar");
     }
 
     private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){

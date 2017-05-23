@@ -1,7 +1,11 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome.event;
 
+import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
+import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainContract;
+
+import java.util.List;
 
 /**
  * Created by SungWon on 5/19/2017.
@@ -9,13 +13,12 @@ import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainContract;
 
 public interface EventContract {
 
-    interface Activity {
-        interface View extends MainContract.View{}
-        interface Controller extends MainContract.Controller{}
-    }
+
 
     interface View extends Contract.BaseView{
         int getEventid();
+
+        void showEventDetails();
     }
 
     interface Controller extends Contract.BaseController{
@@ -33,6 +36,10 @@ public interface EventContract {
         void onSummaryReminderClicked();
 
         void onAttachmentClicked();
+
+        List<HeyooAttendee> getAssociatedAttendees();
+
+        List<HeyooMedia> getAssociatedMedia();
 
     }
 }

@@ -69,9 +69,9 @@ public class HomeController implements HomeContract.Controller{
         Calendar cal3e = Calendar.getInstance();
         cal3e.add(Calendar.DATE, 3);
         Date date3e = cal3e.getTime();
-        HeyooEvent heyooEvent1 = new HeyooEvent(0, "Test HeyooEvent 1", date1s, date1e, true, 0);
-        HeyooEvent heyooEvent2 = new HeyooEvent(0, "Test HeyooEvent 2", date2s, date2e, true, 0);
-        HeyooEvent heyooEvent3 = new HeyooEvent(0, "Test HeyooEvent 3", date3s, date3e, true, 1);
+        HeyooEvent heyooEvent1 = new HeyooEvent(0, "Test HeyooEvent 1", date1s, date1e, "Testing HeyooEvent1 Description", true, 0, "10 Address Lane\nGorp, CA 90000");
+        HeyooEvent heyooEvent2 = new HeyooEvent(0, "Test HeyooEvent 2", date2s, date2e, "Testing HeyooEvent1 Description", true, 0, "11 Address Lane\nGorp, CA 90001");
+        HeyooEvent heyooEvent3 = new HeyooEvent(0, "Test HeyooEvent 3", date3s, date3e, "Testing HeyooEvent1 Description", true, 1, "12 Address Lane\nGorp, CA 90002");
         heyooEventList.add(heyooEvent1);
         heyooEventList.add(heyooEvent2);
         heyooEventList.add(heyooEvent3);
