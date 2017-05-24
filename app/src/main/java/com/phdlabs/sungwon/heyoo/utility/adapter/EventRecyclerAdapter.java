@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventContract;
@@ -141,6 +142,11 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         for (int i = 0; i < mediaList.size(); i++) {
             urlList.add(mediaList.get(i).getFile_path());
         }
+        if(mediaList.size()== 0){
+            baseViewHolder.get(R.id.cvei_container).setVisibility(View.GONE);
+        } else {
+            baseViewHolder.get(R.id.cvei_container).setVisibility(View.VISIBLE);
+        }
         ImageExpander expander = new ImageExpander(mController.getContext(), urlList);
         mImageDisplayList = expander.insertExpandingImage(baseViewHolder.get(R.id.cvei_container));
         for (int i = 0; i < mImageDisplayList.size(); i++) {
@@ -161,7 +167,7 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
     }
 
     private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
-
+        List<HeyooAttendee> attendeesList = mController.getAssociatedAttendees();
     }
 
     private void bindAttachmentHolder(BaseViewHolder baseViewHolder, HeyooEvent event){

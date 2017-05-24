@@ -33,33 +33,52 @@ public class ImageExpander {
                 .into(view);
     }
 
+    public void displayImage(int x, int y, String url, ImageView view){
+        Picasso.with(mContext)
+                .load(url)
+                .resize(x, y)
+                .centerCrop()
+                .into(view);
+    }
+
     /**
      * Method to create a gradually expanding image
      * @param container Container which the images will be inputted
-     * @return List of IDs for ImageViews added
+     * @return List of ImageViews added
      */
     public List<ImageView> insertExpandingImage(View container){
+        int sizex1Diff = 2;
+        int sizeyDiff = 2;
+        int sizex2Diff = 0;
         LinearLayout picLayout = new LinearLayout(mContext);
-        LinearLayout.LayoutParams picLayoutParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
+        picLayout.setPadding(0,0,0,0);
+        LinearLayout.LayoutParams picLayoutParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 2);
+        picLayoutParam.setMargins(0,0,0,0);
         picLayoutParam.setLayoutDirection(LinearLayout.HORIZONTAL);
         picLayout.setLayoutParams(picLayoutParam);
         LinearLayout picLayout2 = new LinearLayout(mContext);
         if(mImageList.size()>2){
             LinearLayout.LayoutParams picLayoutParam2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
+            picLayoutParam2.setMargins(0,0,0,0);
+            picLayout2.setPadding(0,0,0,0);
             picLayoutParam2.setLayoutDirection(LinearLayout.HORIZONTAL);
             picLayout2.setLayoutParams(picLayoutParam2);
+            sizeyDiff = 3;
+            sizex2Diff = mImageList.size() - 2;
+        } else if(mImageList.size()==1){
+            sizex1Diff = 1;
         }
         for (int i = 0; i < mImageList.size(); i++) {
-            ImageView imageView = new ImageView(mContext);
+            final ImageView imageView = new ImageView(mContext);
             LinearLayout.LayoutParams iVParam2 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
             imageView.setLayoutParams(iVParam2);
             if(i < 2) {
-                displayImage(mImageList.get(i), imageView);
                 picLayout.addView(imageView);
+                displayImage(360/sizex1Diff - 6, 600/sizeyDiff, mImageList.get(i), imageView);
                 imageView.generateViewId();
                 mViewList.add(imageView);
             } else if (i < 7){
-                displayImage(mImageList.get(i), imageView);
+                displayImage(360/sizex2Diff - 6, 300/sizeyDiff, mImageList.get(i), imageView);
                 picLayout2.addView(imageView);
                 imageView.generateViewId();
                 mViewList.add(imageView);
