@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,9 +13,11 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
+import com.phdlabs.sungwon.heyoo.utility.ImageExpander;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,6 +29,8 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         implements View.OnClickListener{
 
     EventContract.Controller mController;
+
+    List<ImageView> mImageDisplayList;
 
     public EventRecyclerAdapter(@NonNull List<HeyooEvent> values, EventContract.Controller mController) {
         super(values);
@@ -132,6 +137,21 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         List<HeyooMedia> mediaList = mController.getAssociatedMedia();
         ((TextView) baseViewHolder.get(R.id.cvei_image_title)).setText("Event Media (" +mediaList.size() +")");
         (baseViewHolder.get(R.id.cvei_add_button)).setOnClickListener(this);
+        List<String> urlList = new ArrayList<>();
+        for (int i = 0; i < mediaList.size(); i++) {
+            urlList.add(mediaList.get(i).getFile_path());
+        }
+        ImageExpander expander = new ImageExpander(mController.getContext(), urlList);
+        mImageDisplayList = expander.insertExpandingImage(baseViewHolder.get(R.id.cvei_container));
+        for (int i = 0; i < mImageDisplayList.size(); i++) {
+            final int x = i + 1;
+            mImageDisplayList.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mController.getContext(), "Image Selected: " + x, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void bindStatisticsHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
