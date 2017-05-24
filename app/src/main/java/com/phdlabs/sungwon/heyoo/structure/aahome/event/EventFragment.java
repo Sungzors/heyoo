@@ -3,6 +3,7 @@ package com.phdlabs.sungwon.heyoo.structure.aahome.event;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -75,6 +76,7 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
         repeatList.add(mEvent);
         mAdapter = new EventRecyclerAdapter(repeatList, controller);
         mAdapter.setItems(repeatList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -93,5 +95,11 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
     @Override
     public int getEventid() {
         return mEvent.getId();
+    }
+
+    @Override
+    public void onStop() {
+        mAdapter.clear();
+        super.onStop();
     }
 }

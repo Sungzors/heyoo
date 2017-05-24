@@ -1,9 +1,10 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome.event;
 
+import android.content.Context;
+
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
-import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainContract;
 
 import java.util.List;
 
@@ -40,6 +41,8 @@ public interface EventContract {
         List<HeyooAttendee> getAssociatedAttendees();
 
         List<HeyooMedia> getAssociatedMedia();
+
+        Context getContext();
 
     }
 }

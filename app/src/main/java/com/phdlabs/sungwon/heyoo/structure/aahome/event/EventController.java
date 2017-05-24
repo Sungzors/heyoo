@@ -1,5 +1,8 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome.event;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 
@@ -11,6 +14,8 @@ import java.util.List;
  */
 
 public class EventController implements EventContract.Controller{
+
+    private static final String TAG = "EventController";
 
     private EventContract.View mView;
 
@@ -50,17 +55,17 @@ public class EventController implements EventContract.Controller{
 
     @Override
     public void onTitleYesClicked() {
-
+        Log.d(TAG, "Yes on Title Clicked");
     }
 
     @Override
     public void onTitleMaybeClicked() {
-
+        Log.d(TAG, "Maybe on Title Clicked");
     }
 
     @Override
     public void onTitleNoClicked() {
-
+        Log.d(TAG, "No on Title Clicked");
     }
 
     @Override
@@ -134,7 +139,16 @@ public class EventController implements EventContract.Controller{
         HeyooMedia media3 = new HeyooMedia("Dummy Media 3", "dummy3", "http://i.imgur.com/HfWzk0i.jpg", mView.getEventid());
         HeyooMedia media4 = new HeyooMedia("Dummy Media 4", "dummy4", "http://i.imgur.com/pPVBUld.jpg", mView.getEventid());
         HeyooMedia media5 = new HeyooMedia("Dummy Media 5", "dummy5", "http://i.imgur.com/SMUFKgO.jpg", mView.getEventid());
+        list.add(media1);
+        list.add(media2);
+        list.add(media3);
+        list.add(media4);
+        list.add(media5);
         return list;
     }
 
+    @Override
+    public Context getContext() {
+        return mView.getContext();
+    }
 }

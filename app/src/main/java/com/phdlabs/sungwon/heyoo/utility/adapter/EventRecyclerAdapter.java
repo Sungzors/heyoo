@@ -22,7 +22,8 @@ import java.util.List;
  * Created by SungWon on 5/15/2017.
  */
 
-public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder> {
+public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder>
+        implements View.OnClickListener{
 
     EventContract.Controller mController;
 
@@ -67,28 +68,7 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         switch (type){
             case 0:/*Title*/
                 return new BaseViewHolder(R.layout.card_view_event_title, inflater, parent){
-                    @Override
-                    protected void addClicks(ViewMap views) {
-                        views.click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                switch(view.getId()){
-                                    case R.id.cvet_yes_button:
-                                        Toast.makeText(parent.getContext(), "Yes button clicked", Toast.LENGTH_SHORT).show();
-                                        mController.onTitleYesClicked();
-                                        break;
-                                    case R.id.cvet_maybe_button:
-                                        Toast.makeText(parent.getContext(), "Maybe button clicked", Toast.LENGTH_SHORT).show();
-                                        mController.onTitleMaybeClicked();
-                                        break;
-                                    case R.id.cvet_no_button:
-                                        Toast.makeText(parent.getContext(), "No button clicked", Toast.LENGTH_SHORT).show();
-                                        mController.onTitleNoClicked();
-                                        break;
-                                }
-                            }
-                        });
-                    }
+
 
                     @Override
                     protected void putViewsIntoMap(ViewMap views) {
@@ -97,20 +77,6 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                 };
             case 1:/*Image*/
                 return new BaseViewHolder(R.layout.card_view_event_images, inflater, parent){
-                    @Override
-                    protected void addClicks(ViewMap views) {
-                        views.click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                switch(view.getId()){
-                                    case R.id.cvei_add_button:
-                                        Toast.makeText(parent.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
-                                        mController.onMediaAddClicked();
-                                        break;
-                                }
-                            }
-                        });
-                    }
 
                     @Override
                     protected void putViewsIntoMap(ViewMap views) {
@@ -119,14 +85,6 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                 };
             case 2:/*Statistics?*/
                 return new BaseViewHolder(R.layout.card_view_event_statistics, inflater, parent){
-                    @Override
-                    protected void addClicks(ViewMap views) {
-                        views.click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                            }
-                        });
-                    }
 
                     @Override
                     protected void putViewsIntoMap(ViewMap views) {
@@ -135,9 +93,6 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                 };
             case 3:/*People*/
                 return new BaseViewHolder(R.layout.card_view_event_people, inflater, parent){
-                    @Override
-                    protected void addClicks(ViewMap views) {
-                    }
 
                     @Override
                     protected void putViewsIntoMap(ViewMap views) {
@@ -146,9 +101,6 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                 };
             case 4:/*Attachementes*/
                 return new BaseViewHolder(R.layout.card_view_event_attachment, inflater, parent){
-                    @Override
-                    protected void addClicks(ViewMap views) {
-                    }
 
                     @Override
                     protected void putViewsIntoMap(ViewMap views) {
@@ -171,11 +123,15 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
             SimpleDateFormat formatter = new SimpleDateFormat("EEE - MMM dd");
             ((TextView)baseViewHolder.get(R.id.cvet_event_date)).setText(formatter.format(event.getStartCalendar().getTime()));
         }
+        (baseViewHolder.get(R.id.cvet_yes_button)).setOnClickListener(this);
+        (baseViewHolder.get(R.id.cvet_maybe_button)).setOnClickListener(this);
+        (baseViewHolder.get(R.id.cvet_no_button)).setOnClickListener(this);
     }
 
     private void bindImageHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
         List<HeyooMedia> mediaList = mController.getAssociatedMedia();
         ((TextView) baseViewHolder.get(R.id.cvei_image_title)).setText("Event Media (" +mediaList.size() +")");
+        (baseViewHolder.get(R.id.cvei_add_button)).setOnClickListener(this);
     }
 
     private void bindStatisticsHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
@@ -190,5 +146,27 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
 
     private void bindAttachmentHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.cvet_yes_button:
+                Toast.makeText(mController.getContext(), "Yes button clicked", Toast.LENGTH_SHORT).show();
+                mController.onTitleYesClicked();
+                break;
+            case R.id.cvet_maybe_button:
+                Toast.makeText(mController.getContext(), "Maybe button clicked", Toast.LENGTH_SHORT).show();
+                mController.onTitleMaybeClicked();
+                break;
+            case R.id.cvet_no_button:
+                Toast.makeText(mController.getContext(), "No button clicked", Toast.LENGTH_SHORT).show();
+                mController.onTitleNoClicked();
+                break;
+            case R.id.cvei_add_button:
+                Toast.makeText(mController.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
+                mController.onMediaAddClicked();
+                break;
+        }
     }
 }
