@@ -117,7 +117,7 @@
                 android:layout_below="@id/cves_divider_2"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="19dp"
+                android:layout_marginTop="20dp"
                 android:text="Swim 2016 (Shared)"
                 android:textSize="12sp"/>
 
@@ -146,12 +146,10 @@
                 android:id="@+id/cves_reminder_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/cves_reminder_icon"
                 android:layout_toEndOf="@id/cves_reminder_icon"
                 android:layout_below="@id/cves_divider_3"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="19dp"
                 android:text="Reminders"
                 android:textSize="13sp"
                 />
@@ -161,9 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_below="@id/cves_divider_3"
                 android:text="+"
@@ -176,10 +172,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@id/cves_reminder_text"
-                android:layout_toRightOf="@id/cves_reminder_icon"
                 android:layout_toEndOf="@id/cves_reminder_icon"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp">
 
             </LinearLayout>

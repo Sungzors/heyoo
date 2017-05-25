@@ -23,6 +23,8 @@ public interface EventContract {
     }
 
     interface Controller extends Contract.BaseController{
+        void onEdit();
+
         void onOverviewClicked();
 
         void onDiscussClicked();
@@ -36,7 +38,10 @@ public interface EventContract {
 
         void onSummaryReminderClicked();
 
+        void onAttendeeClicked(HeyooAttendee attendee);
+
         void onAttachmentClicked();
+        void onAttachmentAddClicked();
 
         List<HeyooAttendee> getAssociatedAttendees();
 

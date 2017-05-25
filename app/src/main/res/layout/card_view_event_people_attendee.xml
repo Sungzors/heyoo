@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/cvepa_attendee_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/bg_shadow_box"/>
+
+        <TextView
+            android:id="@+id/cvepa_attendee_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/cvepa_attendee_icon"
+            android:layout_marginStart="15dp"
+            android:textSize="13sp"
+            android:text="Person Name"
+            fontPath="fonts/Avenir-Roman-webfont.ttf"
+            />
+
+        <TextView
+            android:id="@+id/cvepa_attendee_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/cvepa_attendee_icon"
+            android:layout_below="@id/cvepa_attendee_name"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="15dp"
+            android:textSize="11sp"
+            android:text="Person Status"
+            fontPath="fonts/Avenir-Medium-webfont.ttf"/>
+
+        <ViewStub
+            android:id="@+id/cvepa_attendee_colortab"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentEnd="true"/>
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+</RelativeLayout>

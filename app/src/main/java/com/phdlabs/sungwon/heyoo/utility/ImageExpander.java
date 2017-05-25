@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 /**
  * Created by SungWon on 5/24/2017.
  */
@@ -27,6 +29,17 @@ public class ImageExpander {
         mViewList = new ArrayList<>();
     }
 
+    public ImageExpander(Context context, String imagelist) {
+        this.mContext = context;
+        this.mImageList.add(imagelist);
+        mViewList = new ArrayList<>();
+    }
+
+    public ImageExpander(Context context){
+        this.mContext = context;
+        mViewList = new ArrayList<>();
+    }
+
     public void displayImage(String url, ImageView view){
         Picasso.with(mContext)
                 .load(url)
@@ -38,6 +51,13 @@ public class ImageExpander {
                 .load(url)
                 .resize(x, y)
                 .centerCrop()
+                .into(view);
+    }
+
+    public void displayRoundedImage(String url, ImageView view){
+        Picasso.with(mContext)
+                .load(url)
+                .transform(new RoundedCornersTransformation(3, 0))
                 .into(view);
     }
 

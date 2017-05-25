@@ -5,6 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.phdlabs.sungwon.heyoo.R;
@@ -22,6 +25,8 @@ import java.util.List;
 
 public class EventFragment extends BaseFragment<EventContract.Controller>
         implements EventContract.View{
+
+    private Menu mOptionsMenu;
 
     private HeyooEvent mEvent;
     private EventRecyclerAdapter mAdapter;
@@ -63,6 +68,23 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        mOptionsMenu = menu;
+        menu.clear();
+        inflater.inflate(R.menu.menu_edit, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                controller.onEdit();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

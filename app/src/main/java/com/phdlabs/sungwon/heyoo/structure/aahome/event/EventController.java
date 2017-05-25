@@ -2,6 +2,7 @@ package com.phdlabs.sungwon.heyoo.structure.aahome.event;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
@@ -41,6 +42,11 @@ public class EventController implements EventContract.Controller{
     @Override
     public void onStop() {
 
+    }
+
+    @Override
+    public void onEdit() {
+        Toast.makeText(getContext(), "Edit Screen To Be Added", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -84,7 +90,17 @@ public class EventController implements EventContract.Controller{
     }
 
     @Override
+    public void onAttendeeClicked(HeyooAttendee attendee) {
+        Toast.makeText(getContext(), "Clicked " + attendee.getFirst_name() + attendee.getLast_name(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onAttachmentClicked() {
+
+    }
+
+    @Override
+    public void onAttachmentAddClicked() {
 
     }
 
@@ -114,9 +130,9 @@ public class EventController implements EventContract.Controller{
 
     public List<HeyooAttendee> getDummyAttendee(){
         List<HeyooAttendee> list = new ArrayList<>();
-        HeyooAttendee guy1 = new HeyooAttendee(0, "Guy", "One", "http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/prototypen/m_sexy_gr.jpg", "Heyoo Member");
-        HeyooAttendee guy2 = new HeyooAttendee(1, "Guy", "Two", "http://static.tvtropes.org/pmwiki/pub/images/AverageMan1.jpg", "Facebook Member");
-        HeyooAttendee girl1 = new HeyooAttendee(2, "Girl", "One", "http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/prototypen/w_sexy_gr.jpg", "Heyoo Member");
+        HeyooAttendee guy1 = new HeyooAttendee(0, "Guy", "One", "http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/prototypen/m_sexy_gr.jpg","going", "Heyoo Member");
+        HeyooAttendee guy2 = new HeyooAttendee(1, "Guy", "Two", "http://static.tvtropes.org/pmwiki/pub/images/AverageMan1.jpg", "maybe", "Facebook Member");
+        HeyooAttendee girl1 = new HeyooAttendee(2, "Girl", "One", "http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/prototypen/w_sexy_gr.jpg", "no", "Heyoo Member");
         List<Integer> guy1list = new ArrayList<>();
         guy1list.add(0);
         guy1list.add(2);
@@ -129,6 +145,9 @@ public class EventController implements EventContract.Controller{
         guy1.setEventidlist(guy1list);
         guy2.setEventidlist(guy2list);
         girl1.setEventidlist(girl1list);
+        list.add(guy1);
+        list.add(guy2);
+        list.add(girl1);
         return list;
     }
 

@@ -1,6 +1,7 @@
 package com.phdlabs.sungwon.heyoo.utility.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
+import com.phdlabs.sungwon.heyoo.utility.CustomLinearLayoutManager;
 import com.phdlabs.sungwon.heyoo.utility.ImageExpander;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 
@@ -168,10 +170,142 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
 
     private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
         List<HeyooAttendee> attendeesList = mController.getAssociatedAttendees();
+        List<HeyooAttendee> goingList = new ArrayList<>();
+        for (int i = 0; i < attendeesList.size(); i++) {
+            if (attendeesList.get(i).getStatus().equals("going")){
+                goingList.add(attendeesList.get(i));
+            }
+        }
+        List<HeyooAttendee> maybeList = new ArrayList<>();
+        for (int i = 0; i < attendeesList.size(); i++) {
+            if (attendeesList.get(i).getStatus().equals("maybe")){
+                maybeList.add(attendeesList.get(i));
+            }
+        }
+        List<HeyooAttendee> noList = new ArrayList<>();
+        for (int i = 0; i < attendeesList.size(); i++) {
+            if (attendeesList.get(i).getStatus().equals("no")){
+                noList.add(attendeesList.get(i));
+            }
+        }
+        List<HeyooAttendee> noReplyList = new ArrayList<>();
+        for (int i = 0; i < attendeesList.size(); i++) {
+            if (attendeesList.get(i).getStatus().equals("noreply")){
+                noReplyList.add(attendeesList.get(i));
+            }
+        }
+        ((TextView) baseViewHolder.get(R.id.cvep_going_text)).setText("Going (" + goingList.size() + ")");
+        ((TextView) baseViewHolder.get(R.id.cvep_maybe_text)).setText("Maybe (" + maybeList.size() + ")");
+        ((TextView) baseViewHolder.get(R.id.cvep_no_text)).setText("No (" + noList.size() + ")");
+        ((TextView) baseViewHolder.get(R.id.cvep_noreply_text)).setText("Have Not Replied (" + noReplyList.size() + ")");
+        BaseListRecyclerAdapter<HeyooAttendee, BaseViewHolder> goingAdapter = new BaseListRecyclerAdapter<HeyooAttendee, BaseViewHolder>() {
+            @Override
+            protected void onBindItemViewHolder(BaseViewHolder viewHolder, HeyooAttendee data, int position, int type) {
+                bindAttendeeHolder(viewHolder, data);
+            }
+
+            @Override
+            protected BaseViewHolder viewHolder(LayoutInflater inflater, ViewGroup parent, int type) {
+                return new BaseViewHolder(R.layout.card_view_event_people_attendee, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvepa_attendee_icon, R.id.cvepa_attendee_name, R.id.cvepa_attendee_status, R.id.cvepa_attendee_colortab);
+                    }
+                };
+            }
+        };
+        BaseListRecyclerAdapter<HeyooAttendee, BaseViewHolder> maybeAdapter = new BaseListRecyclerAdapter<HeyooAttendee, BaseViewHolder>() {
+            @Override
+            protected void onBindItemViewHolder(BaseViewHolder viewHolder, HeyooAttendee data, int position, int type) {
+                bindAttendeeHolder(viewHolder, data);
+            }
+
+            @Override
+            protected BaseViewHolder viewHolder(LayoutInflater inflater, ViewGroup parent, int type) {
+                return new BaseViewHolder(R.layout.card_view_event_people_attendee, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvepa_attendee_icon, R.id.cvepa_attendee_name, R.id.cvepa_attendee_status, R.id.cvepa_attendee_colortab);
+                    }
+                };
+            }
+        };;
+        BaseListRecyclerAdapter<HeyooAttendee, BaseViewHolder> noAdapter = new BaseListRecyclerAdapter<HeyooAttendee, BaseViewHolder>() {
+            @Override
+            protected void onBindItemViewHolder(BaseViewHolder viewHolder, HeyooAttendee data, int position, int type) {
+                bindAttendeeHolder(viewHolder, data);
+            }
+
+            @Override
+            protected BaseViewHolder viewHolder(LayoutInflater inflater, ViewGroup parent, int type) {
+                return new BaseViewHolder(R.layout.card_view_event_people_attendee, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvepa_attendee_icon, R.id.cvepa_attendee_name, R.id.cvepa_attendee_status, R.id.cvepa_attendee_colortab);
+                    }
+                };
+            }
+        };
+        BaseListRecyclerAdapter<HeyooAttendee, BaseViewHolder> noReplyAdapter = new BaseListRecyclerAdapter<HeyooAttendee, BaseViewHolder>() {
+            @Override
+            protected void onBindItemViewHolder(BaseViewHolder viewHolder, HeyooAttendee data, int position, int type) {
+                bindAttendeeHolder(viewHolder, data);
+            }
+
+            @Override
+            protected BaseViewHolder viewHolder(LayoutInflater inflater, ViewGroup parent, int type) {
+                return new BaseViewHolder(R.layout.card_view_event_people_attendee, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvepa_attendee_icon, R.id.cvepa_attendee_name, R.id.cvepa_attendee_status, R.id.cvepa_attendee_colortab);
+                    }
+                };
+            }
+        };
+        goingAdapter.setItems(goingList);
+        maybeAdapter.setItems(maybeList);
+        noAdapter.setItems(noList);
+        noReplyAdapter.setItems(noReplyList);
+        RecyclerView goingRecycler = baseViewHolder.get(R.id.cvep_going_list);
+        RecyclerView maybeRecycler = baseViewHolder.get(R.id.cvep_maybe_list);
+        RecyclerView noRecycler = baseViewHolder.get(R.id.cvep_no_list);
+        RecyclerView noReplyRecycler = baseViewHolder.get(R.id.cvep_noreply_list);
+        goingRecycler.setLayoutManager(new CustomLinearLayoutManager(mController.getContext()));
+        goingRecycler.setAdapter(goingAdapter);
+        maybeRecycler.setLayoutManager(new CustomLinearLayoutManager(mController.getContext()));
+        maybeRecycler.setAdapter(maybeAdapter);
+        noRecycler.setLayoutManager(new CustomLinearLayoutManager(mController.getContext()));
+        noRecycler.setAdapter(noAdapter);
+        noReplyRecycler.setLayoutManager(new CustomLinearLayoutManager(mController.getContext()));
+        noReplyRecycler.setAdapter(noReplyAdapter);
+    }
+
+    private void bindAttendeeHolder(BaseViewHolder baseViewHolder, HeyooAttendee attendee){
+        ImageExpander expander = new ImageExpander(mController.getContext());
+        expander.displayRoundedImage(attendee.getProfile_picture(), (ImageView)baseViewHolder.get(R.id.cvepa_attendee_icon));
+        ((TextView)baseViewHolder.get(R.id.cvepa_attendee_name)).setText(attendee.getFirst_name() + " " + attendee.getLast_name());
+        ((TextView)baseViewHolder.get(R.id.cvepa_attendee_status)).setText(attendee.getAvatar());
     }
 
     private void bindAttachmentHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
-
+        ((TextView)baseViewHolder.get(R.id.cvea_attachment_title)).setText("Attachments (0)");
+        (baseViewHolder.get(R.id.cvea_add_button)).setOnClickListener(this);
     }
 
     @Override
@@ -193,6 +327,9 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
                 Toast.makeText(mController.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
                 mController.onMediaAddClicked();
                 break;
+            case R.id.cvea_add_button:
+                Toast.makeText(mController.getContext(), "Add button for Attachment clicked", Toast.LENGTH_SHORT).show();
+                mController.onAttachmentAddClicked();
         }
     }
 }

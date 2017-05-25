@@ -17,18 +17,28 @@ public class HeyooAttendee {
     private String country_code;
     private String profile_picture;
     private String avatar;
+    private String status;
     private String passcode;
     private String passcode_expire;
     private boolean verified;
     private String city;
     private List<Integer> eventidlist = new ArrayList<>();
 
-    public HeyooAttendee(int id, String first_name, String last_name, String profile_picture, String avatar) {
+    public HeyooAttendee(int id, String first_name, String last_name, String profile_picture, String status, String avatar) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.profile_picture = profile_picture;
+        this.status = status;
         this.avatar = avatar;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<Integer> getEventidlist() {
