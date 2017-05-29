@@ -17,7 +17,9 @@
         android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:text="Title"/>
+        android:textAlignment="center"
+        android:text="Title"
+        style="@style/TextAppearance.Toolbar"/>
 
     <TextView
         android:id="@+id/left_action"

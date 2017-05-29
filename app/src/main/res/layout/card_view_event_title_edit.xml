@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingPrefix">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_event_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:contentPadding="0dp"
+        style="@style/CardView.Margins"
+        app:cardCornerRadius="3dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="125dp">
+            <ImageView
+                android:id="@+id/cvete_bullet"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/shape_circle_blue"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="19dp"
+                />
+
+            <EditText
+                android:id="@+id/cvete_event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/cvete_bullet"
+                android:text="Swim Meet - Northwood High"
+                style="@style/TextAppearance.EditText"
+                android:textSize="14sp"
+                android:layout_marginTop="16dp"
+                fontPath="fonts/NunitoSans-ExtraBold.ttf"/>
+
+
+            <TextView
+                android:id="@+id/cvet_event_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvet_event_title"
+                android:layout_toRightOf="@id/cvet_bullet"
+                android:layout_toEndOf="@id/cvet_bullet"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:text="Tomorrow - 10:00am - 2:00pm"
+                android:textSize="11sp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvet_event_date"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <FrameLayout
+                        android:id="@+id/cvet_yes_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <include layout="@layout/draw_circle_yes"/>
+                    </FrameLayout>
+                    <TextView
+                        android:id="@+id/cvet_yes_text"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        fontPath="fonts/NunitoSans-Black.ttf"
+                        android:layout_marginTop="2dp"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:textSize="11sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <FrameLayout
+                        android:id="@+id/cvet_maybe_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <include layout="@layout/draw_circle_maybe"/>
+                    </FrameLayout>
+                    <TextView
+                        android:id="@+id/cvet_maybe_text"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:text="Maybe"
+                        fontPath="fonts/NunitoSans-Black.ttf"
+                        android:layout_marginTop="2dp"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:textSize="11sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <FrameLayout
+                        android:id="@+id/cvet_no_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <include layout="@layout/draw_circle_no"/>
+                    </FrameLayout>
+                    <TextView
+                        android:id="@+id/cvet_no_text"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        fontPath="fonts/NunitoSans-Black.ttf"
+                        android:layout_marginTop="2dp"
+                        android:textAlignment="center"
+                        android:textSize="11sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -6,6 +6,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
@@ -119,6 +120,21 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     public Toolbar getToolbar(){
         return mToolbar;
+    }
+
+    public void showBackArrow(){
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+                    mToolbar.setNavigationIcon(null);
+                }
+            }
+        });
+
+
     }
 
     @Override

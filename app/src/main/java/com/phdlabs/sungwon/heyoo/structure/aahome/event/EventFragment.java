@@ -5,14 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.adapter.EventRecyclerAdapter;
 
@@ -26,7 +26,7 @@ import java.util.List;
 public class EventFragment extends BaseFragment<EventContract.Controller>
         implements EventContract.View{
 
-    private Menu mOptionsMenu;
+    private MainActivity mActivity;
 
     private HeyooEvent mEvent;
     private EventRecyclerAdapter mAdapter;
@@ -63,6 +63,7 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
         mEvent = (HeyooEvent) args.getSerializable(Constants.BundleKeys.EVENT_DETAIL);
         getBaseActivity().setToolbarTitle(mEvent.getName());
         showEventDetails();
+        showEventOption();
     }
 
     @Override
@@ -70,11 +71,18 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        mOptionsMenu = menu;
-        menu.clear();
-        inflater.inflate(R.menu.menu_edit, menu);
+    public void showEventOption(){
+        mActivity = (MainActivity)getActivity();
+        mActivity.showBackArrow();
+        Toolbar toolbar = mActivity.getToolbar();
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_edit);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return onOptionsItemSelected(item);
+            }
+        });
     }
 
     @Override
