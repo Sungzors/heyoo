@@ -1,10 +1,12 @@
 package com.phdlabs.sungwon.heyoo.utility.adapter;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -163,8 +165,20 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
     }
 
     private void bindStatisticsHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
-        ((TextView) baseViewHolder.get(R.id.cves_event_address)).setText(event.getAddress());
-        ((TextView) baseViewHolder.get(R.id.cves_event_status)).setText(event.getDescription());
+        EditText address = baseViewHolder.get(R.id.cves_event_address);
+        address.setSingleLine(false);
+        address.setEnabled(false);
+        address.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
+        address.setText(event.getAddress());
+        EditText status = baseViewHolder.get(R.id.cves_event_status);
+        status.setSingleLine(false);
+        status.setEnabled(false);
+        status.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
+        status.setText(event.getDescription());
+        EditText calendar = baseViewHolder.get(R.id.cves_calendar_name);
+        calendar.setSingleLine(false);
+        calendar.setEnabled(false);
+        calendar.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
         ((TextView) baseViewHolder.get(R.id.cves_calendar_name)).setText("Main Calendar");
     }
 

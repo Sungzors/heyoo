@@ -122,8 +122,8 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         return mToolbar;
     }
 
-    public void showBackArrow(){
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
+    public void showBackArrow(int icon){
+        mToolbar.setNavigationIcon(icon);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

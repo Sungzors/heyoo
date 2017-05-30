@@ -73,7 +73,7 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
 
     public void showEventOption(){
         mActivity = (MainActivity)getActivity();
-        mActivity.showBackArrow();
+        mActivity.showBackArrow(R.drawable.ic_back);
         Toolbar toolbar = mActivity.getToolbar();
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_edit);
