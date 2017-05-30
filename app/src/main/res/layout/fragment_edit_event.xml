@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/event_detail_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:layout_marginBottom="100dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-100dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/button_curve_corner"
+            android:text="@string/publish"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            fontPath="fonts/NunitoSans-SemiBold.ttf"/>
+    </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
+    <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="5dp">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/bg_shadow_curve_box"
+            android:text="Save As Draft"
+            android:textSize="13sp"
+            fontPath="fonts/NunitoSans-SemiBold.ttf"/>
+    </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
+
+
+
+</LinearLayout>

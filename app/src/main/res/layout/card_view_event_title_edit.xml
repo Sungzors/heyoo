@@ -16,15 +16,23 @@
         style="@style/CardView.Margins"
         app:cardCornerRadius="3dp">
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="125dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cvete_event_title_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Title"
+                android:layout_margin="15dp"/>
             <ImageView
                 android:id="@+id/cvete_bullet"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:src="@drawable/shape_circle_blue"
+                android:layout_below="@id/cvete_event_title_title"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="19dp"
+                android:layout_marginTop="4dp"
                 />
 
             <EditText
@@ -32,102 +40,120 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:layout_below="@id/cvete_event_title_title"
                 android:layout_toEndOf="@id/cvete_bullet"
                 android:text="Swim Meet - Northwood High"
                 style="@style/TextAppearance.EditText"
                 android:textSize="14sp"
-                android:layout_marginTop="16dp"
                 fontPath="fonts/NunitoSans-ExtraBold.ttf"/>
 
+            <View
+                android:id="@+id/cvete_divider_1"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/cvete_event_title"
+                android:background="@color/shadow"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"/>
 
-            <TextView
-                android:id="@+id/cvet_event_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cvet_event_title"
-                android:layout_toRightOf="@id/cvet_bullet"
-                android:layout_toEndOf="@id/cvet_bullet"
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
-                android:text="Tomorrow - 10:00am - 2:00pm"
-                android:textSize="11sp"
-                />
             <LinearLayout
+                android:id="@+id/cvete_date_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cvet_event_date"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_below="@id/cvete_divider_1"
+                android:layout_marginBottom="15dp">
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1">
-                    <FrameLayout
-                        android:id="@+id/cvet_yes_button"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-                        <include layout="@layout/draw_circle_yes"/>
-                    </FrameLayout>
-                    <TextView
-                        android:id="@+id/cvet_yes_text"
-                        android:layout_width="35dp"
+                        android:text="Start Date/Time"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"/>
+                    <EditText
+                        android:id="@+id/cvete_start_date"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Yes"
-                        fontPath="fonts/NunitoSans-Black.ttf"
-                        android:layout_marginTop="2dp"
-                        android:layout_gravity="center"
-                        android:textAlignment="center"
-                        android:textSize="11sp"/>
+                        style="@style/TextAppearance.EditText"
+                        android:paddingEnd="20dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:inputType="datetime"
+                        android:hint="Insert Date"
+                        android:text="Mon, Jan 9, 2017 \n 7:00PM"
+                        />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+                        <ToggleButton
+                            android:id="@+id/cvete_toggle_allday"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="15dp"
+                            android:textOn="X"
+                            android:textOff=""
+                            android:background="@drawable/bg_shadow_box"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All Day"
+                            android:layout_marginStart="10dp"/>
+                    </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <FrameLayout
-                        android:id="@+id/cvet_maybe_button"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-                        <include layout="@layout/draw_circle_maybe"/>
-                    </FrameLayout>
-                    <TextView
-                        android:id="@+id/cvet_maybe_text"
-                        android:layout_width="35dp"
+                        android:text="End Date/Time"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"/>
+                    <EditText
+                        android:id="@+id/cvete_end_date"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Maybe"
-                        fontPath="fonts/NunitoSans-Black.ttf"
-                        android:layout_marginTop="2dp"
-                        android:textAlignment="center"
-                        android:layout_gravity="center"
-                        android:textSize="11sp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <FrameLayout
-                        android:id="@+id/cvet_no_button"
+                        style="@style/TextAppearance.EditText"
+                        android:paddingEnd="20dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:inputType="datetime"
+                        android:hint="Insert Date"
+                        android:text="Mon, Jan 9, 2017 \n 7:00PM"
+                        />
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-                        <include layout="@layout/draw_circle_no"/>
-                    </FrameLayout>
-                    <TextView
-                        android:id="@+id/cvet_no_text"
-                        android:layout_width="35dp"
-                        android:layout_height="wrap_content"
-                        android:text="No"
-                        fontPath="fonts/NunitoSans-Black.ttf"
-                        android:layout_marginTop="2dp"
-                        android:textAlignment="center"
-                        android:textSize="11sp"
-                        android:layout_gravity="center"/>
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+                        <ToggleButton
+                            android:id="@+id/cvete_toggle_repeat"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="15dp"
+                            android:textOn="X"
+                            android:textOff=""
+                            android:background="@drawable/bg_shadow_box"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Repeat..."
+                            android:layout_marginStart="10dp"/>
+                    </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
+
+
         </RelativeLayout>
 
 

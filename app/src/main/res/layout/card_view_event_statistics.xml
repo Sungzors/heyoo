@@ -29,24 +29,25 @@
                 <include layout="@layout/draw_circle_location_orange"/>
             </FrameLayout>
 
-            <TextView
+            <EditText
                 android:id="@+id/cves_event_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/cves_location_icon"
                 android:layout_toEndOf="@id/cves_location_icon"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
+                android:inputType="textPersonName"
+                android:hint="Address"
                 android:text="4515 Portola Pkwy \nIrvine, CA 92620"
                 fontPath="fonts/NunitoSans-Regular.ttf"
+                style="@style/TextAppearance.EditText"
                 android:textSize="12sp"/>
 
             <View
                 android:id="@+id/cves_divider_1"
                 android:layout_width="350dp"
                 android:layout_height="1dp"
-                android:layout_below="@id/cves_event_address"
+                android:layout_below="@id/cves_location_icon"
                 android:background="@color/shadow"
                 android:layout_marginTop="15dp"
                 android:layout_centerHorizontal="true"/>
@@ -62,7 +63,7 @@
                 <include layout="@layout/draw_circle_description_orange"/>
             </FrameLayout>
 
-            <TextView
+            <EditText
                 android:id="@+id/cves_event_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,6 +73,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
+                style="@style/TextAppearance.EditText"
                 android:text="Day 1 of the West Coast Swim \nTournament"
                 android:textSize="12sp"
                 fontPath="fonts/NunitoSans-Regular.ttf"/>
@@ -108,7 +110,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="22dp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/cves_calendar_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,6 +120,9 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
+                style="@style/TextAppearance.EditText"
+                android:inputType="textPersonName"
+                android:hint="Calendar"
                 android:text="Swim 2016 (Shared)"
                 android:textSize="12sp"/>
 
@@ -152,6 +157,7 @@
                 android:layout_marginTop="19dp"
                 android:text="Reminders"
                 android:textSize="13sp"
+                android:textColor="@color/black"
                 />
 
             <TextView

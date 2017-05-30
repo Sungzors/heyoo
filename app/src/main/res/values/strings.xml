@@ -18,4 +18,5 @@
     <string name="sign_in_inquiry">Already have an account? Sign in Here</string>
     <string name="question">"?"</string>
     <string name="edit">Edit</string>
+    <string name="publish">Publish</string>
 </resources>
