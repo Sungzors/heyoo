@@ -2,6 +2,8 @@ package com.phdlabs.sungwon.heyoo.structure.aahome.eventedit;
 
 import android.content.Context;
 
+import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
+
 /**
  * Created by SungWon on 5/30/2017.
  */
@@ -32,12 +34,12 @@ public class EventEditController implements EventEditContract.Controller {
     }
 
     @Override
-    public void onSaveDraft() {
+    public void onSaveDraftClicked(EventEditRecyclerAdapter adapter) {
 
     }
 
     @Override
-    public void onPublishClicked() {
+    public void onPublishClicked(EventEditRecyclerAdapter adapter) {
 
     }
 

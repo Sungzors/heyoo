@@ -5,22 +5,28 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
+import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
 
 /**
  * Created by SungWon on 5/30/2017.
  */
 
 public class EventEditFragment extends BaseFragment<EventEditContract.Controller>
-        implements EventEditContract.View {
+        implements EventEditContract.View, View.OnClickListener{
 
 
     private HeyooEvent mEvent;
+    private Button mPublishButton;
+    private Button mDraftButton;
+
+    private EventEditRecyclerAdapter mAdapter;
 
     public static EventEditFragment newInstance(HeyooEvent event){
         Bundle args = new Bundle();
@@ -62,6 +68,10 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mPublishButton = findById(R.id.edit_publish_button);
+        mDraftButton = findById(R.id.edit_draft_button);
+        mPublishButton.setOnClickListener(this);
+        mDraftButton.setOnClickListener(this);
     }
 
     public void showEventOption(){
@@ -86,5 +96,16 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.edit_publish_button:
+                controller.onPublishClicked(mAdapter);
+                break;
+            case R.id.edit_draft_button:
+                controller.onSaveDraftClicked(mAdapter);
+                break;
+        }
+    }
 }
 

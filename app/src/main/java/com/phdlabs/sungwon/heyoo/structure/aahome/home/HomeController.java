@@ -1,8 +1,8 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome.home;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
+import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +15,8 @@ public class HomeController implements HomeContract.Controller{
 
     private HomeContract.View mView;
 
+    private HeyooEventManager mEventManager;
+
     HomeController(HomeContract.View mView){
         this.mView = mView;
     }
@@ -23,6 +25,7 @@ public class HomeController implements HomeContract.Controller{
     public void onStart() {
         List<HeyooEvent> heyooEvents = getTestEvents();
         mView.showEvents(heyooEvents);
+        mEventManager = HeyooEventManager.getInstance();
     }
 
     @Override
@@ -52,7 +55,6 @@ public class HomeController implements HomeContract.Controller{
     }
 
     private List<HeyooEvent> getTestEvents(){
-        ArrayList<HeyooEvent> heyooEventList = new ArrayList<>();
         Calendar cal1s = Calendar.getInstance();
         Date date1s = cal1s.getTime();
         Calendar cal2s = Calendar.getInstance();
@@ -72,9 +74,9 @@ public class HomeController implements HomeContract.Controller{
         HeyooEvent heyooEvent1 = new HeyooEvent(0, "Test HeyooEvent 1", date1s, date1e, "Testing HeyooEvent1 Description", true, 0, "10 Address Lane\nGorp, CA 90000");
         HeyooEvent heyooEvent2 = new HeyooEvent(0, "Test HeyooEvent 2", date2s, date2e, "Testing HeyooEvent2 Description", true, 0, "11 Address Lane\nGorp, CA 90001");
         HeyooEvent heyooEvent3 = new HeyooEvent(0, "Test HeyooEvent 3", date3s, date3e, "Testing HeyooEvent3 Description", true, 1, "12 Address Lane\nGorp, CA 90002");
-        heyooEventList.add(heyooEvent1);
-        heyooEventList.add(heyooEvent2);
-        heyooEventList.add(heyooEvent3);
-        return heyooEventList;
+        mEventManager.addEvents(heyooEvent1);
+        mEventManager.addEvents(heyooEvent2);
+        mEventManager.addEvents(heyooEvent3);
+        return mEventManager.getEvents();
     }
 }

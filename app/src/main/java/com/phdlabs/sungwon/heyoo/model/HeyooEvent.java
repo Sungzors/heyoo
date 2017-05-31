@@ -3,6 +3,7 @@ package com.phdlabs.sungwon.heyoo.model;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by SungWon on 4/25/2017.
@@ -23,6 +24,9 @@ public class HeyooEvent implements Serializable{
     private String description;
     private String address;
     private int recurrence_id;
+    private List<HeyooAttendee> attendees;
+    private List<HeyooMedia> media;
+    private List<HeyooAttachment> attachments;
 
     public static int hashCode(Calendar calendar) {
             //Should produce hashes like "20170401"
@@ -119,5 +123,29 @@ public class HeyooEvent implements Serializable{
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<HeyooAttendee> getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(List<HeyooAttendee> attendees) {
+        this.attendees = attendees;
+    }
+
+    public List<HeyooMedia> getMedia() {
+        return media;
+    }
+
+    public void setMedia(List<HeyooMedia> media) {
+        this.media = media;
+    }
+
+    public List<HeyooAttachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<HeyooAttachment> attachments) {
+        this.attachments = attachments;
     }
 }
