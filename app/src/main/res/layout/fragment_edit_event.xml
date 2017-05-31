@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingPrefix">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/event_detail_list"
+        android:id="@+id/event_edit_detail_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
@@ -31,7 +31,7 @@
     </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
     <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:layout_margin="5dp">
         <Button
             android:id="@+id/edit_draft_button"

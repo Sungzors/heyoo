@@ -20,6 +20,8 @@ public interface EventContract {
         int getEventid();
 
         void showEventDetails();
+
+        void showEdit();
     }
 
     interface Controller extends Contract.BaseController{

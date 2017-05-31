@@ -3,6 +3,7 @@ package com.phdlabs.sungwon.heyoo.model;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,7 @@ public class HeyooEventManager {
     private HeyooEventManager(){
         super();
         mHeyooEndpoint = Rest.getInstance().getHeyooEndpoint();
+        mList = new ArrayList<>();
     }
 
     public List<HeyooEvent> getEvents(){

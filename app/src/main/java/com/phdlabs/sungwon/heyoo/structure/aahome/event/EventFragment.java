@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
+import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
@@ -110,7 +111,10 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
         mRecyclerView.setAdapter(mAdapter);
     }
 
-
+    @Override
+    public void showEdit() {
+        getBaseActivity().replaceFragment(EventEditFragment.newInstance(mEvent), true);
+    }
 
     @Override
     public void showProgress() {

@@ -3,6 +3,8 @@ package com.phdlabs.sungwon.heyoo.structure.aahome.eventedit;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,9 @@ import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SungWon on 5/30/2017.
@@ -26,6 +31,7 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     private Button mPublishButton;
     private Button mDraftButton;
 
+    private RecyclerView mRecyclerView;
     private EventEditRecyclerAdapter mAdapter;
 
     public static EventEditFragment newInstance(HeyooEvent event){
@@ -63,6 +69,7 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
             getBaseActivity().setToolbarTitle(mEvent.getName());
         }
         showEventOption();
+        showEventEdit();
     }
 
     @Override
@@ -88,7 +95,17 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
 
     @Override
     public void showEventEdit() {
-
+        mRecyclerView = findById(R.id.event_edit_detail_list);
+        List<HeyooEvent> repeatList = new ArrayList<>();
+        repeatList.add(mEvent);
+        repeatList.add(mEvent);
+        repeatList.add(mEvent);
+        repeatList.add(mEvent);
+        repeatList.add(mEvent);
+        mAdapter = new EventEditRecyclerAdapter(repeatList, controller);
+        mAdapter.setItems(repeatList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

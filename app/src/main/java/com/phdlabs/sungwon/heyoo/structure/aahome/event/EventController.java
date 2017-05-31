@@ -46,7 +46,7 @@ public class EventController implements EventContract.Controller{
 
     @Override
     public void onEdit() {
-        Toast.makeText(getContext(), "Edit Screen To Be Added", Toast.LENGTH_SHORT).show();
+        mView.showEdit();
     }
 
     @Override

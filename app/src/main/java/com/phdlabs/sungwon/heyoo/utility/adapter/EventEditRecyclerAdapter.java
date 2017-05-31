@@ -15,6 +15,7 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
+import com.phdlabs.sungwon.heyoo.utility.HeyooTimePicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +37,22 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
     List<HeyooMedia> mMediaList = new ArrayList<>();
     EditText mLocation;
     EditText mNotes;
+    EditText mCalendar;
+
+    boolean isNull = true;
 
 
     public EventEditRecyclerAdapter(@NonNull List<HeyooEvent> values, EventEditContract.Controller mController) {
         super(values);
         this.mController = mController;
+        if (values.get(0)!=null){
+            isNull = false;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -90,27 +102,32 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
 
     private void bindTitleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
         mTitle = baseViewHolder.get(R.id.cvete_event_title);
+        mStartDate = baseViewHolder.get(R.id.cvete_start_date);
+        mEndDate = baseViewHolder.get(R.id.cvete_end_date);
+        HeyooTimePicker timepicker = new HeyooTimePicker(mStartDate, mController.getContext());
+
+        if(!isNull){
+            mTitle.setText(event.getName());
+        }
     }
 
     private void bindImageHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
     }
 
     private void bindStatisticsHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
-        EditText address = baseViewHolder.get(R.id.cves_event_address);
-        address.setSingleLine(false);
-        address.setEnabled(false);
-        address.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
-        address.setText(event.getAddress());
-        EditText status = baseViewHolder.get(R.id.cves_event_status);
-        status.setSingleLine(false);
-        status.setEnabled(false);
-        status.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
-        status.setText(event.getDescription());
-        EditText calendar = baseViewHolder.get(R.id.cves_calendar_name);
-        calendar.setSingleLine(false);
-        calendar.setEnabled(false);
-        calendar.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
-        ((TextView) baseViewHolder.get(R.id.cves_calendar_name)).setText("Main Calendar");
+        mLocation = baseViewHolder.get(R.id.cves_event_address);
+        mLocation.setSingleLine(false);
+        mLocation.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
+        mNotes = baseViewHolder.get(R.id.cves_event_status);
+        mNotes.setSingleLine(false);
+        mNotes.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
+        mCalendar = baseViewHolder.get(R.id.cves_calendar_name);
+        mCalendar.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
+        if (!isNull){
+            mLocation.setText(event.getAddress());
+            mNotes.setText(event.getDescription());
+            mCalendar.setText("Main Calendar");
+        }
     }
 
     private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
