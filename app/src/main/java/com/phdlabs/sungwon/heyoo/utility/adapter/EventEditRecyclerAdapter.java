@@ -15,9 +15,11 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
-import com.phdlabs.sungwon.heyoo.utility.HeyooTimePicker;
+import com.phdlabs.sungwon.heyoo.utility.HeyooDatePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -103,9 +105,12 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
     private void bindTitleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
         mTitle = baseViewHolder.get(R.id.cvete_event_title);
         mStartDate = baseViewHolder.get(R.id.cvete_start_date);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm aaa");
+        mStartDate.setText(sdf.format(new Date()));
         mEndDate = baseViewHolder.get(R.id.cvete_end_date);
-        HeyooTimePicker timepicker = new HeyooTimePicker(mStartDate, mController.getContext());
-
+        mEndDate.setText(sdf.format(new Date()));
+        HeyooDatePicker startdaypicker = new HeyooDatePicker(mStartDate, mController.getContext());
+        HeyooDatePicker enddaypicker = new HeyooDatePicker(mEndDate, mController.getContext());
         if(!isNull){
             mTitle.setText(event.getName());
         }

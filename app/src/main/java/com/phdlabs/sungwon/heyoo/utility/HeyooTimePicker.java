@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -19,6 +20,9 @@ public class HeyooTimePicker implements View.OnFocusChangeListener, TimePickerDi
     private Calendar myCalendar;
     private Context ctx;
     private String dayString = "";
+    private int year;
+    private int month;
+    private int day;
 
     public HeyooTimePicker(EditText editText, Context ctx){
         this.editText = editText;
@@ -27,12 +31,16 @@ public class HeyooTimePicker implements View.OnFocusChangeListener, TimePickerDi
         this.ctx = ctx;
     }
 
-    public HeyooTimePicker(EditText editText, Context ctx, String dayString){
+    public HeyooTimePicker(EditText editText, Context ctx, int year, int month, int day){
         this.editText = editText;
-        this.editText.setOnFocusChangeListener(this);
         this.myCalendar = Calendar.getInstance();
         this.ctx = ctx;
-        this.dayString = dayString;
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
+        int minute = myCalendar.get(Calendar.MINUTE);
+        new TimePickerDialog(ctx, this, hour, minute, true).show();
     }
 
     @Override
@@ -46,9 +54,16 @@ public class HeyooTimePicker implements View.OnFocusChangeListener, TimePickerDi
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        this.editText.setText( dayString + hourOfDay + ":" + minute);
+        myCalendar.set(year, month, day, hourOfDay, minute);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm aaa");
+        sdf.setTimeZone(myCalendar.getTimeZone());
+        editText.setText(sdf.format(myCalendar.getTime()));
         InputMethodManager imm = (InputMethodManager)ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    public Calendar getMyCalendar(){
+        return myCalendar;
     }
 
 }
