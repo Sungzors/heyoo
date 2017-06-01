@@ -1,5 +1,7 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import android.util.SparseArray;
+
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 
@@ -14,7 +16,7 @@ public class HeyooEventManager {
     private static HeyooEventManager mInstance;
     private final HeyooEndpoint mHeyooEndpoint;
 
-    private List<HeyooEvent> mList;
+    private SparseArray<HeyooEvent> mMap;
 
     public static HeyooEventManager getInstance(){
         if (mInstance == null) {
@@ -26,14 +28,23 @@ public class HeyooEventManager {
     private HeyooEventManager(){
         super();
         mHeyooEndpoint = Rest.getInstance().getHeyooEndpoint();
-        mList = new ArrayList<>();
+        mMap = new SparseArray<>();
     }
 
-    public List<HeyooEvent> getEvents(){
-        return mList;
+    public SparseArray<HeyooEvent> getMapEvents(){
+        return mMap;
     }
 
     public void addEvents(HeyooEvent event){
-        mList.add(event);
+        mMap.put(event.getId(), event);
+    }
+
+    public List<HeyooEvent> getEvents(){
+        List<HeyooEvent> eventList = new ArrayList<>();
+        for (int i = 0; i < mMap.size(); i++) {
+            HeyooEvent event = mMap.valueAt(i);
+            eventList.add(event);
+        }
+        return eventList;
     }
 }

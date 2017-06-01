@@ -5,9 +5,11 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
@@ -16,9 +18,11 @@ import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.HeyooDatePicker;
+import com.phdlabs.sungwon.heyoo.utility.ImageExpander;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,10 +37,14 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
 
     EditText mTitle;
     EditText mStartDate;
+    HeyooDatePicker mStartPicker;
+    Calendar mStartCalendar;
     EditText mEndDate;
-    Button mAllDay;
-    Button mRepeat;
+    HeyooDatePicker mEndPicker;
+    Calendar mEndCalendar;
+    ToggleButton mAllDay, mRepeat;
     List<HeyooMedia> mMediaList = new ArrayList<>();
+    List<ImageView> mImageDisplayList;
     EditText mLocation;
     EditText mNotes;
     EditText mCalendar;
@@ -109,14 +117,39 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         mStartDate.setText(sdf.format(new Date()));
         mEndDate = baseViewHolder.get(R.id.cvete_end_date);
         mEndDate.setText(sdf.format(new Date()));
-        HeyooDatePicker startdaypicker = new HeyooDatePicker(mStartDate, mController.getContext());
-        HeyooDatePicker enddaypicker = new HeyooDatePicker(mEndDate, mController.getContext());
+        mStartPicker = new HeyooDatePicker(mStartDate, mController.getContext());
+        mEndPicker = new HeyooDatePicker(mEndDate, mController.getContext());
         if(!isNull){
             mTitle.setText(event.getName());
         }
+        mStartCalendar = mStartPicker.getTimePicker().getMyCalendar();
+        mEndCalendar = mEndPicker.getTimePicker().getMyCalendar();
     }
 
     private void bindImageHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
+        List<HeyooMedia> mediaList = mController.getAssociatedMedia();
+        ((TextView) baseViewHolder.get(R.id.cvei_image_title)).setText("Event Media (" +mediaList.size() +")");
+        (baseViewHolder.get(R.id.cvei_add_button)).setOnClickListener(this);
+        List<String> urlList = new ArrayList<>();
+        for (int i = 0; i < mediaList.size(); i++) {
+            urlList.add(mediaList.get(i).getFile_path());
+        }
+        if(mediaList.size()== 0){
+            baseViewHolder.get(R.id.cvei_container).setVisibility(View.GONE);
+        } else {
+            baseViewHolder.get(R.id.cvei_container).setVisibility(View.VISIBLE);
+        }
+        ImageExpander expander = new ImageExpander(mController.getContext(), urlList);
+        mImageDisplayList = expander.insertExpandingImage(baseViewHolder.get(R.id.cvei_container));
+        for (int i = 0; i < mImageDisplayList.size(); i++) {
+            final int x = i + 1;
+            mImageDisplayList.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mController.getContext(), "Image Selected: " + x, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void bindStatisticsHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
@@ -147,9 +180,25 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         (baseViewHolder.get(R.id.cvea_add_button)).setOnClickListener(this);
     }
 
+    public HeyooEvent getEvent(){
+        HeyooEvent event = new HeyooEvent(
+                mController.getEventid(),
+                mTitle.getText().toString(),
+                mStartCalendar.getTime(),
+                mEndCalendar.getTime(),
+                mNotes.getText().toString(),
+                true,
+                0, //TODO: retrieve Calendar id
+                mLocation.getText().toString() );
+        return event;
+    }
+
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
+            case R.id.cvei_add_button:
+                mController.onMediaAddClicked();
+                break;
         }
     }
 }

@@ -114,6 +114,11 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     }
 
     @Override
+    public int getEventid() {
+        return mEvent.getId();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.edit_publish_button:

@@ -18,6 +18,7 @@ public class HeyooDatePicker implements View.OnFocusChangeListener, DatePickerDi
     private Calendar myCalendar;
     private Context ctx;
     private String dayString = "";
+    HeyooTimePicker timePicker;
 
     public HeyooDatePicker(EditText editText, Context ctx){
         this.editText = editText;
@@ -39,6 +40,10 @@ public class HeyooDatePicker implements View.OnFocusChangeListener, DatePickerDi
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        HeyooTimePicker timePicker = new HeyooTimePicker(editText, ctx, year, month, day);
+        timePicker = new HeyooTimePicker(editText, ctx, year, month, day);
+    }
+
+    public HeyooTimePicker getTimePicker(){
+        return timePicker;
     }
 }
