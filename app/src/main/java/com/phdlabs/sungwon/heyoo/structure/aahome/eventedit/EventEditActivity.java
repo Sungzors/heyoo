@@ -40,7 +40,9 @@ public class EventEditActivity extends BaseActivity {
 
     public static void start(Context context, HeyooEvent event){
         Intent intent = new Intent(context, EventEditActivity.class);
-        intent.putExtra(Constants.BundleKeys.EVENT_DETAIL, event);
+        if (event!=null){
+            intent.putExtra(Constants.BundleKeys.EVENT_DETAIL, event);
+        }
         context.startActivity(intent);
     }
 }

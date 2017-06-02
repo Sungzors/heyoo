@@ -24,7 +24,10 @@ public class HomeController implements HomeContract.Controller{
     @Override
     public void onStart() {
         mEventManager = HeyooEventManager.getInstance();
-        List<HeyooEvent> heyooEvents = getTestEvents();
+        if (mEventManager.getEvents().isEmpty()){
+            getTestEvents();
+        }
+        List<HeyooEvent> heyooEvents = mEventManager.getEvents();
         mView.showEvents(heyooEvents);
     }
 
@@ -45,7 +48,7 @@ public class HomeController implements HomeContract.Controller{
 
     @Override
     public void onDaySelected() {
-        mView.showEvents(getTestEvents());
+        mView.showEvents(mEventManager.getEvents());
         mView.refreshList();
     }
 
@@ -54,7 +57,7 @@ public class HomeController implements HomeContract.Controller{
 
     }
 
-    private List<HeyooEvent> getTestEvents(){
+    private void getTestEvents(){
         Calendar cal1s = Calendar.getInstance();
         Date date1s = cal1s.getTime();
         Calendar cal2s = Calendar.getInstance();
@@ -77,6 +80,5 @@ public class HomeController implements HomeContract.Controller{
         mEventManager.addEvents(heyooEvent1);
         mEventManager.addEvents(heyooEvent2);
         mEventManager.addEvents(heyooEvent3);
-        return mEventManager.getEvents();
     }
 }

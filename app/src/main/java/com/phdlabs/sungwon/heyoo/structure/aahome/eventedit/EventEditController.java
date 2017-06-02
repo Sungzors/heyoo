@@ -3,8 +3,8 @@ package com.phdlabs.sungwon.heyoo.structure.aahome.eventedit;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
-import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ public class EventEditController implements EventEditContract.Controller {
     private static final String TAG = "EventEditController";
 
     private EventEditContract.View mView;
+    private HeyooEventManager mEventManager;
 
     EventEditController(EventEditContract.View mView){
         this.mView = mView;
@@ -25,7 +26,6 @@ public class EventEditController implements EventEditContract.Controller {
 
     @Override
     public void onStart() {
-
     }
 
     @Override
@@ -44,13 +44,13 @@ public class EventEditController implements EventEditContract.Controller {
     }
 
     @Override
-    public void onSaveDraftClicked(EventEditRecyclerAdapter adapter) {
-
+    public void onSaveDraftClicked() {
+        mView.saveEvent();
     }
 
     @Override
-    public void onPublishClicked(EventEditRecyclerAdapter adapter) {
-
+    public void onPublishClicked() {
+        mView.postEvent();
     }
 
     @Override

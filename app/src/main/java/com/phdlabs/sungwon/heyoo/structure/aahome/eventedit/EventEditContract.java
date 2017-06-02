@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
-import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
 
 import java.util.List;
 
@@ -19,12 +18,14 @@ public interface EventEditContract {
 
         int getEventid();
 
+        void saveEvent();
+        void postEvent();
 
     }
 
     interface Controller extends Contract.BaseController{
-        void onPublishClicked(EventEditRecyclerAdapter adapter);
-        void onSaveDraftClicked(EventEditRecyclerAdapter adapter);
+        void onPublishClicked();
+        void onSaveDraftClicked();
 
         List<HeyooMedia> getAssociatedMedia();
 

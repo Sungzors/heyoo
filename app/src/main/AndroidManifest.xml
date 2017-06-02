@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".structure.aahome.eventedit.EventEditActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".structure.login.LoginActivity"

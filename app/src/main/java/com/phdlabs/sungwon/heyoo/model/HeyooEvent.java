@@ -24,6 +24,7 @@ public class HeyooEvent implements Serializable{
     private String description;
     private String address;
     private int recurrence_id;
+    private boolean published = true;
     private List<HeyooAttendee> attendees;
     private List<HeyooMedia> media;
     private List<HeyooAttachment> attachments;
@@ -123,6 +124,14 @@ public class HeyooEvent implements Serializable{
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 
     public List<HeyooAttendee> getAttendees() {

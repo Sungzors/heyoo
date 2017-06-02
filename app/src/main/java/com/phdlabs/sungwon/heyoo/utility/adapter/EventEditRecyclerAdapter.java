@@ -50,6 +50,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
     EditText mCalendar;
 
     boolean isNull = true;
+    HeyooEvent mEvent;
 
 
     public EventEditRecyclerAdapter(@NonNull List<HeyooEvent> values, EventEditContract.Controller mController) {
@@ -114,16 +115,24 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         mTitle = baseViewHolder.get(R.id.cvete_event_title);
         mStartDate = baseViewHolder.get(R.id.cvete_start_date);
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm aaa");
-        mStartDate.setText(sdf.format(new Date()));
+        if(!isNull){
+            mStartDate.setText(sdf.format(event.getStart_time()));
+        } else {
+            mStartDate.setText(sdf.format(new Date()));
+        }
         mEndDate = baseViewHolder.get(R.id.cvete_end_date);
-        mEndDate.setText(sdf.format(new Date()));
+        if(!isNull){
+            mEndDate.setText(sdf.format(event.getEnd_time()));
+        } else {
+            mEndDate.setText(sdf.format(new Date()));
+        }
         mStartPicker = new HeyooDatePicker(mStartDate, mController.getContext());
         mEndPicker = new HeyooDatePicker(mEndDate, mController.getContext());
         if(!isNull){
             mTitle.setText(event.getName());
         }
-        mStartCalendar = mStartPicker.getTimePicker().getMyCalendar();
-        mEndCalendar = mEndPicker.getTimePicker().getMyCalendar();
+        mAllDay = baseViewHolder.get(R.id.cvete_toggle_allday);
+        mEvent = event;
     }
 
     private void bindImageHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
@@ -181,15 +190,35 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
     }
 
     public HeyooEvent getEvent(){
+        Date startDate;
+        Date endDate;
+        if(isNull){
+            startDate = new Date();
+            endDate = new Date();
+        } else {
+            startDate = mEvent.getStart_time();
+            endDate = mEvent.getEnd_time();
+        }
+        if(mStartPicker.isFinished){
+            startDate = mStartPicker.getTimePicker().getMyCalendar().getTime();
+        }
+        if(mEndPicker.isFinished){
+            endDate = mEndPicker.getTimePicker().getMyCalendar().getTime();
+        }
         HeyooEvent event = new HeyooEvent(
                 mController.getEventid(),
                 mTitle.getText().toString(),
-                mStartCalendar.getTime(),
-                mEndCalendar.getTime(),
+                startDate,
+                endDate,
                 mNotes.getText().toString(),
                 true,
                 0, //TODO: retrieve Calendar id
                 mLocation.getText().toString() );
+        if (mAllDay.getText().toString().equals("")){
+            event.setAllDay(false);
+        } else {
+            event.setAllDay(true);
+        }
         return event;
     }
 

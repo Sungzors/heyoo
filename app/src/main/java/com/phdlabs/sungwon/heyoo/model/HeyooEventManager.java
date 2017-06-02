@@ -6,6 +6,8 @@ import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -43,7 +45,26 @@ public class HeyooEventManager {
         List<HeyooEvent> eventList = new ArrayList<>();
         for (int i = 0; i < mMap.size(); i++) {
             HeyooEvent event = mMap.valueAt(i);
-            eventList.add(event);
+            if(event.isPublished()){
+                eventList.add(event);
+            }
+        }
+        Collections.sort(eventList, new Comparator<HeyooEvent>() {
+            @Override
+            public int compare(HeyooEvent e1, HeyooEvent e2) {
+                return e1.getStart_time().compareTo(e2.getStart_time());
+            }
+        });
+        return eventList;
+    }
+
+    public List<HeyooEvent> getUnpublishedEvents(){
+        List<HeyooEvent> eventList = new ArrayList<>();
+        for (int i = 0; i < mMap.size(); i++) {
+            HeyooEvent event = mMap.valueAt(i);
+            if(!event.isPublished()){
+                eventList.add(event);
+            }
         }
         return eventList;
     }

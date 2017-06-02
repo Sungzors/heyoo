@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ public abstract class BaseActivity extends CoreActivity {
      */
     public final String TAG = getClass().getSimpleName();
 
+    private Toolbar mToolbar;
+
     @LayoutRes
     protected abstract int layoutId();
 
@@ -34,6 +37,7 @@ public abstract class BaseActivity extends CoreActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layoutId());
+        mToolbar = (Toolbar)findViewById(R.id.toolbar);
     }
 
     public void addFragment(@NonNull Fragment fragment, boolean addToBackStack) {
@@ -62,6 +66,23 @@ public abstract class BaseActivity extends CoreActivity {
         if (view != null) {
             ((TextView) view).setText(title);
         }
+    }
+
+    public void showBackArrow(int icon){
+        mToolbar.setNavigationIcon(icon);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+                    mToolbar.setNavigationIcon(null);
+                }
+            }
+        });
+    }
+
+    public Toolbar getToolbar(){
+        return mToolbar;
     }
 //
 //    public void showProgress() {

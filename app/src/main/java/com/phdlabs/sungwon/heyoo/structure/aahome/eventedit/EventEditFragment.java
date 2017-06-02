@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome.eventedit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +12,10 @@ import android.widget.Button;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
+import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
+import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
+import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
-import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
 
@@ -28,6 +31,7 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
 
 
     private HeyooEvent mEvent;
+    private HeyooEventManager mEventManager;
     private Button mPublishButton;
     private Button mDraftButton;
 
@@ -68,6 +72,7 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         } else {
             getBaseActivity().setToolbarTitle(mEvent.getName());
         }
+        mEventManager = HeyooEventManager.getInstance();
         showEventOption();
         showEventEdit();
     }
@@ -82,7 +87,7 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     }
 
     public void showEventOption(){
-        MainActivity activity = (MainActivity)getActivity();
+        BaseActivity activity = (BaseActivity)getActivity();
         activity.showBackArrow(android.R.drawable.ic_menu_close_clear_cancel);
         Toolbar toolbar = activity.getToolbar();
         toolbar.getMenu().clear();
@@ -109,12 +114,45 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     }
 
     @Override
+    public void saveEvent() {
+        HeyooEvent event = mAdapter.getEvent();
+        event.setPublished(false);
+        if(event.getId()==-1){
+            event.setId(mEventManager.getMapEvents().size());
+        }
+        mEventManager.addEvents(event);
+        //TODO: post to server
+        Intent intent = new Intent(getContext(), HomeActivity.class);
+        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
+
+    @Override
+    public void postEvent() {
+        HeyooEvent event = mAdapter.getEvent();
+        if(!event.isPublished()){
+            event.setPublished(true);
+        }
+        if(event.getId()==-1){
+            event.setId(mEventManager.getMapEvents().size());
+        }
+        mEventManager.addEvents(event);
+        //TODO: post to server. For now, ID will be place in map
+        Intent intent = new Intent(getContext(), HomeActivity.class);
+        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
+
+    @Override
     public void hideProgress() {
 
     }
 
     @Override
     public int getEventid() {
+        if(mEvent == null){
+            return -1;
+        }
         return mEvent.getId();
     }
 
@@ -122,10 +160,10 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.edit_publish_button:
-                controller.onPublishClicked(mAdapter);
+                controller.onPublishClicked();
                 break;
             case R.id.edit_draft_button:
-                controller.onSaveDraftClicked(mAdapter);
+                controller.onSaveDraftClicked();
                 break;
         }
     }

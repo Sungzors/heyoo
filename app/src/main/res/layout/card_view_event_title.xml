@@ -17,7 +17,7 @@
         app:cardCornerRadius="3dp">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="125dp">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/cvet_bullet"
                 android:layout_width="10dp"
@@ -122,6 +122,7 @@
                         android:text="No"
                         fontPath="fonts/NunitoSans-Black.ttf"
                         android:layout_marginTop="2dp"
+                        android:layout_marginBottom="15dp"
                         android:textAlignment="center"
                         android:textSize="11sp"
                         android:layout_gravity="center"/>
