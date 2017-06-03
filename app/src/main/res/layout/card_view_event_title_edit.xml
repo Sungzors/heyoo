@@ -76,7 +76,7 @@
                         android:text="Start Date/Time"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"/>
-                    <EditText
+                    <TextView
                         android:id="@+id/cvete_start_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                         android:text="End Date/Time"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="10dp"/>
-                    <EditText
+                    <TextView
                         android:id="@+id/cvete_end_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

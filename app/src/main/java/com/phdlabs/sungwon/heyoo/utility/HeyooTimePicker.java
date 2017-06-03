@@ -3,8 +3,8 @@ package com.phdlabs.sungwon.heyoo.utility;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
@@ -16,7 +16,7 @@ import java.util.Calendar;
 
 public class HeyooTimePicker implements View.OnFocusChangeListener, TimePickerDialog.OnTimeSetListener {
 
-    private EditText editText;
+    private TextView textView;
     private Calendar myCalendar;
     private Context ctx;
     private String dayString = "";
@@ -25,14 +25,14 @@ public class HeyooTimePicker implements View.OnFocusChangeListener, TimePickerDi
     private int day;
 
     public HeyooTimePicker(EditText editText, Context ctx){
-        this.editText = editText;
-        this.editText.setOnFocusChangeListener(this);
+        this.textView = editText;
+        this.textView.setOnFocusChangeListener(this);
         this.myCalendar = Calendar.getInstance();
         this.ctx = ctx;
     }
 
-    public HeyooTimePicker(EditText editText, Context ctx, int year, int month, int day){
-        this.editText = editText;
+    public HeyooTimePicker(TextView textView, Context ctx, int year, int month, int day){
+        this.textView = textView;
         this.myCalendar = Calendar.getInstance();
         this.ctx = ctx;
         this.year = year;
@@ -57,9 +57,9 @@ public class HeyooTimePicker implements View.OnFocusChangeListener, TimePickerDi
         myCalendar.set(year, month, day, hourOfDay, minute);
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm aaa");
         sdf.setTimeZone(myCalendar.getTimeZone());
-        editText.setText(sdf.format(myCalendar.getTime()));
-        InputMethodManager imm = (InputMethodManager)ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        textView.setText(sdf.format(myCalendar.getTime()));
+//        InputMethodManager imm = (InputMethodManager)ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
     }
 
     public Calendar getMyCalendar(){

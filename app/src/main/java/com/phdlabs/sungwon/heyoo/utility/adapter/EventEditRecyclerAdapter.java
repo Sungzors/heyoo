@@ -36,10 +36,10 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
     EventEditContract.Controller mController;
 
     EditText mTitle;
-    EditText mStartDate;
+    TextView mStartDate;
     HeyooDatePicker mStartPicker;
     Calendar mStartCalendar;
-    EditText mEndDate;
+    TextView mEndDate;
     HeyooDatePicker mEndPicker;
     Calendar mEndCalendar;
     ToggleButton mAllDay, mRepeat;
@@ -126,8 +126,8 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         } else {
             mEndDate.setText(sdf.format(new Date()));
         }
-        mStartPicker = new HeyooDatePicker(mStartDate, mController.getContext());
-        mEndPicker = new HeyooDatePicker(mEndDate, mController.getContext());
+        mStartDate.setOnClickListener(this);
+        mEndDate.setOnClickListener(this);
         if(!isNull){
             mTitle.setText(event.getName());
         }
@@ -199,21 +199,33 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
             startDate = mEvent.getStart_time();
             endDate = mEvent.getEnd_time();
         }
-        if(mStartPicker.isFinished){
-            startDate = mStartPicker.getTimePicker().getMyCalendar().getTime();
+        if(mStartPicker != null){
+            if(mStartPicker.isFinished){
+                startDate = mStartPicker.getTimePicker().getMyCalendar().getTime();
+            }
         }
-        if(mEndPicker.isFinished){
-            endDate = mEndPicker.getTimePicker().getMyCalendar().getTime();
+        if(mEndPicker != null){
+            if(mEndPicker.isFinished){
+                endDate = mEndPicker.getTimePicker().getMyCalendar().getTime();
+            }
+        }
+        String notes = mEvent.getDescription();
+        if(mNotes != null){
+            notes = mNotes.getText().toString();
+        }
+        String location = mEvent.getAddress();
+        if(mLocation != null){
+            location = mLocation.getText().toString();
         }
         HeyooEvent event = new HeyooEvent(
                 mController.getEventid(),
                 mTitle.getText().toString(),
                 startDate,
                 endDate,
-                mNotes.getText().toString(),
+                notes,
                 true,
                 0, //TODO: retrieve Calendar id
-                mLocation.getText().toString() );
+                location );
         if (mAllDay.getText().toString().equals("")){
             event.setAllDay(false);
         } else {
@@ -227,6 +239,12 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         switch(view.getId()) {
             case R.id.cvei_add_button:
                 mController.onMediaAddClicked();
+                break;
+            case R.id.cvete_start_date:
+                mStartPicker = new HeyooDatePicker(mStartDate, mController.getContext());
+                break;
+            case R.id.cvete_end_date:
+                mEndPicker = new HeyooDatePicker(mEndDate, mController.getContext());
                 break;
         }
     }
