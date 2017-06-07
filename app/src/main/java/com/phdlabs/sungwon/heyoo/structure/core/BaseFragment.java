@@ -2,10 +2,8 @@ package com.phdlabs.sungwon.heyoo.structure.core;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.BuildConfig;
 import com.phdlabs.sungwon.heyoo.R;
@@ -67,19 +65,19 @@ public abstract class BaseFragment<Controller extends Contract.BaseController> e
                 .setPositiveButton(android.R.string.ok, null).show();
     }
 
-//    public void showProgress() {
-//        View progress = findById(R.id.progress_view);
-//        if (progress != null) {
-//            progress.setVisibility(View.VISIBLE);
-//        }
-//    }
-//
-//    public void hideProgress() {
-//        View progress = findById(R.id.progress_view);
-//        if (progress != null) {
-//            progress.setVisibility(View.GONE);
-//        }
-//    }
+    public void showProgress() {
+        View progress = findById(R.id.progress_view);
+        if (progress != null) {
+            progress.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideProgress() {
+        View progress = findById(R.id.progress_view);
+        if (progress != null) {
+            progress.setVisibility(View.GONE);
+        }
+    }
 
     public void close() {
         getBaseActivity().closeFromChild();

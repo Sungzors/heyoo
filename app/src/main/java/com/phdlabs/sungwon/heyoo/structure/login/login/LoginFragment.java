@@ -61,16 +61,6 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
     public void showLogin() {
 
     }

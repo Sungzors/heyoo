@@ -34,6 +34,20 @@ public interface LoginContract {
     }
 
     interface Register{
+        interface View extends Contract.BaseView {
+            int getCode();
 
+            void resendCode();
+
+            void createAccount();
+
+            void cancel();
+        }
+
+        interface Controller extends Contract.BaseController {
+
+
+
+        }
     }
 }
