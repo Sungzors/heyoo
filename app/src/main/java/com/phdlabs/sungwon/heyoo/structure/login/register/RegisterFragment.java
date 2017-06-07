@@ -83,15 +83,7 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
         return mCode.getText().toString();
     }
 
-    @Override
-    public void resendCode() {
 
-    }
-
-    @Override
-    public void createAccount(String code, String phone) {
-
-    }
 
     @Override
     public void cancel() {
@@ -102,10 +94,10 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fr_resend:
-                resendCode();
+                controller.onResend();
                 break;
             case R.id.fr_create_button:
-                createAccount(getCode(), mPhone);
+                controller.onRegister(getCode(), mPhone);
                 break;
             case R.id.fr_cancel:
                 cancel();

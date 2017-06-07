@@ -4,6 +4,7 @@ import com.phdlabs.sungwon.heyoo.api.data.LoginData;
 import com.phdlabs.sungwon.heyoo.api.data.ResendData;
 import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
+import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -24,7 +25,7 @@ public interface HeyooEndpoint {
     Call<UserDataResponse> register(@Body LoginData loginData);
 
     @POST("/auth/verify")
-    Call<UserDataResponse> verify(@Body VerifyData verifyData);
+    Call<VerifyDataResponse> verify(@Body VerifyData verifyData);
 
     @POST("/auth/resend")
     Call<UserDataResponse> resend(@Body ResendData resendData);

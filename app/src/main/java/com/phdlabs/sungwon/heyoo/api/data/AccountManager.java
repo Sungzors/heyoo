@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
-import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
+import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
@@ -45,7 +45,7 @@ public class AccountManager {
         //TODO: move the login call from login to here, also do register
     }
 
-    public void bindAccountData(UserDataResponse data) {
+    public void bindAccountData(VerifyDataResponse data) {
 
     }
 

@@ -38,16 +38,13 @@ public interface LoginContract {
             String getCode();
             String getPhone();
 
-            void resendCode();
-
-            void createAccount(String code, String phone);
-
             void cancel();
         }
 
         interface Controller extends Contract.BaseController {
             void onResend();
 
+            void onRegister(String code, String phone);
 
         }
     }

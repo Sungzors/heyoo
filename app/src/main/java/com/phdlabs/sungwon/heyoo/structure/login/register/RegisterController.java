@@ -2,10 +2,14 @@ package com.phdlabs.sungwon.heyoo.structure.login.register;
 
 import android.widget.Toast;
 
+import com.phdlabs.sungwon.heyoo.api.data.AccountManager;
 import com.phdlabs.sungwon.heyoo.api.data.ResendData;
+import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.event.RegisterResendCodeEvent;
+import com.phdlabs.sungwon.heyoo.api.event.VerifyDataEvent;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
+import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
@@ -32,7 +36,20 @@ public class RegisterController implements LoginContract.Register.Controller {
         this.mEvents = EventsManager.getInstance().getDataEventBus();
     }
 
+    @Override
+    public void onRegister(String code, String phone) {
+        VerifyData data = new VerifyData(phone, code);
+        Call<VerifyDataResponse> call = mCaller.verify(data);
+        call.enqueue(new HCallback<VerifyDataResponse, VerifyDataEvent>(mEvents) {
+            @Override
+            protected void onSuccess(VerifyDataResponse data) {
+                mEvents.post(new VerifyDataEvent());
+                AccountManager account = AccountManager.getInstance();
+                account.bindAccountData(data);
+            }
+        });
 
+    }
 
     @Override
     public void onResend() {
