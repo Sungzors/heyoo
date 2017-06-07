@@ -45,7 +45,8 @@ public class RegisterController implements LoginContract.Register.Controller {
             protected void onSuccess(VerifyDataResponse data) {
                 mEvents.post(new VerifyDataEvent());
                 AccountManager account = AccountManager.getInstance();
-                account.bindAccountData(data);
+                account.bindAccountData(data, mView.getContext());
+                mView.openApp();
             }
         });
 

@@ -33,6 +33,7 @@ public class AccountManager {
         mCaller = Rest.getInstance().getHeyooEndpoint();
     }
 
+    /*Must call this to init token if logged in*/
     public boolean isUserLogged(Context context){
         Preferences pref = new Preferences(context);
         if (mAccessToken == null) {
@@ -45,8 +46,10 @@ public class AccountManager {
         //TODO: move the login call from login to here, also do register
     }
 
-    public void bindAccountData(VerifyDataResponse data) {
-
+    public void bindAccountData(VerifyDataResponse data, Context context) {
+        mAccessToken = data.getToken();
+        Preferences pref = new Preferences(context);
+        pref.putPreference(Constants.PreferenceConstants.KEY_TOKEN, mAccessToken);
     }
 
 }

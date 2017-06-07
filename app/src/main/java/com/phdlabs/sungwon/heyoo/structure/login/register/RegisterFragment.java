@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.structure.login.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginContract;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
@@ -83,7 +85,11 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
         return mCode.getText().toString();
     }
 
-
+    @Override
+    public void openApp() {
+        Intent intent = new Intent(getContext(), HomeActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void cancel() {

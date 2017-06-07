@@ -38,6 +38,8 @@ public interface LoginContract {
             String getCode();
             String getPhone();
 
+            void openApp();
+
             void cancel();
         }
 
