@@ -15,5 +15,6 @@ public class Constants {
     public interface BundleKeys{
         String EVENT_ID = "eventid";
         String EVENT_DETAIL = "eventdetail";
+        String LOGIN_DETAIL = "logindetail";
     }
 }

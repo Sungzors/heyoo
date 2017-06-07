@@ -35,17 +35,18 @@ public interface LoginContract {
 
     interface Register{
         interface View extends Contract.BaseView {
-            int getCode();
+            String getCode();
+            String getPhone();
 
             void resendCode();
 
-            void createAccount();
+            void createAccount(String code, String phone);
 
             void cancel();
         }
 
         interface Controller extends Contract.BaseController {
-
+            void onResend();
 
 
         }

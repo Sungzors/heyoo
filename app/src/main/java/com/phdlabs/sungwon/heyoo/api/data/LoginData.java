@@ -3,11 +3,13 @@ package com.phdlabs.sungwon.heyoo.api.data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by SungWon on 5/8/2017.
  */
 
-public class LoginData {
+public class LoginData implements Serializable{
 
     @SerializedName("phone")
     @Expose

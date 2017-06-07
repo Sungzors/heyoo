@@ -68,7 +68,7 @@
         android:layout_marginTop="100dp"
         android:background="@drawable/button_curve_corner">
         <Button
-            android:id="@+id/login_sign_button"
+            android:id="@+id/fr_create_button"
             android:layout_width="230dp"
             android:layout_height="40dp"
             android:text="Create Account"
