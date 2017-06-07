@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.login;
+package com.phdlabs.sungwon.heyoo.structure.login.login;
 
 import android.graphics.Typeface;
 import android.os.Bundle;

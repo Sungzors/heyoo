@@ -13,7 +13,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
-import com.phdlabs.sungwon.heyoo.structure.login.LoginActivity;
+import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

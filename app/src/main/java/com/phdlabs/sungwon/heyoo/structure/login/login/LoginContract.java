@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.login;
+package com.phdlabs.sungwon.heyoo.structure.login.login;
 
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 
@@ -31,5 +31,9 @@ public interface LoginContract {
         void onLoginClicked();
 
         void onRegisterClicked();
+    }
+
+    interface Register{
+
     }
 }

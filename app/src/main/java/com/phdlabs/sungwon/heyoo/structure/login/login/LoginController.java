@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.login;
+package com.phdlabs.sungwon.heyoo.structure.login.login;
 
 import android.content.Context;
 import android.widget.Toast;
