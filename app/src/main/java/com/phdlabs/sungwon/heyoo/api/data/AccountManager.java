@@ -7,6 +7,7 @@ import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
+import com.phdlabs.sungwon.heyoo.model.UserManager;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
 
@@ -50,6 +51,8 @@ public class AccountManager {
         mAccessToken = data.getToken();
         Preferences pref = new Preferences(context);
         pref.putPreference(Constants.PreferenceConstants.KEY_TOKEN, mAccessToken);
+        UserManager userManager = UserManager.getInstance();
+        userManager.setUser(data.getUser());
     }
 
 }
