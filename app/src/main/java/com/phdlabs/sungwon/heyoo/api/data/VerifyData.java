@@ -12,16 +12,12 @@ public class VerifyData {
     @SerializedName("phone")
     @Expose
     private String phone;
-    @SerializedName("country_code")
-    @Expose
-    private String country_code;
-    @SerializedName("password")
+    @SerializedName("passcode")
     @Expose
     private String passcode;
 
-    public VerifyData(String phone, String country_code, String passcode){
+    public VerifyData(String phone, String passcode){
         this.phone = phone;
-        this.country_code = country_code;
         this.passcode = passcode;
     }
 
@@ -34,17 +30,6 @@ public class VerifyData {
      */
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getCountry_code() {
-        return country_code;
-    }
-
-    /**
-     * Must include +, i.e. "+1"
-     */
-    public void setCountry_code(String country_code) {
-        this.country_code = country_code;
     }
 
     public String getPasscode() {

@@ -1,8 +1,10 @@
 package com.phdlabs.sungwon.heyoo.structure.login.register;
 
+import android.widget.Toast;
+
 import com.phdlabs.sungwon.heyoo.api.data.ResendData;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
-import com.phdlabs.sungwon.heyoo.api.event.RegisterDataEvent;
+import com.phdlabs.sungwon.heyoo.api.event.RegisterResendCodeEvent;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
@@ -30,14 +32,16 @@ public class RegisterController implements LoginContract.Register.Controller {
         this.mEvents = EventsManager.getInstance().getDataEventBus();
     }
 
+
+
     @Override
     public void onResend() {
         ResendData data = new ResendData(mView.getPhone());
         Call<UserDataResponse> call = mCaller.resend(data);
-        call.enqueue(new HCallback<UserDataResponse, RegisterDataEvent>(mEvents) {
+        call.enqueue(new HCallback<UserDataResponse, RegisterResendCodeEvent>(mEvents) {
             @Override
             protected void onSuccess(UserDataResponse data) {
-                mEvents.post(new RegisterDataEvent());
+                mEvents.post(new RegisterResendCodeEvent());
             }
 
             @Override
@@ -46,6 +50,14 @@ public class RegisterController implements LoginContract.Register.Controller {
 
             }
         });
+    }
+
+    public void onEventMainThread(RegisterResendCodeEvent event){
+        if (event.isSuccess()){
+            Toast.makeText(mView.getContext(), "Code Resent!", Toast.LENGTH_SHORT).show();
+        } else {
+            mView.showError(event.getErrorMessage());
+        }
     }
 
     @Override
