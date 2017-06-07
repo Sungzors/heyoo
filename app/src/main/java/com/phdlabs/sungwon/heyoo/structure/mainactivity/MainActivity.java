@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditActivity;
+import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.LoginActivity;
@@ -159,7 +159,8 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showTasksPage() {
-        EventEditActivity.start(getContext(), null);
+//        EventEditActivity.start(getContext(), null);
+        replaceFragment(EventEditFragment.newInstance(null), true);
     }
 
     @Override

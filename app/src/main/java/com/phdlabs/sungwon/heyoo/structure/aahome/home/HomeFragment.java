@@ -17,11 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventFragment;
+import com.phdlabs.sungwon.heyoo.structure.aahome.eventdraft.EventDraftFragment;
+import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
@@ -107,6 +108,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mStateBuilder = mCalendarView.newState();
         mToolbar = ((MainActivity)getActivity()).getToolbar();
         mMenu = mToolbar.getMenu();
+        mMenu.clear();
         Date dummydate = new Date();
         dummydate.setTime(10000);
         mDummyHeyooEvent = new HeyooEvent(0, "dummy", dummydate, dummydate, "dummy event. If you see this, something has gone wrong", false, 9999, null);
@@ -157,7 +159,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_calendar_btn:
-                        Toast.makeText(getContext(), "What is this supposed to do?", Toast.LENGTH_SHORT).show();
+                        showDraftFragment();
                         return true;
                     case R.id.action_full_cal:
                         showFullCalendar();
@@ -176,7 +178,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         });
     }
 
-    public void setupRecyclerAdapter(){
+    private void setupRecyclerAdapter(){
         mRecyclerAdapter = new BaseListRecyclerAdapter<HeyooEvent, BaseViewHolder>() {
             @Override
             protected void onBindItemViewHolder(BaseViewHolder viewHolder, HeyooEvent data, int position, int type) {
@@ -305,6 +307,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         bgshape.setColor(Color.BLUE);
     }
 
+
     @Override
     public void showFullCalendar() {
 //        mTestText.setText("Full Calendar mode");
@@ -377,7 +380,13 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 
     @Override
     public void showAddEvent() {
+//        EventEditActivity.start(getContext(), null);
+        getBaseActivity().replaceFragment(EventEditFragment.newInstance(null),true);
+    }
 
+    @Override
+    public void showDraftFragment() {
+        getBaseActivity().replaceFragment(EventDraftFragment.newInstance(), true);
     }
 
     @Override

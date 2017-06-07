@@ -41,6 +41,8 @@ public class HeyooEventManager {
         mMap.put(event.getId(), event);
     }
 
+    public void setEvents(int key, HeyooEvent event) {mMap.append(key, event);}
+
     public List<HeyooEvent> getEvents(){
         List<HeyooEvent> eventList = new ArrayList<>();
         for (int i = 0; i < mMap.size(); i++) {

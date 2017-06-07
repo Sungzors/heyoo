@@ -3,6 +3,7 @@ package com.phdlabs.sungwon.heyoo.structure.aahome.event;
 import android.content.Context;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
+import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 
@@ -51,6 +52,18 @@ public interface EventContract {
 
         Context getContext();
 
+    }
+
+    interface Draft {
+        interface View extends Contract.BaseView {
+            void showDrafts();
+
+            void showSelectedDraft(HeyooEvent event);
+        }
+
+        interface Controller extends Contract.BaseController {
+            void onDraftSelected(HeyooEvent event);
+        }
     }
 }
 

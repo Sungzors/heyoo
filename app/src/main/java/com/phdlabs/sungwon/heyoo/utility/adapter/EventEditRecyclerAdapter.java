@@ -209,11 +209,22 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
                 endDate = mEndPicker.getTimePicker().getMyCalendar().getTime();
             }
         }
-        String notes = mEvent.getDescription();
+        String notes;
+        if (isNull){
+            notes = null;
+        } else {
+            notes = mEvent.getDescription();
+        }
         if(mNotes != null){
             notes = mNotes.getText().toString();
         }
-        String location = mEvent.getAddress();
+        String location;
+        if(isNull){
+            location = null;
+        } else {
+            location = mEvent.getAddress();
+        }
+
         if(mLocation != null){
             location = mLocation.getText().toString();
         }

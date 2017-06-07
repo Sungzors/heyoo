@@ -1,6 +1,7 @@
 package com.phdlabs.sungwon.heyoo.structure.core;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -36,6 +37,7 @@ public abstract class BaseActivity extends CoreActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(layoutId());
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
     }

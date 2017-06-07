@@ -19,15 +19,17 @@ public interface HomeContract {
 
 
     interface View extends Contract.BaseView{
-        void showAddEvent(); // TODO: 4/18/2017
+        void showAddEvent();
 
-        void showEventDetail(HeyooEvent event);// TODO: 4/18/2017
+        void showEventDetail(HeyooEvent event);
 
         void showFullCalendar();
 
         void showPartialCalendar();
 
         void refreshList();
+
+        void showDraftFragment();
 
         int getSelectedTab();// TODO: 4/18/2017
 

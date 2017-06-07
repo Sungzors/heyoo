@@ -1,6 +1,5 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome.eventedit;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
-import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
@@ -93,6 +91,7 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         toolbar.getMenu().clear();
     }
 
+
     @Override
     public void showProgress() {
 
@@ -122,9 +121,10 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         }
         mEventManager.addEvents(event);
         //TODO: post to server
-        Intent intent = new Intent(getContext(), HomeActivity.class);
-        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
+//        Intent intent = new Intent(getContext(), HomeActivity.class);
+//        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+//        startActivity(intent);
+        getBaseActivity().onBackPressed();
     }
 
     @Override
@@ -138,10 +138,17 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         }
         mEventManager.addEvents(event);
         //TODO: post to server. For now, ID will be place in map
-        Intent intent = new Intent(getContext(), HomeActivity.class);
-        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
+//        Intent intent = new Intent(getContext(), HomeActivity.class);
+//        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+//        startActivity(intent);
+        getBaseActivity().onBackPressed();
     }
+
+//    @Override
+//    public boolean onBackPressed() {
+//        getBaseActivity().finish();
+//        return true;
+//    }
 
     @Override
     public void hideProgress() {
