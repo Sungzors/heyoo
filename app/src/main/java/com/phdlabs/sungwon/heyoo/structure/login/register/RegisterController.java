@@ -8,7 +8,7 @@ import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.event.RegisterResendCodeEvent;
 import com.phdlabs.sungwon.heyoo.api.event.VerifyDataEvent;
-import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
+import com.phdlabs.sungwon.heyoo.api.response.ResendResponse;
 import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
@@ -16,6 +16,7 @@ import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginContract;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -54,22 +55,23 @@ public class RegisterController implements LoginContract.Register.Controller {
 
     @Override
     public void onResend() {
-        ResendData data = new ResendData(mView.getPhone());
-        Call<UserDataResponse> call = mCaller.resend(data);
-        call.enqueue(new HCallback<UserDataResponse, RegisterResendCodeEvent>(mEvents) {
+        ResendData data = new ResendData(mView.getPhone(), mView.getCountry());
+        Call<ResendResponse> call = mCaller.resend(data);
+        call.enqueue(new HCallback<ResendResponse, RegisterResendCodeEvent>(mEvents) {
             @Override
-            protected void onSuccess(UserDataResponse data) {
+            protected void onSuccess(ResendResponse data) {
                 mEvents.post(new RegisterResendCodeEvent());
             }
 
             @Override
-            protected void onError(Response<UserDataResponse> response) {
+            protected void onError(Response<ResendResponse> response) {
                 super.onError(response);
 
             }
         });
     }
 
+    @Subscribe
     public void onEventMainThread(RegisterResendCodeEvent event){
         if (event.isSuccess()){
             Toast.makeText(mView.getContext(), "Code Resent!", Toast.LENGTH_SHORT).show();
@@ -80,7 +82,7 @@ public class RegisterController implements LoginContract.Register.Controller {
 
     @Override
     public void onStart() {
-
+        mEvents.register(this);
     }
 
     @Override
@@ -95,6 +97,6 @@ public class RegisterController implements LoginContract.Register.Controller {
 
     @Override
     public void onStop() {
-
+        mEvents.unregister(this);
     }
 }

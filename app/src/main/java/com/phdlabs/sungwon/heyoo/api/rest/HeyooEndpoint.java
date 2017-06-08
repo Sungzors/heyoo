@@ -3,6 +3,7 @@ package com.phdlabs.sungwon.heyoo.api.rest;
 import com.phdlabs.sungwon.heyoo.api.data.LoginData;
 import com.phdlabs.sungwon.heyoo.api.data.ResendData;
 import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
+import com.phdlabs.sungwon.heyoo.api.response.ResendResponse;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
 import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 
@@ -28,6 +29,6 @@ public interface HeyooEndpoint {
     Call<VerifyDataResponse> verify(@Body VerifyData verifyData);
 
     @POST("/auth/resend")
-    Call<UserDataResponse> resend(@Body ResendData resendData);
+    Call<ResendResponse> resend(@Body ResendData resendData);
 
 }

@@ -75,8 +75,8 @@ public class LoginController implements LoginContract.Controller {
         call.enqueue(new HCallback<UserDataResponse, RegisterDataEvent>(mEvents) {
             @Override
             protected void onSuccess(UserDataResponse data) {
+                mView.showVerify(mView.getPhone(), mView.getCountryCode());
                 mEvents.post(new RegisterDataEvent());
-                mView.showVerify();
             }
 
             @Override
@@ -85,5 +85,6 @@ public class LoginController implements LoginContract.Controller {
 
             }
         });
+//        mView.showVerify(mView.getPhone(), mView.getCountryCode());
     }
 }

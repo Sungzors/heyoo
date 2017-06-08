@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.api.response;
 
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.User;
 
 /**
@@ -8,23 +9,15 @@ import com.phdlabs.sungwon.heyoo.model.User;
 
 public class UserDataResponse extends ErrorResponse {
 
-    private Data data;
+    private User user;
 
-    public Data getData() {
-        return data;
-    }
+    private HeyooCalendar calendar;
 
     public User getUser() {
-        return data.getUser();
+        return user;
     }
 
-    public static class Data {
-
-        private User user;
-
-        public User getUser() {
-            return user;
-        }
-
+    public HeyooCalendar getCalendar() {
+        return calendar;
     }
 }

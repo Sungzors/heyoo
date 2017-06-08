@@ -76,7 +76,7 @@
         android:layout_marginTop="-2dp"
         android:background="@drawable/bg_shadow_box"
         android:inputType="phone"
-        android:imeOptions="actionNext"
+        android:imeOptions="actionDone"
         android:hint="@string/phone_number_hint"
         android:textColorHint="@color/shadow"/>
 

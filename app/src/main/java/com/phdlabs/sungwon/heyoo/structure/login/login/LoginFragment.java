@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.hbb20.CountryCodePicker;
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.structure.login.register.RegisterFragment;
 
 /**
  * Created by SungWon on 5/7/2017.
@@ -76,8 +77,8 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
     }
 
     @Override
-    public void showVerify() {
-//        getBaseActivity().replaceFragment();
+    public void showVerify(String phone, String country_code) {
+        getBaseActivity().replaceFragment(RegisterFragment.newInstance(phone, country_code), true);
     }
 
     @Override

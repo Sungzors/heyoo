@@ -6,20 +6,20 @@ package com.phdlabs.sungwon.heyoo.api.response;
 
 public class StatusResponse {
 
-    public static final String STATUS_ERROR = "error";
-    public static final String STATUS_SUCCESS = "success";
+    public static final String STATUS_ERROR = "false";
+    public static final String STATUS_SUCCESS = "true";
 
-    private String status;
+    private String success;
 
     public String getStatus() {
-        return status;
+        return success;
     }
 
     public boolean isError() {
-        return STATUS_ERROR.equals(status);
+        return STATUS_ERROR.equals(success);
     }
 
     public boolean isSuccess() {
-        return STATUS_SUCCESS.equals(status);
+        return STATUS_SUCCESS.equals(success);
     }
 }

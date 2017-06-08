@@ -11,10 +11,10 @@ public class User {
     private Integer id;
     private String first_name;
     private String last_name;
-    private Integer phone;
+    private String phone;
     private String email;
     private String facebook_id;
-    private Integer country_code;
+    private String country_code;
     private String profile_picture;
     private String city;
     private String passcode;
@@ -55,11 +55,11 @@ public class User {
         this.last_name = last_name;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -79,11 +79,11 @@ public class User {
         this.facebook_id = facebook_id;
     }
 
-    public Integer getCountry_code() {
+    public String getCountry_code() {
         return country_code;
     }
 
-    public void setCountry_code(Integer country_code) {
+    public void setCountry_code(String country_code) {
         this.country_code = country_code;
     }
 

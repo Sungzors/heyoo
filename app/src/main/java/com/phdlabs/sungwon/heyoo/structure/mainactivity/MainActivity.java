@@ -8,8 +8,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.api.data.AccountManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
@@ -171,10 +173,32 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showAlertsPage() {
-
+        Toast.makeText(this, AccountManager.getInstance().debugGetKey(this), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mController.onStart();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mController.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mController.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mController.onResume();
+    }
 
     @Override
     public void close() {

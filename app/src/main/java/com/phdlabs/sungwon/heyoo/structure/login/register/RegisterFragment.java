@@ -25,6 +25,7 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
         implements LoginContract.Register.View, View.OnClickListener{
 
     private String mPhone;
+    private String mCountry;
 
     private EditText mCode;
     private TextView mResend;
@@ -32,9 +33,10 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
     private TextView mCancel;
 
 
-    public static RegisterFragment newInstance(String phone){
+    public static RegisterFragment newInstance(String phone, String country){
         Bundle args = new Bundle();
-        args.putString(Constants.BundleKeys.LOGIN_DETAIL, phone);
+        args.putString(Constants.BundleKeys.LOGIN_PHONE, phone);
+        args.putString(Constants.BundleKeys.LOGIN_COUNTRY_CODE, country);
         RegisterFragment fragment = new RegisterFragment();
         fragment.setArguments(args);
         return fragment;
@@ -60,7 +62,8 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
-        mPhone = args.getString(Constants.BundleKeys.LOGIN_DETAIL);
+        mPhone = args.getString(Constants.BundleKeys.LOGIN_PHONE);
+        mCountry = args.getString(Constants.BundleKeys.LOGIN_COUNTRY_CODE);
         mCode = findById(R.id.fr_confirmation_code);
         mResend = findById(R.id.fr_resend);
         mCreate = findById(R.id.fr_create_button);
@@ -73,6 +76,11 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
     @Override
     public String getPhone() {
         return mPhone;
+    }
+
+    @Override
+    public String getCountry() {
+        return mCountry;
     }
 
     @Override

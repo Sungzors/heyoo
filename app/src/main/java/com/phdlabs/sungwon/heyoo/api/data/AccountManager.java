@@ -24,6 +24,7 @@ public class AccountManager {
     private String mAccessToken;
     private HeyooEndpoint mCaller;
     private EventBus mEvents;
+    private Preferences mPref;
 
     public static AccountManager getInstance(){
         return sInstance;
@@ -36,9 +37,9 @@ public class AccountManager {
 
     /*Must call this to init token if logged in*/
     public boolean isUserLogged(Context context){
-        Preferences pref = new Preferences(context);
+        mPref = new Preferences(context);
         if (mAccessToken == null) {
-            mAccessToken = pref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
+            mAccessToken = mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
         }
         return mAccessToken != null;
     }
@@ -47,10 +48,15 @@ public class AccountManager {
         //TODO: move the login call from login to here, also do register
     }
 
+    public String debugGetKey(Context context){
+        mPref = new Preferences(context);
+        return mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
+    }//TODO:debug, get rid of
+
     public void bindAccountData(VerifyDataResponse data, Context context) {
         mAccessToken = data.getToken();
-        Preferences pref = new Preferences(context);
-        pref.putPreference(Constants.PreferenceConstants.KEY_TOKEN, mAccessToken);
+        mPref = new Preferences(context);
+        mPref.putPreference(Constants.PreferenceConstants.KEY_TOKEN, mAccessToken);
         UserManager userManager = UserManager.getInstance();
         userManager.setUser(data.getUser());
     }

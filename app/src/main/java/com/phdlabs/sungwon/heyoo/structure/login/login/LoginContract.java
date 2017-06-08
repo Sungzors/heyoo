@@ -17,7 +17,7 @@ public interface LoginContract {
 
         void showRegister();
 
-        void showVerify();
+        void showVerify(String phone, String country_code);
 
         void showLoginError();
 
@@ -37,6 +37,7 @@ public interface LoginContract {
         interface View extends Contract.BaseView {
             String getCode();
             String getPhone();
+            String getCountry();
 
             void openApp();
 

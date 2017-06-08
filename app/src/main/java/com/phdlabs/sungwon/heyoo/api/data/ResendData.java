@@ -12,9 +12,21 @@ public class ResendData {
     @SerializedName("phone")
     @Expose
     private String phone;
+    @SerializedName("country_code")
+    @Expose
+    private String country_code;
 
-    public ResendData(String phone) {
+    public ResendData(String phone, String country_code) {
         this.phone = phone;
+        this.country_code = country_code;
+    }
+
+    public String getCountry_code() {
+        return country_code;
+    }
+
+    public void setCountry_code(String country_code) {
+        this.country_code = country_code;
     }
 
     public String getPhone() {
