@@ -60,6 +60,7 @@ public abstract class BaseFragment<Controller extends Contract.BaseController> e
         }
     }
 
+
     public void showError(String message) {
         new AlertDialog.Builder(getActivity()).setMessage(message)
                 .setPositiveButton(android.R.string.ok, null).show();
