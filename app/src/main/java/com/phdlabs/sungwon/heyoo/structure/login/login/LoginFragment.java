@@ -28,6 +28,11 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
     EditText mLoginNumber;
     Button mLoginButton;
     TextView mLoginSigned;
+    TextView mLoginTitle;
+    TextView mLoginEmailText;
+
+
+    boolean isRegister = true;
 
     @NonNull
     @Override
@@ -44,6 +49,7 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        isRegister = true;
         super.onCreate(savedInstanceState);
     }
 
@@ -56,39 +62,36 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
         mLoginNumber = findById(R.id.login_phone_number);
         mLoginButton = findById(R.id.login_sign_button);
         mLoginSigned = findById(R.id.login_already_sign);
+        mLoginTitle = findById(R.id.login_title);
+        mLoginEmailText = findById(R.id.login_email_text);
         mLoginButton.setOnClickListener(this);
         mLoginSigned.setOnClickListener(this);
+        showRegister();
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public void showLogin() {
-
+        mLoginEmailText.setVisibility(View.GONE);
+        mLoginEmail.setVisibility(View.GONE);
+        mLoginTitle.setText(R.string.login);
+        mLoginButton.setText(R.string.sign_in);
+        mLoginSigned.setText(R.string.register_inquiry);
     }
 
     @Override
     public void showRegister() {
-
+        mLoginEmailText.setVisibility(View.VISIBLE);
+        mLoginEmail.setVisibility(View.VISIBLE);
+        mLoginTitle.setText(R.string.create_your_account);
+        mLoginButton.setText(R.string.sign_up);
+        mLoginSigned.setText(R.string.sign_in_inquiry);
     }
 
-    @Override
-    public void showLoginError() {
-
-    }
 
     @Override
     public void showVerify(String phone, String country_code) {
         getBaseActivity().replaceFragment(RegisterFragment.newInstance(phone, country_code), true);
-    }
-
-    @Override
-    public void showPasswordError() {
-
-    }
-
-    @Override
-    public void sendSMS() {
-
     }
 
     @Override
@@ -116,9 +119,15 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_sign_button:
-                controller.onRegisterClicked();
+                controller.onRegisterClicked(isRegister);
                 break;
             case R.id.login_already_sign:
+                isRegister = !isRegister;
+                if (isRegister){
+                    showRegister();
+                } else {
+                    showLogin();
+                }
                 break;
         }
     }

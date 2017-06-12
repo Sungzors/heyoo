@@ -4,8 +4,11 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.api.data.LoginData;
+import com.phdlabs.sungwon.heyoo.api.data.ResendData;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.event.RegisterDataEvent;
+import com.phdlabs.sungwon.heyoo.api.event.RegisterResendCodeEvent;
+import com.phdlabs.sungwon.heyoo.api.response.ResendResponse;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
@@ -69,22 +72,36 @@ public class LoginController implements LoginContract.Controller {
     }
 
     @Override
-    public void onRegisterClicked() {
-        LoginData data = new LoginData(mView.getPhone(), mView.getCountryCode(), mView.getEmail());
-        Call<UserDataResponse> call = mCaller.register(data);
-        call.enqueue(new HCallback<UserDataResponse, RegisterDataEvent>(mEvents) {
-            @Override
-            protected void onSuccess(UserDataResponse data) {
-                mView.showVerify(mView.getPhone(), mView.getCountryCode());
-                mEvents.post(new RegisterDataEvent());
-            }
+    public void onRegisterClicked(boolean isRegister) {
 
-            @Override
-            protected void onError(Response<UserDataResponse> response) {
-                super.onError(response);
+        if(isRegister){
+            LoginData data = new LoginData(mView.getPhone(), mView.getCountryCode(), mView.getEmail());
+            Call<UserDataResponse> call = mCaller.register(data);
+            call.enqueue(new HCallback<UserDataResponse, RegisterDataEvent>(mEvents) {
+                @Override
+                protected void onSuccess(UserDataResponse data) {
+                    mView.showVerify(mView.getPhone(), mView.getCountryCode());
+                    mEvents.post(new RegisterDataEvent());
+                }
 
-            }
-        });
+                @Override
+                protected void onError(Response<UserDataResponse> response) {
+                    super.onError(response);
+
+                }
+            });
+        } else {
+            ResendData data = new ResendData(mView.getPhone(), mView.getCountryCode());
+            Call<ResendResponse> call = mCaller.resend(data);
+            call.enqueue(new HCallback<ResendResponse, RegisterResendCodeEvent>(mEvents) {
+                @Override
+                protected void onSuccess(ResendResponse data) {
+                    mView.showVerify(mView.getPhone(), mView.getCountryCode());
+                    mEvents.post(new RegisterResendCodeEvent());
+                }
+            });
+        }
+
 //        mView.showVerify(mView.getPhone(), mView.getCountryCode());
     }
 }

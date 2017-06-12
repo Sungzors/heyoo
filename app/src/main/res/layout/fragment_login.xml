@@ -23,6 +23,7 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/login_title"
         style="@style/TextAppearance.LoginSubtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
         android:layout_marginTop="10dp"/>
 
     <TextView
+        android:id="@+id/login_email_text"
         android:layout_marginTop="19dp"
         style="@style/TextAppearance.LoginSmallText"
         android:layout_width="match_parent"

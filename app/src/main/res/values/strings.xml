@@ -24,4 +24,7 @@
     <string name="enter_confirmation_code">Enter Confirmation Code</string>
     <string name="cancel">Cancel</string>
     <string name="resend_code">Resend Code</string>
+    <string name="login">Login</string>
+    <string name="sign_in">Sign in</string>
+    <string name="register_inquiry">Don\'t have an account? Register Here</string>
 </resources>

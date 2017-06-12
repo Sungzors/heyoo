@@ -19,18 +19,12 @@ public interface LoginContract {
 
         void showVerify(String phone, String country_code);
 
-        void showLoginError();
-
-        void showPasswordError();
-
-        void sendSMS();
-
     }
 
     interface Controller extends Contract.BaseController{
         void onLoginClicked();
 
-        void onRegisterClicked();
+        void onRegisterClicked(boolean isRegister);
     }
 
     interface Register{
