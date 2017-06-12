@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingPrefix">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="5dp"
+        app:contentPadding="0dp"
+        android:layout_margin="2dp"
+        app:cardCornerRadius="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+            <ImageView
+                android:id="@+id/cvc_tab_left"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/tab_left_of_card"
+                />
+            <TextView
+                android:id="@+id/cvc_event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/cvc_tab_left"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="25dp"
+                android:text="I AM AN EVENT HELLO - hello"
+                android:textSize="14sp"
+                fontPath="fonts/Avenir-Oblique-webfont"/>
+            <FrameLayout
+                android:id="@+id/cvc_event_alert_icon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="25dp"
+                android:layout_below="@id/cvc_event_title"
+                android:layout_toEndOf="@id/cvc_tab_left"
+                android:layout_marginTop="7dp">
+                <include layout="@layout/draw_circle_alert_orange"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"/>
+            </FrameLayout>
+            <TextView
+                android:id="@+id/cvc_event_alert_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvc_event_title"
+                android:layout_toEndOf="@id/cvc_event_alert_icon"
+                android:layout_marginTop="15dp"
+                android:text="5"
+                android:textSize="11sp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginStart="11dp"
+                fontPath="fonts/Avenir-Medium-webfont"/>
+            <FrameLayout
+                android:id="@+id/cvc_event_people_icon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_below="@id/cvc_event_title"
+                android:layout_toEndOf="@id/cvc_event_alert_number"
+                android:src="@drawable/itopensitseyes"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="20dp">
+                <include layout="@layout/draw_circle_people_double"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"/>
+            </FrameLayout>
+            <TextView
+                android:id="@+id/cvc_event_people_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvc_event_title"
+                android:layout_toEndOf="@id/cvc_event_people_icon"
+                android:text="1"
+                android:textSize="11sp"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="15dp"
+                fontPath="fonts/Avenir-Medium-webfont"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

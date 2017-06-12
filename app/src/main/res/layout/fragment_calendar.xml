@@ -7,4 +7,47 @@
     android:layout_height="wrap_content"
     tools:ignore="MissingPrefix">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <FrameLayout
+            android:id="@+id/fc_calendar_icon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp">
+            <include layout="@layout/draw_circle_calendar_orange"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/fc_calendar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calendars (3)"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="40dp"/>
+
+        <TextView
+            android:id="@+id/fc_calendar_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tabselected"
+            android:text="+"
+            android:textSize="30sp"
+            android:layout_gravity="end"
+            android:layout_marginStart="-40dp"
+            android:paddingTop="15dp"
+            />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fc_calendar_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
 </LinearLayout>
