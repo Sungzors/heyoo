@@ -86,6 +86,8 @@ public abstract class BaseActivity extends CoreActivity {
     public Toolbar getToolbar(){
         return mToolbar;
     }
+
+
 //
 //    public void showProgress() {
 //        View progress = findById(R.id.progress_view);

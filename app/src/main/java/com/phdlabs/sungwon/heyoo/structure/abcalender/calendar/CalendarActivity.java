@@ -37,7 +37,7 @@ public class CalendarActivity extends MainActivity<CalendarContract.Activity.Con
     @NonNull
     @Override
     protected CalendarContract.Activity.Controller createController() {
-        return new CalendarController(this);
+        return new CalendarActivityController(this);
     }
 
     @Override

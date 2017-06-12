@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.structure.abcalender;
 
+import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainContract;
 
 /**
@@ -13,11 +14,11 @@ public interface CalendarContract {
         interface Controller extends MainContract.Controller{}
     }
 
-    interface View {
+    interface View extends Contract.BaseView{
 
     }
 
-    interface Controller {
+    interface Controller extends Contract.BaseController{
 
     }
 }
