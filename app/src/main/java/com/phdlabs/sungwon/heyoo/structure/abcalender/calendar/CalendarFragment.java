@@ -4,15 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.CalendarContract;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
+import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 
 /**
@@ -36,6 +40,8 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
 
     private RecyclerView mRecycler;
     private BaseListRecyclerAdapter<HeyooCalendar, BaseViewHolder> mAdapter;
+
+    private HeyooCalendarManager mCalendarManager;
 
     @NonNull
     @Override
@@ -70,6 +76,41 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
     }
 
     private void setUpRecycler(){
+        mAdapter = new BaseListRecyclerAdapter<HeyooCalendar, BaseViewHolder>() {
+            @Override
+            protected void onBindItemViewHolder(BaseViewHolder viewHolder, HeyooCalendar data, int position, int type) {
+                bindItemViewHolder(viewHolder, data);
+            }
+
+            @Override
+            protected BaseViewHolder viewHolder(LayoutInflater inflater, ViewGroup parent, int type) {
+                return new BaseViewHolder(R.layout.card_view_calendar, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                        views.click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                HeyooCalendar calendar = getItem(getAdapterPosition());
+                                showCalendarDetails(calendar);
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void putViewsIntoMap(ViewMap views) {
+                        views.put(R.id.cvh_top_date_text, R.id.cvh_time, R.id.cvh_event_title);
+                    }
+                };
+            }
+        };
+    }
+
+    private void bindItemViewHolder(BaseViewHolder viewHolder, HeyooCalendar calendar){
+
+    }
+
+    @Override
+    public void showCalendarDetails(HeyooCalendar calendar) {
 
     }
 }

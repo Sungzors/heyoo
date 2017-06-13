@@ -7,9 +7,9 @@
         android:src="@drawable/shape_circle_orange"
         android:layout_gravity="center"/>
     <ImageView
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:src="@drawable/ic_people"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/ic_members"
         android:layout_gravity="center"/>
 
 </FrameLayout>
