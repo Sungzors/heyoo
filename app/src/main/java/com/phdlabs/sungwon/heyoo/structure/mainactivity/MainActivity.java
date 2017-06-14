@@ -14,6 +14,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.data.AccountManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
+import com.phdlabs.sungwon.heyoo.structure.abcalender.calendar.CalendarActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
 
@@ -156,7 +157,8 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showCalendarPage() {
-
+        Intent intent = new Intent(this, CalendarActivity.class);
+        this.startActivity(intent);
     }
 
     @Override

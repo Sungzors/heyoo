@@ -17,5 +17,6 @@ public class Constants {
         String EVENT_DETAIL = "eventdetail";
         String LOGIN_PHONE = "loginphone";
         String LOGIN_COUNTRY_CODE = "logincountrycode";
+        String LOGIN_REGISTER_STATUS = "isregister";
     }
 }

@@ -28,4 +28,6 @@ public class HeyooCalendarManager {
         mHeyooEndpoint = Rest.getInstance().getHeyooEndpoint();
         mMap = new SparseArray<>();
     }
+
+
 }

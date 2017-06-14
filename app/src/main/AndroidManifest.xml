@@ -30,6 +30,10 @@
         <activity
             android:name=".structure.login.login.LoginActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".structure.abcalender.calendar.CalendarActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
