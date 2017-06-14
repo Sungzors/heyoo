@@ -173,6 +173,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showAlertsPage() {
+        String key = AccountManager.getInstance().debugGetKey(this);
         Toast.makeText(this, AccountManager.getInstance().debugGetKey(this), Toast.LENGTH_SHORT).show();
     }
 

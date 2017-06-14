@@ -11,4 +11,10 @@
     <color name="unselectGrey">#40cfcfcf</color>
     <color name="unselectfullGrey">#cfcfcf</color>
     <color name="shadow">#e0e0e0</color>
+    <color name="butterscotch">#ffb33d</color>
+    <color name="seaFoamBlue">#51bfcc</color>
+    <color name="seaFoamGreen">#68d2aa</color>
+    <color name="paleRed">#df4442</color>
+    <color name="amethyst">#925bbd</color>
+    <color name="dimYellow">#f0e757</color>
 </resources>

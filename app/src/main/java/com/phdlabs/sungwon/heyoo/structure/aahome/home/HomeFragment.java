@@ -130,6 +130,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mEventList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mEventList.setAdapter(mRecyclerAdapter);
 
+
+
         super.onViewCreated(view, savedInstanceState);
     }
 
