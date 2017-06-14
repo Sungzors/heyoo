@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome.event;
+package com.phdlabs.sungwon.heyoo.structure.acevents.event;
 
 import android.content.Context;
 

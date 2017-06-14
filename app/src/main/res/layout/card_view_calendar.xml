@@ -25,21 +25,21 @@
                 android:background="@drawable/tab_left_of_card"
                 />
             <TextView
-                android:id="@+id/cvc_event_title"
+                android:id="@+id/cvc_calendar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/cvc_tab_left"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="25dp"
-                android:text="I AM AN EVENT HELLO - hello"
+                android:text="I AM A CALENDAR HELLO - hello"
                 android:textSize="14sp"
                 fontPath="fonts/Avenir-Oblique-webfont"/>
             <FrameLayout
-                android:id="@+id/cvc_event_alert_icon"
+                android:id="@+id/cvc_calendar_alert_icon"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="25dp"
-                android:layout_below="@id/cvc_event_title"
+                android:layout_below="@id/cvc_calendar_title"
                 android:layout_toEndOf="@id/cvc_tab_left"
                 android:layout_marginTop="7dp">
                 <include layout="@layout/draw_circle_alert_orange"
@@ -47,11 +47,11 @@
                     android:layout_width="match_parent"/>
             </FrameLayout>
             <TextView
-                android:id="@+id/cvc_event_alert_number"
+                android:id="@+id/cvc_calendar_alert_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cvc_event_title"
-                android:layout_toEndOf="@id/cvc_event_alert_icon"
+                android:layout_below="@id/cvc_calendar_title"
+                android:layout_toEndOf="@id/cvc_calendar_alert_icon"
                 android:layout_marginTop="15dp"
                 android:text="5"
                 android:textSize="11sp"
@@ -59,11 +59,11 @@
                 android:layout_marginStart="11dp"
                 fontPath="fonts/Avenir-Medium-webfont"/>
             <FrameLayout
-                android:id="@+id/cvc_event_people_icon"
+                android:id="@+id/cvc_calendar_people_icon"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:layout_below="@id/cvc_event_title"
-                android:layout_toEndOf="@id/cvc_event_alert_number"
+                android:layout_below="@id/cvc_calendar_title"
+                android:layout_toEndOf="@id/cvc_calendar_alert_number"
                 android:src="@drawable/itopensitseyes"
                 android:layout_marginTop="7dp"
                 android:layout_marginStart="20dp">
@@ -72,11 +72,11 @@
                     android:layout_width="match_parent"/>
             </FrameLayout>
             <TextView
-                android:id="@+id/cvc_event_people_number"
+                android:id="@+id/cvc_calendar_people_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cvc_event_title"
-                android:layout_toEndOf="@id/cvc_event_people_icon"
+                android:layout_below="@id/cvc_calendar_title"
+                android:layout_toEndOf="@id/cvc_calendar_people_icon"
                 android:text="1"
                 android:textSize="11sp"
                 android:layout_marginStart="11dp"

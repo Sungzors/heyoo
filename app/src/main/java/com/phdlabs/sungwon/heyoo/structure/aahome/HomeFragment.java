@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome.home;
+package com.phdlabs.sungwon.heyoo.structure.aahome;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -20,9 +20,9 @@ import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
-import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventFragment;
-import com.phdlabs.sungwon.heyoo.structure.aahome.eventdraft.EventDraftFragment;
-import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
+import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventFragment;
+import com.phdlabs.sungwon.heyoo.structure.acevents.eventdraft.EventDraftFragment;
+import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;

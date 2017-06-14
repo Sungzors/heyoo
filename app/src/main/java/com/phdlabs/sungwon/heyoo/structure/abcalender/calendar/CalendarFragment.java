@@ -19,6 +19,8 @@ import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 
+import java.util.List;
+
 /**
  * Created by SungWon on 6/12/2017.
  */
@@ -37,6 +39,8 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
     private TextView mCardAlertNum;
     private ImageView mCardPeopleIcon;
     private TextView mCardPeopleNum;
+
+    private List<HeyooCalendar> mCalendars;
 
     private RecyclerView mRecycler;
     private BaseListRecyclerAdapter<HeyooCalendar, BaseViewHolder> mAdapter;
@@ -73,7 +77,11 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
         mCalendarTitle = findById(R.id.fc_calendar_title);
         mCalendarAdd = findById(R.id.fc_calendar_add);
         mRecycler = findById(R.id.fc_calendar_list);
+        mCalendarManager = HeyooCalendarManager.getInstance(getContext());
+        mCalendarManager.loadCalendars();
+        mCalendars = mCalendarManager.getCalendars();
     }
+
 
     private void setUpRecycler(){
         mAdapter = new BaseListRecyclerAdapter<HeyooCalendar, BaseViewHolder>() {
@@ -95,17 +103,18 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
                             }
                         });
                     }
-
-                    @Override
-                    protected void putViewsIntoMap(ViewMap views) {
-                        views.put(R.id.cvh_top_date_text, R.id.cvh_time, R.id.cvh_event_title);
-                    }
                 };
             }
         };
     }
 
     private void bindItemViewHolder(BaseViewHolder viewHolder, HeyooCalendar calendar){
+        mTabLeft = findById(R.id.cvc_tab_left);
+        mCardEventTitle = findById(R.id.cvc_calendar_title);
+        mCardAlertIcon = findById(R.id.dcao_icon_background);
+        mCardAlertNum = findById(R.id.cvc_calendar_alert_number);
+        mCardPeopleIcon = findById(R.id.dcco_cal_icon_back);
+        mCardPeopleNum = findById(R.id.cvc_calendar_people_number);
 
     }
 

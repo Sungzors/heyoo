@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome.home;
+package com.phdlabs.sungwon.heyoo.structure.aahome;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;

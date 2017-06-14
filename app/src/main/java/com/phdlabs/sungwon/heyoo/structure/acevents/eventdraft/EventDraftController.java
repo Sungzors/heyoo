@@ -1,7 +1,7 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome.eventdraft;
+package com.phdlabs.sungwon.heyoo.structure.acevents.eventdraft;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
-import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventContract;
+import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventContract;
 
 /**
  * Created by SungWon on 6/5/2017.

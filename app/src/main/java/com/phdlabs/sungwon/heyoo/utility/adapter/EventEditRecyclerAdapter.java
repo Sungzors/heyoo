@@ -15,7 +15,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
-import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditContract;
+import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.HeyooDatePicker;
 import com.phdlabs.sungwon.heyoo.utility.ImageExpander;

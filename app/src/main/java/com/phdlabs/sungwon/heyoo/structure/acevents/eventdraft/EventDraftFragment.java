@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome.eventdraft;
+package com.phdlabs.sungwon.heyoo.structure.acevents.eventdraft;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
-import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventContract;
-import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
+import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventContract;
+import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;

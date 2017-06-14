@@ -6,9 +6,9 @@ package com.phdlabs.sungwon.heyoo.api.event;
 
 public class CalendarRetrievalEvent extends Event {
 
-    CalendarRetrievalEvent(){super();}
+    public CalendarRetrievalEvent(){super();}
 
-    CalendarRetrievalEvent(String message){
+    public CalendarRetrievalEvent(String message){
         super(message);
     }
 }

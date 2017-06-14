@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome.home;
+package com.phdlabs.sungwon.heyoo.structure.aahome;
 
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainController;
 

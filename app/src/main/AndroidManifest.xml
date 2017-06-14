@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".structure.aahome.eventedit.EventEditActivity"
+            android:name=".structure.acevents.eventedit.EventEditActivity"
             android:screenOrientation="portrait"/>
 
         <activity

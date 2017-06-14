@@ -1,4 +1,4 @@
-package com.phdlabs.sungwon.heyoo.structure.aahome.eventedit;
+package com.phdlabs.sungwon.heyoo.structure.acevents.eventedit;
 
 import android.content.Context;
 import android.widget.Toast;
