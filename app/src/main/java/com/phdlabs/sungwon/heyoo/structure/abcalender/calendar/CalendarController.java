@@ -14,8 +14,12 @@ public class CalendarController implements CalendarContract.Controller {
         this.mView = mView;
     }
 
-    public void onStart() {
+    @Override
+    public void onEdit() {
 
+    }
+
+    public void onStart() {
     }
 
     @Override

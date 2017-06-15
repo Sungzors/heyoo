@@ -20,6 +20,6 @@ public interface CalendarContract {
     }
 
     interface Controller extends Contract.BaseController{
-
+        void onEdit();
     }
 }

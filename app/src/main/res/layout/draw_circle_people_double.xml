@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
     <ImageView
+        android:id="@+id/dcpd_people_icon_bg"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/shape_circle_orange"
+        android:background="@drawable/shape_circle_orange"
         android:layout_gravity="center"/>
     <ImageView
         android:layout_width="15dp"

@@ -12,9 +12,9 @@ import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.data.AccountManager;
-import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
-import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.calendar.CalendarActivity;
+import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
 

@@ -75,7 +75,14 @@ public class HeyooCalendarManager {
     }
 
     private void bindCalendars(List<HeyooCalendar> list){
+        if(!mCalendars.isEmpty()){
+            mCalendars.clear();
+        }
         mCalendars.addAll(list);
+    }
+
+    public EventBus getEventBus(){
+        return mEvents;
     }
 
     public List<HeyooCalendar> getCalendars() {

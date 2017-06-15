@@ -10,9 +10,9 @@ import java.util.List;
 
 public class CalendarRetrievalResponse extends ErrorResponse {
 
-    List<HeyooCalendar> calendar;
+    List<HeyooCalendar> calendars;
 
     public List<HeyooCalendar> getCalendar() {
-        return calendar;
+        return calendars;
     }
 }

@@ -122,7 +122,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
                 mLastHeyooEvent = mDummyHeyooEvent;
             }
         });
-
         showCalendarOption();
         showAddOption();
         setupRecyclerAdapter();

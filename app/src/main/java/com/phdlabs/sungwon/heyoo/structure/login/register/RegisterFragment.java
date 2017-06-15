@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginContract;
 import com.phdlabs.sungwon.heyoo.utility.Constants;

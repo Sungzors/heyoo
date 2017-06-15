@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffab40</color>
+    <color name="colorPrimary">#ffb33d</color>
     <color name="colorPrimaryDark">#ffa000</color>
     <color name="colorAccent">#304ffe</color>
     <color name="white">#ffffff</color>
@@ -17,4 +17,5 @@
     <color name="paleRed">#df4442</color>
     <color name="amethyst">#925bbd</color>
     <color name="dimYellow">#f0e757</color>
+    <color name="darkPink">#f66993</color>
 </resources>
