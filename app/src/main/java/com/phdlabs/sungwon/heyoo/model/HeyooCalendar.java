@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by SungWon on 4/25/2017.
  */
 
-public class HeyooCalendar {
+public class HeyooCalendar implements Serializable{
 
     private int id;
     private String name;

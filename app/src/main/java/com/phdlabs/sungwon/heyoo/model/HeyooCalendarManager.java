@@ -49,6 +49,7 @@ public class HeyooCalendarManager {
         mPref = new Preferences(mContext);
         mEvents = new EventBus();
         mCalendars = new ArrayList<>();
+        loadCalendars();
     }
 
     public void loadCalendars(){
@@ -87,5 +88,14 @@ public class HeyooCalendarManager {
 
     public List<HeyooCalendar> getCalendars() {
         return mCalendars;
+    }
+
+    public HeyooCalendar getCalendar(int calID){
+        for (int i = 0; i < mCalendars.size(); i++) {
+            if(mCalendars.get(i).getId()==calID){
+                return mCalendars.get(i);
+            }
+        }
+        return null;
     }
 }

@@ -168,7 +168,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         mNotes = baseViewHolder.get(R.id.cves_event_status);
         mNotes.setSingleLine(false);
         mNotes.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
-        mCalendar = baseViewHolder.get(R.id.cves_calendar_name);
+        mCalendar = baseViewHolder.get(R.id.fca_calendar_edit_name);
         mCalendar.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
         if (!isNull){
             mLocation.setText(event.getAddress());

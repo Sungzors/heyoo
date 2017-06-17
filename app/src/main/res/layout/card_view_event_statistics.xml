@@ -19,172 +19,176 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <FrameLayout
                 android:id="@+id/cves_location_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp">
-                <include layout="@layout/draw_circle_location_orange"/>
+
+                <include layout="@layout/draw_circle_location_orange" />
             </FrameLayout>
 
             <EditText
                 android:id="@+id/cves_event_address"
+                style="@style/TextAppearance.EditText"
+                fontPath="fonts/NunitoSans-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/cves_location_icon"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:inputType="textPersonName"
+                android:layout_toEndOf="@id/cves_location_icon"
                 android:hint="Address"
+                android:inputType="textPersonName"
                 android:text="4515 Portola Pkwy \nIrvine, CA 92620"
-                fontPath="fonts/NunitoSans-Regular.ttf"
-                style="@style/TextAppearance.EditText"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <View
                 android:id="@+id/cves_divider_1"
                 android:layout_width="350dp"
                 android:layout_height="1dp"
                 android:layout_below="@id/cves_location_icon"
-                android:background="@color/shadow"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:layout_centerHorizontal="true"/>
+                android:background="@color/shadow" />
 
             <FrameLayout
                 android:id="@+id/cves_description_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_below="@id/cves_divider_1"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/cves_divider_1">
-                <include layout="@layout/draw_circle_description_orange"/>
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp">
+
+                <include layout="@layout/draw_circle_description_orange" />
             </FrameLayout>
 
             <EditText
                 android:id="@+id/cves_event_status"
+                style="@style/TextAppearance.EditText"
+                fontPath="fonts/NunitoSans-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/cves_location_icon"
                 android:layout_below="@id/cves_divider_1"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                style="@style/TextAppearance.EditText"
-                android:text="Day 1 of the West Coast Swim \nTournament"
-                android:textSize="12sp"
-                android:inputType="textPersonName"
+                android:layout_toEndOf="@id/cves_location_icon"
                 android:hint="Notes"
-                fontPath="fonts/NunitoSans-Regular.ttf"/>
+                android:inputType="textPersonName"
+                android:text="Day 1 of the West Coast Swim \nTournament"
+                android:textSize="12sp" />
 
             <View
                 android:id="@+id/cves_divider_2"
                 android:layout_width="350dp"
                 android:layout_height="1dp"
                 android:layout_below="@id/cves_description_icon"
-                android:background="@color/shadow"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:layout_centerHorizontal="true"/>
+                android:background="@color/shadow" />
 
             <FrameLayout
-                android:id="@+id/cves_calendar_icon"
+                android:id="@+id/fca_calendar_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_below="@id/cves_divider_2"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/cves_divider_2">
-                <include layout="@layout/draw_circle_calendar_orange"/>
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp">
+
+                <include layout="@layout/draw_circle_calendar_orange" />
             </FrameLayout>
 
             <ImageView
-                android:id="@+id/cves_blue_dot_of_death_knell"
+                android:id="@+id/fca_blue_dot_of_death_knell"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:src="@drawable/shape_circle_blue"
                 android:layout_below="@id/cves_divider_2"
-                android:layout_toRightOf="@id/cves_calendar_icon"
-                android:layout_toEndOf="@id/cves_calendar_icon"
-                android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="22dp"/>
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="22dp"
+                android:layout_toEndOf="@id/fca_calendar_icon"
+                android:layout_toRightOf="@id/fca_calendar_icon"
+                android:src="@drawable/shape_circle_blue" />
 
             <EditText
-                android:id="@+id/cves_calendar_name"
+                android:id="@+id/fca_calendar_edit_name"
+                style="@style/TextAppearance.EditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/cves_blue_dot_of_death_knell"
-                android:layout_toEndOf="@id/cves_blue_dot_of_death_knell"
                 android:layout_below="@id/cves_divider_2"
-                android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
-                style="@style/TextAppearance.EditText"
-                android:inputType="textPersonName"
+                android:layout_toEndOf="@id/fca_blue_dot_of_death_knell"
+                android:layout_toRightOf="@id/fca_blue_dot_of_death_knell"
                 android:hint="Calendar"
+                android:inputType="textPersonName"
                 android:text="Swim 2016 (Shared)"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <View
                 android:id="@+id/cves_divider_3"
                 android:layout_width="350dp"
                 android:layout_height="1dp"
-                android:layout_below="@id/cves_calendar_icon"
-                android:background="@color/shadow"
+                android:layout_below="@id/fca_calendar_icon"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:layout_centerHorizontal="true"/>
+                android:background="@color/shadow" />
 
             <FrameLayout
                 android:id="@+id/cves_reminder_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_below="@id/cves_divider_3"
                 android:layout_marginBottom="15dp"
-                android:layout_below="@id/cves_divider_3">
-                <include layout="@layout/draw_circle_reminder_orange"/>
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp">
+
+                <include layout="@layout/draw_circle_reminder_orange" />
             </FrameLayout>
 
             <TextView
                 android:id="@+id/cves_reminder_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/cves_reminder_icon"
                 android:layout_below="@id/cves_divider_3"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="19dp"
+                android:layout_toEndOf="@id/cves_reminder_icon"
                 android:text="Reminders"
-                android:textSize="13sp"
                 android:textColor="@color/black"
-                />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/cves_add_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_below="@id/cves_divider_3"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_below="@id/cves_divider_3"
+                android:gravity="center_horizontal"
                 android:text="+"
-                android:textSize="30sp"
-                android:gravity="center_horizontal"/>
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:id="@+id/cves_reminder_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_below="@id/cves_reminder_text"
-                android:layout_toEndOf="@id/cves_reminder_icon"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@id/cves_reminder_icon"
+                android:orientation="horizontal">
 
             </LinearLayout>
         </RelativeLayout>
-        
+
 
     </android.support.v7.widget.CardView>
 

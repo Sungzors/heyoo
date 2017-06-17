@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -101,27 +100,27 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
         mToolbar = ((MainActivity)getActivity()).getToolbar();
         mMenu = mToolbar.getMenu();
         mMenu.clear();
-        mToolbar.inflateMenu(R.menu.menu_edit);
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return onOptionsItemSelected(item);
-            }
-        });
+//        mToolbar.inflateMenu(R.menu.menu_edit);
+//        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                return onOptionsItemSelected(item);
+//            }
+//        });
 
         mCalendarManager = HeyooCalendarManager.getInstance(getContext());
         mCalendarManager.loadCalendars();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                controller.onEdit();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_edit:
+//                controller.onEdit();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Subscribe
     public void onEventMainThread(CalendarRetrievalEvent event){

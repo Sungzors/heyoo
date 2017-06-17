@@ -20,6 +20,7 @@ public class Constants {
         String LOGIN_PHONE = "loginphone";
         String LOGIN_COUNTRY_CODE = "logincountrycode";
         String LOGIN_REGISTER_STATUS = "isregister";
+        String HOME_CALENDAR_ID = "homecalid";
     }
 
     public static int getColor(String color){

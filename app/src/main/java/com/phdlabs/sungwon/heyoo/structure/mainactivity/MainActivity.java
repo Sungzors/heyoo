@@ -92,7 +92,6 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         mTabLayout.addTab(messages);
         mTabLayout.addTab(alerts);
         TabLayout.Tab tab = mTabLayout.getTabAt(0);
-        tab.select();
     }
 
     @Tab
@@ -146,7 +145,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
+        onTabSelected(tab);
     }
 
     @Override

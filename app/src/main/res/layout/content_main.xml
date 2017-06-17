@@ -42,6 +42,7 @@
             app:tabIndicatorHeight="3dp"
             app:tabIndicatorColor="@color/tabselected"
             app:tabTextAppearance="@style/TextAppearance.Tab"
+            app:tabGravity="fill"
             />
 
     </FrameLayout>

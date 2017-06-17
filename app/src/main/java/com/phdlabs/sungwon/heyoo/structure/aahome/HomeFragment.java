@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventdraft.EventDraftFragment;
@@ -26,6 +27,7 @@ import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
+import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.EventDecorator;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
@@ -73,6 +75,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     private Calendar mToday;
     private RecyclerView mEventList;
 
+    private HeyooCalendarManager mCalendarManager;
+
+    private int mCalID = -1;
+
     @NonNull
     @Override
     protected HomeContract.Controller createController() {
@@ -86,10 +92,17 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         return fragment;
     }
 
+    public static HomeFragment newInstance(int calID){
+        Bundle args = new Bundle();
+        HomeFragment fragment = new HomeFragment();
+        args.putInt(Constants.BundleKeys.HOME_CALENDAR_ID, calID);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-        getBaseActivity().setToolbarTitle(R.string.home);
     }
 
     @Override
@@ -101,6 +114,13 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 //        mTestText = findById(R.id.test_text2);
 //        mTestText.setText("hello");
+        mCalID = getArguments().getInt(Constants.BundleKeys.HOME_CALENDAR_ID, -1);
+        mCalendarManager = HeyooCalendarManager.getInstance(getContext());
+        if(mCalID == -1){
+            getBaseActivity().setToolbarTitle(R.string.home);
+        } else {
+            getBaseActivity().setToolbarTitle(mCalendarManager.getCalendar(mCalID).getName());
+        }
         mTabLayout = findById(R.id.tab_layout);
         mCalendarView = findById(R.id.material_calendar_view);
         mCalendarView.addDecorator(this);
