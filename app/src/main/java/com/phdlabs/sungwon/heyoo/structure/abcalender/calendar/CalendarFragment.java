@@ -18,7 +18,9 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.event.CalendarRetrievalEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeFragment;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.CalendarContract;
+import com.phdlabs.sungwon.heyoo.structure.abcalender.add.CalendarAddFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
@@ -110,6 +112,12 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
 
         mCalendarManager = HeyooCalendarManager.getInstance(getContext());
         mCalendarManager.loadCalendars();
+        mCalendarAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getBaseActivity().replaceFragment(CalendarAddFragment.newInstance(), true);
+            }
+        });
     }
 
 //    @Override
@@ -178,11 +186,11 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
         mCardAlertNum.setText(String.valueOf(2));
         GradientDrawable peopleshape = (GradientDrawable)mCardPeopleIcon.getBackground();
         peopleshape.setColor(Constants.getColor(calendar.getColor()));
-        mCardPeopleNum.setText(String.valueOf(3));
+        mCardPeopleNum.setText(String.valueOf(3));//TODO: set number value according to size of list of users
     }
 
     @Override
     public void showCalendarDetails(HeyooCalendar calendar) {
-
+        getBaseActivity().replaceFragment(HomeFragment.newInstance(calendar.getId()),true);
     }
 }
