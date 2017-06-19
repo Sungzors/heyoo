@@ -15,7 +15,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
-import com.phdlabs.sungwon.heyoo.structure.aahome.event.EventContract;
+import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.CustomLinearLayoutManager;
 import com.phdlabs.sungwon.heyoo.utility.ImageExpander;
@@ -149,11 +149,11 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         status.setEnabled(false);
         status.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
         status.setText(event.getDescription());
-        EditText calendar = baseViewHolder.get(R.id.cves_calendar_name);
+        EditText calendar = baseViewHolder.get(R.id.fca_calendar_edit_name);
         calendar.setSingleLine(false);
         calendar.setEnabled(false);
         calendar.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
-        ((TextView) baseViewHolder.get(R.id.cves_calendar_name)).setText("Main Calendar");
+        ((TextView) baseViewHolder.get(R.id.fca_calendar_edit_name)).setText("Main Calendar");
     }
 
     private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){

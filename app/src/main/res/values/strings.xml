@@ -27,4 +27,13 @@
     <string name="login">Login</string>
     <string name="sign_in">Sign in</string>
     <string name="register_inquiry">Don\'t have an account? Register Here</string>
+    <string name="my_calendars">My Calendars</string>
+    <string name="create_calendar">Create Calendar</string>
+    <string name="amethyst">amethyst</string>
+    <string name="butterscotch">butterscotch</string>
+    <string name="seafoamblue">seaFoamBlue</string>
+    <string name="seafoamgreen">seaFoamGreen</string>
+    <string name="palered">paleRed</string>
+    <string name="dimyellow">dimYellow</string>
+    <string name="darkpink">darkPink</string>
 </resources>

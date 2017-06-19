@@ -6,4 +6,8 @@ package com.phdlabs.sungwon.heyoo.api.response;
 
 public class ResendResponse extends ErrorResponse {
 
+    //TODO: Do Relog
+
+
+
 }

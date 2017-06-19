@@ -15,7 +15,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
-import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditContract;
+import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.HeyooDatePicker;
 import com.phdlabs.sungwon.heyoo.utility.ImageExpander;
@@ -168,7 +168,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         mNotes = baseViewHolder.get(R.id.cves_event_status);
         mNotes.setSingleLine(false);
         mNotes.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
-        mCalendar = baseViewHolder.get(R.id.cves_calendar_name);
+        mCalendar = baseViewHolder.get(R.id.fca_calendar_edit_name);
         mCalendar.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
         if (!isNull){
             mLocation.setText(event.getAddress());

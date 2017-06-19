@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginContract;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
@@ -26,6 +26,7 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
 
     private String mPhone;
     private String mCountry;
+    private boolean isRegister;
 
     private EditText mCode;
     private TextView mResend;
@@ -33,10 +34,11 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
     private TextView mCancel;
 
 
-    public static RegisterFragment newInstance(String phone, String country){
+    public static RegisterFragment newInstance(String phone, String country, boolean isRegister){
         Bundle args = new Bundle();
         args.putString(Constants.BundleKeys.LOGIN_PHONE, phone);
         args.putString(Constants.BundleKeys.LOGIN_COUNTRY_CODE, country);
+        args.putBoolean(Constants.BundleKeys.LOGIN_REGISTER_STATUS, isRegister);
         RegisterFragment fragment = new RegisterFragment();
         fragment.setArguments(args);
         return fragment;
@@ -64,6 +66,7 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
         Bundle args = getArguments();
         mPhone = args.getString(Constants.BundleKeys.LOGIN_PHONE);
         mCountry = args.getString(Constants.BundleKeys.LOGIN_COUNTRY_CODE);
+        isRegister = args.getBoolean(Constants.BundleKeys.LOGIN_REGISTER_STATUS);
         mCode = findById(R.id.fr_confirmation_code);
         mResend = findById(R.id.fr_resend);
         mCreate = findById(R.id.fr_create_button);
@@ -71,6 +74,11 @@ public class RegisterFragment extends BaseFragment<LoginContract.Register.Contro
         mResend.setOnClickListener(this);
         mCreate.setOnClickListener(this);
         mCancel.setOnClickListener(this);
+        if(isRegister){
+            mCreate.setText("Create Account");
+        } else {
+            mCreate.setText("Login");
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
 
@@ -64,6 +65,14 @@
         <item name="android:imeOptions">actionNext</item>
     </style>
 
+    <style name="TextAppearance.General">
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="fontPath">fonts/NunitoSans-Regular.ttf</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="TextAppearance.Toolbar">
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
@@ -78,6 +87,11 @@
         <item name="android:layout_marginEnd">5dp</item>
         <item name="android:layout_marginTop">1dp</item>
         <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="CardView.GeneralMargins">
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginTop">15dp</item>
     </style>
 
 </resources>

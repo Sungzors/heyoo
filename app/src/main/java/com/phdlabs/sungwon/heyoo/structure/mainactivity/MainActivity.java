@@ -12,8 +12,9 @@ import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.data.AccountManager;
-import com.phdlabs.sungwon.heyoo.structure.aahome.eventedit.EventEditFragment;
-import com.phdlabs.sungwon.heyoo.structure.aahome.home.HomeActivity;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
+import com.phdlabs.sungwon.heyoo.structure.abcalender.calendar.CalendarActivity;
+import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
 
@@ -91,7 +92,6 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         mTabLayout.addTab(messages);
         mTabLayout.addTab(alerts);
         TabLayout.Tab tab = mTabLayout.getTabAt(0);
-        tab.select();
     }
 
     @Tab
@@ -131,11 +131,16 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
             @Override
             public void onClick(View view) {
                 onBackPressed();
-                if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+                if(getSupportFragmentManager().getBackStackEntryCount() == 0){
                     mToolbar.setNavigationIcon(null);
                 }
             }
         });
+    }
+
+    public void eraseBackArrow(){
+        mToolbar.setNavigationIcon(null);
+        mToolbar.setNavigationOnClickListener(null);
     }
 
     @Override
@@ -145,7 +150,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
+        onTabSelected(tab);
     }
 
     @Override
@@ -156,7 +161,8 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showCalendarPage() {
-
+        Intent intent = new Intent(this, CalendarActivity.class);
+        this.startActivity(intent);
     }
 
     @Override
@@ -173,6 +179,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showAlertsPage() {
+        String key = AccountManager.getInstance().debugGetKey(this);
         Toast.makeText(this, AccountManager.getInstance().debugGetKey(this), Toast.LENGTH_SHORT).show();
     }
 

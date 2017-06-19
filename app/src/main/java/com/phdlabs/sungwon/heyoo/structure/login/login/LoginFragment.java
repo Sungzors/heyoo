@@ -91,7 +91,7 @@ public class LoginFragment extends BaseFragment<LoginContract.Controller>
 
     @Override
     public void showVerify(String phone, String country_code) {
-        getBaseActivity().replaceFragment(RegisterFragment.newInstance(phone, country_code), true);
+        getBaseActivity().replaceFragment(RegisterFragment.newInstance(phone, country_code, isRegister), true);
     }
 
     @Override

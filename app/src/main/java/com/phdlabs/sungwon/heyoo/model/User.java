@@ -23,6 +23,25 @@ public class User {
     private Date created_at;
     private Date updated_at;
 
+    public User(String avatar, Integer id, String first_name, String last_name, String phone, String email, String country_code, String profile_picture, String city, String passcode, Date passcode_expire, boolean verified) {
+        this.avatar = avatar;
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.phone = phone;
+        this.email = email;
+        this.country_code = country_code;
+        this.profile_picture = profile_picture;
+        this.city = city;
+        this.passcode = passcode;
+        this.passcode_expire = passcode_expire;
+        this.verified = verified;
+    }
+
+    public User(Integer id) {
+        this.id = id;
+    }
+
     public String getAvatar() {
         return avatar;
     }

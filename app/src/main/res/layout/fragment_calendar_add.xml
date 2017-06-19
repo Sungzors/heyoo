@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingPrefix">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_calendar_add_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:contentPadding="0dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/fca_calendar_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calendar Name"
+                fontPath="fonts/NunitoSans-Regular.ttf"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"/>
+
+            <ImageView
+                android:id="@+id/fca_blue_dot_of_death_knell"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_below="@id/fca_calendar_name"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                fontPath="fonts/NunitoSans-Regular.ttf"
+                android:src="@drawable/shape_circle_blue" />
+
+            <EditText
+                android:id="@+id/fca_calendar_edit_name"
+                style="@style/TextAppearance.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fca_calendar_name"
+                fontPath="fonts/NunitoSans-Regular.ttf"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/fca_blue_dot_of_death_knell"
+                android:hint="Your Calendar Name"
+                android:inputType="textPersonName"
+                android:imeOptions="actionDone"
+                android:text="Swim 2016 (Shared)"
+                android:maxLines="1"
+                android:textSize="12sp" />
+
+            <View
+                android:id="@+id/fca_divider_1"
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="65dp"
+                android:background="@color/shadow" />
+
+            <TextView
+                android:id="@+id/fca_calendar_color_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fca_divider_1"
+                style="@style/TextAppearance.General"
+                android:text="Calendar Color"/>
+
+            <RadioGroup
+                android:id="@+id/fca_radiogroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fca_calendar_color_title"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+                <RadioButton
+                    android:id="@+id/fca_butterscotch"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_butterscotch"
+                    android:checked="true"/>
+                <RadioButton
+                    android:id="@+id/fca_seafoamBlue"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_seafoamblue"/>
+
+                <RadioButton
+                    android:id="@+id/fca_seafoamGreen"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_seafoamgreen"/>
+
+                <RadioButton
+                    android:id="@+id/fca_paleRed"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_palered"/>
+
+                <RadioButton
+                    android:id="@+id/fca_amethyst"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_amethyst"/>
+
+                <RadioButton
+                    android:id="@+id/fca_dimYellow"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_dimyellow"/>
+
+                <RadioButton
+                    android:id="@+id/fca_darkPink"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_darkpink" />
+            </RadioGroup>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_calendar_add_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:contentPadding="0dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="3dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:id="@+id/fca_share_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                style="@style/CardView.GeneralMargins">
+                <include layout="@layout/draw_circle_people_orange"/>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.General"
+                android:textSize="14sp"
+                android:layout_toEndOf="@id/fca_share_icon"
+                android:layout_marginTop="19dp"
+                android:text="Share Calendar"/>
+
+            <TextView
+                android:id="@+id/fca_share_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:textSize="25sp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"/>
+
+            <EditText
+                android:id="@+id/fca_empty_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="+ Share Calendar With Other People"
+                style="@style/TextAppearance.General"
+                android:background="@android:color/transparent"
+                android:layout_below="@id/fca_share_icon"
+                android:textSize="14sp"
+                android:layout_marginBottom="15dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fca_share_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_below="@id/fca_share_icon"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-51dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="-51dp"
+        android:background="@color/shadow" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+        <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:mrl_rippleRoundedCorners="3dp"
+            android:background="@color/butterscotch">
+            <Button
+                android:id="@+id/fca_publish_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:text="Publish"
+                android:textSize="13sp"
+                android:textColor="@color/white"/>
+        </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,14 +8,17 @@ import java.util.List;
  * Created by SungWon on 4/25/2017.
  */
 
-public class HeyooCalendar {
+public class HeyooCalendar implements Serializable{
 
     private int id;
     private String name;
     private String color;
+    private int owner_id;
     private Date created_at;
     private Date updated_at;
     private transient List<HeyooEvent> eventsList;
+    private int user_id;
+
 
     public List<HeyooEvent> getEventsList() {
         return eventsList;
@@ -30,6 +34,32 @@ public class HeyooCalendar {
         this.color = color;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public HeyooCalendar(int id, String name, String color, int owner_id, Date created_at, Date updated_at, int user_id) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+        this.owner_id = owner_id;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.user_id = user_id;
+    }
+
+    public int getOwner_id() {
+        return owner_id;
+    }
+
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public int getId() {
