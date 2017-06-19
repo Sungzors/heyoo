@@ -20,6 +20,15 @@ public interface CalendarContract {
     }
 
     interface Controller extends Contract.BaseController{
-        void onEdit();
+
+    }
+
+    interface Add{
+        interface View extends Contract.BaseView{
+
+        }
+        interface Controller extends Contract.BaseController{
+
+        }
     }
 }

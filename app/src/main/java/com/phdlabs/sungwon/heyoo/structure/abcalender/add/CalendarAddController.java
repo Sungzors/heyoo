@@ -1,21 +1,21 @@
-package com.phdlabs.sungwon.heyoo.structure.abcalender.calendar;
+package com.phdlabs.sungwon.heyoo.structure.abcalender.add;
 
 import com.phdlabs.sungwon.heyoo.structure.abcalender.CalendarContract;
 
 /**
- * Created by SungWon on 6/12/2017.
+ * Created by SungWon on 6/19/2017.
  */
 
-public class CalendarController implements CalendarContract.Controller {
+public class CalendarAddController implements CalendarContract.Add.Controller {
 
-    CalendarContract.View mView;
+    CalendarContract.Add.View mView;
 
-    CalendarController(CalendarContract.View mView){
+    CalendarAddController(CalendarContract.Add.View mView){
         this.mView = mView;
     }
-
-
+    @Override
     public void onStart() {
+
     }
 
     @Override
