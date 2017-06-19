@@ -83,6 +83,7 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
     public void onStart() {
         super.onStart();
         getBaseActivity().setToolbarTitle(R.string.my_calendars);
+        ((MainActivity)getActivity()).eraseBackArrow();
         mCalendarManager.getEventBus().register(this);
     }
 
@@ -178,7 +179,16 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
         mCardAlertNum = viewHolder.get(R.id.cvc_calendar_alert_number);
         mCardPeopleIcon = viewHolder.get(R.id.dcpd_people_icon_bg);
         mCardPeopleNum = viewHolder.get(R.id.cvc_calendar_people_number);
-        mCardEventTitle.setText(calendar.getName());
+        String status;
+        if (calendar.getName().equals("Master")){
+            status = " (Main)";
+        } else if (calendar.getOwner_id()==7 /*TODO: insert owner id from gotten user*/){
+            status = " (Owner)";
+        } else {
+            status = " (Shared)";
+        }
+        mCardEventTitle.setText(calendar.getName()+status);
+
         GradientDrawable bgshape = (GradientDrawable)mTabLeft.getBackground();
         bgshape.setColor(Constants.getColor(calendar.getColor()));
         GradientDrawable alertshape = (GradientDrawable)mCardAlertIcon.getBackground();

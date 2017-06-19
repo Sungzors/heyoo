@@ -131,11 +131,16 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
             @Override
             public void onClick(View view) {
                 onBackPressed();
-                if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+                if(getSupportFragmentManager().getBackStackEntryCount() == 0){
                     mToolbar.setNavigationIcon(null);
                 }
             }
         });
+    }
+
+    public void eraseBackArrow(){
+        mToolbar.setNavigationIcon(null);
+        mToolbar.setNavigationOnClickListener(null);
     }
 
     @Override

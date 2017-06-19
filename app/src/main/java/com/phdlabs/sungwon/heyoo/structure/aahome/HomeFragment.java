@@ -103,6 +103,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     @Override
     public void onStart() {
         super.onStart();
+        ((MainActivity)getActivity()).eraseBackArrow();
     }
 
     @Override

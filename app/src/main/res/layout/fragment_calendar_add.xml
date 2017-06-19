@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:cardElevation="5dp"
         app:contentPadding="0dp"
-        android:layout_margin="2dp"
+        android:layout_margin="5dp"
         app:cardCornerRadius="3dp">
 
         <RelativeLayout
@@ -42,7 +42,7 @@
             <EditText
                 android:id="@+id/fca_calendar_edit_name"
                 style="@style/TextAppearance.EditText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fca_calendar_name"
                 fontPath="fonts/NunitoSans-Regular.ttf"
@@ -51,7 +51,9 @@
                 android:layout_toEndOf="@id/fca_blue_dot_of_death_knell"
                 android:hint="Your Calendar Name"
                 android:inputType="textPersonName"
+                android:imeOptions="actionDone"
                 android:text="Swim 2016 (Shared)"
+                android:maxLines="1"
                 android:textSize="12sp" />
 
             <View
@@ -72,92 +74,77 @@
 
             <RadioGroup
                 android:id="@+id/fca_radiogroup"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fca_calendar_color_title"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <RadioButton
-                        android:id="@+id/fca_butterscotch"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/shape_selector_butterscotch"
-                        android:checked="true"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <RadioButton
-                        android:id="@+id/fca_seafoamBlue"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/shape_selector_seafoamblue"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <RadioButton
-                        android:id="@+id/fca_seafoamGreen"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/shape_selector_seafoamgreen"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <RadioButton
-                        android:id="@+id/fca_paleRed"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/shape_selector_palered"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <RadioButton
-                        android:id="@+id/fca_amethyst"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/shape_selector_amethyst"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <RadioButton
-                        android:id="@+id/fca_dimYellow"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/shape_selector_dimyellow"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <RadioButton
-                        android:id="@+id/fca_darkPink"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/shape_selector_darkpink"/>
-                </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+                <RadioButton
+                    android:id="@+id/fca_butterscotch"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_butterscotch"
+                    android:checked="true"/>
+                <RadioButton
+                    android:id="@+id/fca_seafoamBlue"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_seafoamblue"/>
+
+                <RadioButton
+                    android:id="@+id/fca_seafoamGreen"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_seafoamgreen"/>
+
+                <RadioButton
+                    android:id="@+id/fca_paleRed"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_palered"/>
+
+                <RadioButton
+                    android:id="@+id/fca_amethyst"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_amethyst"/>
+
+                <RadioButton
+                    android:id="@+id/fca_dimYellow"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_dimyellow"/>
+
+                <RadioButton
+                    android:id="@+id/fca_darkPink"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:button="@null"
+                    android:background="@drawable/shape_selector_darkpink" />
             </RadioGroup>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
@@ -168,7 +155,7 @@
         android:layout_height="wrap_content"
         app:cardElevation="5dp"
         app:contentPadding="0dp"
-        android:layout_margin="2dp"
+        android:layout_margin="5dp"
         app:cardCornerRadius="3dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -209,7 +196,8 @@
                 style="@style/TextAppearance.General"
                 android:background="@android:color/transparent"
                 android:layout_below="@id/fca_share_icon"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:layout_marginBottom="15dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fca_share_list"

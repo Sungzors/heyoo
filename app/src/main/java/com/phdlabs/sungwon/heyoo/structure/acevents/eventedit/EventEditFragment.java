@@ -14,6 +14,7 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
 
@@ -71,6 +72,9 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
             getBaseActivity().setToolbarTitle(mEvent.getName());
         }
         mEventManager = HeyooEventManager.getInstance();
+        if(getChildFragmentManager().getBackStackEntryCount() == 0){
+            ((MainActivity)getActivity()).eraseBackArrow();
+        }
         showEventOption();
         showEventEdit();
     }

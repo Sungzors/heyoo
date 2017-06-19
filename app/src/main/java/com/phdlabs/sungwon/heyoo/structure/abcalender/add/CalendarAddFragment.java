@@ -114,7 +114,7 @@ public class CalendarAddFragment extends BaseFragment<CalendarContract.Add.Contr
     @Subscribe
     public void onEventMainThread(CalendarPostEvent event){
         if(event.isSuccess()){
-            onBackPressed();
+            getBaseActivity().onBackPressed();
         } else {
             showError(event.getErrorMessage());
         }
