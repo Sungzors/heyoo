@@ -164,7 +164,7 @@
                 android:id="@+id/fca_share_icon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                style="@style/CardView.GeneralMargins">
+                style="@style/CardView.ContentMargins">
                 <include layout="@layout/draw_circle_people_orange"/>
             </FrameLayout>
 

@@ -11,10 +11,7 @@
         android:id="@+id/card_view_event_statistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="5dp"
-        app:contentPadding="0dp"
-        style="@style/CardView.Margins"
-        app:cardCornerRadius="3dp">
+        style="@style/CardView.Margins">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -81,60 +78,12 @@
                 android:text="Day 1 of the West Coast Swim \nTournament"
                 android:textSize="12sp" />
 
-            <View
-                android:id="@+id/cves_divider_2"
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:layout_below="@id/cves_description_icon"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:background="@color/shadow" />
-
-            <FrameLayout
-                android:id="@+id/fca_calendar_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cves_divider_2"
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp">
-
-                <include layout="@layout/draw_circle_calendar_orange" />
-            </FrameLayout>
-
-            <ImageView
-                android:id="@+id/fca_blue_dot_of_death_knell"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_below="@id/cves_divider_2"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="22dp"
-                android:layout_toEndOf="@id/fca_calendar_icon"
-                android:layout_toRightOf="@id/fca_calendar_icon"
-                android:src="@drawable/shape_circle_blue" />
-
-            <EditText
-                android:id="@+id/fca_calendar_edit_name"
-                style="@style/TextAppearance.EditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cves_divider_2"
-                android:layout_marginLeft="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_toEndOf="@id/fca_blue_dot_of_death_knell"
-                android:layout_toRightOf="@id/fca_blue_dot_of_death_knell"
-                android:hint="Calendar"
-                android:inputType="textPersonName"
-                android:text="Swim 2016 (Shared)"
-                android:textSize="12sp" />
 
             <View
                 android:id="@+id/cves_divider_3"
                 android:layout_width="350dp"
                 android:layout_height="1dp"
-                android:layout_below="@id/fca_calendar_icon"
+                android:layout_below="@id/cves_description_icon"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:background="@color/shadow" />

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -47,7 +48,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
     List<ImageView> mImageDisplayList;
     EditText mLocation;
     EditText mNotes;
-    EditText mCalendar;
+    Spinner mCalendarSpinner;
 
     boolean isNull = true;
     HeyooEvent mEvent;
@@ -112,6 +113,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
     }
 
     private void bindTitleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
+        mCalendarSpinner = baseViewHolder.get(R.id.cvete_fidget_spinner);
         mTitle = baseViewHolder.get(R.id.cvete_event_title);
         mStartDate = baseViewHolder.get(R.id.cvete_start_date);
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm aaa");
@@ -168,12 +170,9 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         mNotes = baseViewHolder.get(R.id.cves_event_status);
         mNotes.setSingleLine(false);
         mNotes.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
-        mCalendar = baseViewHolder.get(R.id.fca_calendar_edit_name);
-        mCalendar.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
         if (!isNull){
             mLocation.setText(event.getAddress());
             mNotes.setText(event.getDescription());
-            mCalendar.setText("Main Calendar");
         }
     }
 

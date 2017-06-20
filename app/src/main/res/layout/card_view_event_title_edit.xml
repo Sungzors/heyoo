@@ -11,19 +11,35 @@
         android:id="@+id/card_view_event_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="5dp"
-        app:contentPadding="0dp"
-        style="@style/CardView.Margins"
-        app:cardCornerRadius="3dp">
+        style="@style/CardView.Margins">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <FrameLayout
+                android:id="@+id/cvete_calendar_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp">
+
+                <include layout="@layout/draw_circle_calendar_orange" />
+            </FrameLayout>
+
+            <Spinner
+                android:id="@+id/cvete_fidget_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@id/cvete_calendar_icon"/>
 
             <TextView
                 android:id="@+id/cvete_event_title_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Event Title"
+                android:layout_below="@id/cvete_calendar_icon"
                 android:layout_margin="15dp"/>
             <ImageView
                 android:id="@+id/cvete_bullet"
