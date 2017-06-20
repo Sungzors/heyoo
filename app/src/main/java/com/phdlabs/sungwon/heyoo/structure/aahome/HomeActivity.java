@@ -16,6 +16,7 @@ public class HomeActivity extends MainActivity<HomeContract.Activity.Controller>
 
     private HomeFragment mHomeFragment;
 
+
     @NonNull
     @Override
     protected HomeContract.Activity.Controller createController() {
@@ -30,6 +31,7 @@ public class HomeActivity extends MainActivity<HomeContract.Activity.Controller>
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getSupportFragmentManager().beginTransaction().add(R.id.content_frame, getHomeFragment()).commitAllowingStateLoss();
     }
 

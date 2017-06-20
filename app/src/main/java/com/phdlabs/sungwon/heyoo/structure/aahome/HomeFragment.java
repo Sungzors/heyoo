@@ -122,7 +122,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         } else {
             getBaseActivity().setToolbarTitle(mCalendarManager.getCalendar(mCalID).getName());
         }
-        mTabLayout = findById(R.id.tab_layout);
+        mTabLayout = ((MainActivity)getBaseActivity()).getTabLayout();
+        if(mCalID == -1){
+            mTabLayout.getTabAt(0).select();
+        }
         mCalendarView = findById(R.id.material_calendar_view);
         mCalendarView.addDecorator(this);
         mCalendarView.addDecorator(decorateBackground(getDummyDates()));

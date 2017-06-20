@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
@@ -23,7 +24,6 @@ import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -77,7 +77,7 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
     protected BaseViewHolder viewHolder(LayoutInflater inflater, final ViewGroup parent, int type) {
         switch (type){
             case 0:/*Title*/
-                return new BaseViewHolder(R.layout.card_view_event_title, inflater, parent){
+                return new BaseViewHolder(R.layout.card_view_event_title_edit, inflater, parent){
                 };
             case 1:/*Image*/
                 return new BaseViewHolder(R.layout.card_view_event_images, inflater, parent) {
@@ -96,20 +96,18 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
     }
 
     private void bindTitleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
-        ((TextView)baseViewHolder.get(R.id.cvet_event_title)).setText(event.getDescription());
-        if (event.getStartTimeHash() == HeyooEvent.hashCode(Calendar.getInstance())) {
-            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd");
-            ((TextView) baseViewHolder.get(R.id.cvet_event_date)).setText("Today - " + formatter.format(event.getStartCalendar().getTime()));
-        } else if(event.getStartTimeHash() == HeyooEvent.hashCode(Calendar.getInstance()) + 1){
-            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd");
-            ((TextView) baseViewHolder.get(R.id.cvet_event_date)).setText("Tomorrow - " + formatter.format(event.getStartCalendar().getTime()));
-        } else {
-            SimpleDateFormat formatter = new SimpleDateFormat("EEE - MMM dd");
-            ((TextView)baseViewHolder.get(R.id.cvet_event_date)).setText(formatter.format(event.getStartCalendar().getTime()));
-        }
-        (baseViewHolder.get(R.id.cvet_yes_button)).setOnClickListener(this);
-        (baseViewHolder.get(R.id.cvet_maybe_button)).setOnClickListener(this);
-        (baseViewHolder.get(R.id.cvet_no_button)).setOnClickListener(this);
+        ((TextView)baseViewHolder.get(R.id.cvete_event_title)).setText(event.getName());
+        TextView startDate = baseViewHolder.get(R.id.cvete_start_date);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm aaa");
+        startDate.setText(sdf.format(event.getStart_time()));
+        TextView endDate = baseViewHolder.get(R.id.cvete_end_date);
+        endDate.setText(sdf.format(event.getEnd_time()));
+        ((ToggleButton)baseViewHolder.get(R.id.cvete_toggle_allday)).setChecked(event.isAllDay());
+        baseViewHolder.get(R.id.cvete_toggle_allday).setEnabled(false);
+        //TODO: check for repeat events
+//        (baseViewHolder.get(R.id.cvet_yes_button)).setOnClickListener(this);
+//        (baseViewHolder.get(R.id.cvet_maybe_button)).setOnClickListener(this);
+//        (baseViewHolder.get(R.id.cvet_no_button)).setOnClickListener(this);
     }
 
     private void bindImageHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
@@ -299,18 +297,18 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.cvet_yes_button:
-                Toast.makeText(mController.getContext(), "Yes button clicked", Toast.LENGTH_SHORT).show();
-                mController.onTitleYesClicked();
-                break;
-            case R.id.cvet_maybe_button:
-                Toast.makeText(mController.getContext(), "Maybe button clicked", Toast.LENGTH_SHORT).show();
-                mController.onTitleMaybeClicked();
-                break;
-            case R.id.cvet_no_button:
-                Toast.makeText(mController.getContext(), "No button clicked", Toast.LENGTH_SHORT).show();
-                mController.onTitleNoClicked();
-                break;
+//            case R.id.cvet_yes_button:
+//                Toast.makeText(mController.getContext(), "Yes button clicked", Toast.LENGTH_SHORT).show();
+//                mController.onTitleYesClicked();
+//                break;
+//            case R.id.cvet_maybe_button:
+//                Toast.makeText(mController.getContext(), "Maybe button clicked", Toast.LENGTH_SHORT).show();
+//                mController.onTitleMaybeClicked();
+//                break;
+//            case R.id.cvet_no_button:
+//                Toast.makeText(mController.getContext(), "No button clicked", Toast.LENGTH_SHORT).show();
+//                mController.onTitleNoClicked();
+//                break;
             case R.id.cvei_add_button:
                 Toast.makeText(mController.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
                 mController.onMediaAddClicked();
