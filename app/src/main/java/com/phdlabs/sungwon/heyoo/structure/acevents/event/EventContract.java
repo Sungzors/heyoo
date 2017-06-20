@@ -3,6 +3,7 @@ package com.phdlabs.sungwon.heyoo.structure.acevents.event;
 import android.content.Context;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
@@ -51,6 +52,8 @@ public interface EventContract {
         List<HeyooMedia> getAssociatedMedia();
 
         Context getContext();
+
+        List<HeyooCalendar> getSelectedCalendar();
 
     }
 

@@ -1,7 +1,9 @@
 package com.phdlabs.sungwon.heyoo.utility.adapter;
 
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +16,12 @@ import android.widget.ToggleButton;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditContract;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
+import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.HeyooDatePicker;
 import com.phdlabs.sungwon.heyoo.utility.ImageExpander;
 
@@ -112,8 +116,20 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         return null;
     }
 
-    private void bindTitleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
+    private void bindTitleHolder(final BaseViewHolder baseViewHolder, HeyooEvent event){
         mCalendarSpinner = baseViewHolder.get(R.id.cvete_fidget_spinner);
+        DefaultSpinnerAdapter<HeyooCalendar> spinnerAdapter = new DefaultSpinnerAdapter<HeyooCalendar>(mController.getContext(), mController.getCalendars(), R.layout.spinner_calendar_list){
+            @Override
+            public void bindView(View view, HeyooCalendar data, int position) {
+                GradientDrawable circleOfDoom = (GradientDrawable)(view.findViewById(R.id.scl_blue_dot_of_death_knell)).getBackground();
+                circleOfDoom.setColor(Constants.getColor(data.getColor()));
+                ((TextView)view.findViewById(R.id.scl_text_of_deadliness)).setText(data.getName());
+            }
+        };
+        mCalendarSpinner.setAdapter(spinnerAdapter);
+        if(!isNull){
+            mCalendarSpinner.setSelection(mController.getSelectedPosition(mEvent.getCalendars()));
+        }
         mTitle = baseViewHolder.get(R.id.cvete_event_title);
         mStartDate = baseViewHolder.get(R.id.cvete_start_date);
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm aaa");
@@ -215,8 +231,13 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
             notes = mEvent.getDescription();
         }
         if(mNotes != null){
-            notes = mNotes.getText().toString();
+            if(TextUtils.isEmpty(mNotes.getText().toString())){
+                notes = mNotes.getText().toString();
+            }
         }
+        int calID;
+        calID = ((HeyooCalendar)mCalendarSpinner.getSelectedItem()).getId();
+
         String location;
         if(isNull){
             location = null;
@@ -234,7 +255,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
                 endDate,
                 notes,
                 true,
-                0, //TODO: retrieve Calendar id
+                calID,
                 location );
         if (mAllDay.getText().toString().equals("")){
             event.setAllDay(false);

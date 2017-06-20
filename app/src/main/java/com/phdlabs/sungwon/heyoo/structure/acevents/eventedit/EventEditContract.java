@@ -2,6 +2,7 @@ package com.phdlabs.sungwon.heyoo.structure.acevents.eventedit;
 
 import android.content.Context;
 
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 
@@ -28,12 +29,14 @@ public interface EventEditContract {
         void onSaveDraftClicked();
 
         List<HeyooMedia> getAssociatedMedia();
+        List<HeyooCalendar> getCalendars();
 
         void onMediaAddClicked();
 
         Context getContext();
 
         int getEventid();
+        int getSelectedPosition(int calID);
 
     }
 }
