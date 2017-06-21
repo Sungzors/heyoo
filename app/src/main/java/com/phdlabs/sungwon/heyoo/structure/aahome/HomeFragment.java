@@ -373,18 +373,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 
     }
 
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-
     @Override
     public void showEvents(List<HeyooEvent> heyooEvents) {
         List<HeyooEvent> heyooFiltered = new ArrayList<>();

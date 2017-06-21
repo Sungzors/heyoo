@@ -5,6 +5,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 
 import java.util.ArrayList;
@@ -20,13 +22,15 @@ public class EventController implements EventContract.Controller{
 
     private EventContract.View mView;
 
+    private HeyooCalendarManager mCalendarManager;
+
     EventController(EventContract.View mView){
         this.mView = mView;
     }
 
     @Override
     public void onStart() {
-
+        mCalendarManager = HeyooCalendarManager.getInstance(getContext());
     }
 
     @Override
@@ -163,6 +167,13 @@ public class EventController implements EventContract.Controller{
         list.add(media3);
         list.add(media4);
         list.add(media5);
+        return list;
+    }
+
+    @Override
+    public List<HeyooCalendar> getSelectedCalendar() {
+        List<HeyooCalendar> list = new ArrayList<>();
+        list.add(mCalendarManager.getCalendar(mView.getEvent().getCalendars()));
         return list;
     }
 

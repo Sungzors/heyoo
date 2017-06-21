@@ -21,6 +21,8 @@ public interface EventContract {
     interface View extends Contract.BaseView{
         int getEventid();
 
+        HeyooEvent getEvent();
+
         void showEventDetails();
 
         void showEdit();

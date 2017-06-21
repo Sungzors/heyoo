@@ -11,7 +11,10 @@
         android:id="@+id/card_view_event_statistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/CardView.Margins">
+        style="@style/CardView.Margins"
+        app:cardElevation="3dp"
+        app:contentPadding="0dp"
+        app:cardCornerRadius="3dp">
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -163,11 +163,6 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         status.setEnabled(false);
         status.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
         status.setText(event.getDescription());
-        EditText calendar = baseViewHolder.get(R.id.fca_calendar_edit_name);
-        calendar.setSingleLine(false);
-        calendar.setEnabled(false);
-        calendar.setTextColor(ContextCompat.getColor(mController.getContext(),R.color.black));
-        ((TextView) baseViewHolder.get(R.id.fca_calendar_edit_name)).setText("Main Calendar");
     }
 
     private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){

@@ -133,6 +133,11 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
     }
 
     @Override
+    public HeyooEvent getEvent(){
+        return mEvent;
+    }
+
+    @Override
     public void onStop() {
         mAdapter.clear();
         super.onStop();

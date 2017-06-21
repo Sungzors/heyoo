@@ -1,6 +1,7 @@
 package com.phdlabs.sungwon.heyoo.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class HeyooEvent implements Serializable{
     private Calendar endCalendar;
     private Date end_time;
     private boolean allDay;
-    private int calendars;
+    private List<Integer> calendars;
     private String privacy;
     private String description;
     private String address;
@@ -46,7 +47,8 @@ public class HeyooEvent implements Serializable{
         endCalendar.setTime(end_time);
         this.description = description;
         this.allDay = allDay;
-        this.calendars = calendars;
+        this.calendars = new ArrayList<>();
+        this.calendars.add(calendars);
         this.address = address;
     }
 
@@ -111,11 +113,11 @@ public class HeyooEvent implements Serializable{
     }
 
     public int getCalendars() {
-        return calendars;
+        return calendars.get(0);
     }
 
     public void setCalendars(int calendars) {
-        this.calendars = calendars;
+        this.calendars.set(0,calendars);
     }
 
     public String getAddress() {
@@ -156,5 +158,21 @@ public class HeyooEvent implements Serializable{
 
     public void setAttachments(List<HeyooAttachment> attachments) {
         this.attachments = attachments;
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
+    public int getRecurrence_id() {
+        return recurrence_id;
+    }
+
+    public void setRecurrence_id(int recurrence_id) {
+        this.recurrence_id = recurrence_id;
     }
 }

@@ -1,9 +1,14 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import android.content.Context;
 import android.util.SparseArray;
 
+import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
+import com.phdlabs.sungwon.heyoo.utility.Preferences;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,21 +21,27 @@ import java.util.List;
 
 public class HeyooEventManager {
     private static HeyooEventManager mInstance;
-    private final HeyooEndpoint mHeyooEndpoint;
+    private final HeyooEndpoint mCaller;
+    private Context mContext;
+    private Preferences mPref;
+    private EventBus mEvents;
 
     private SparseArray<HeyooEvent> mMap;
 
-    public static HeyooEventManager getInstance(){
+    public static HeyooEventManager getInstance(Context context){
         if (mInstance == null) {
-            mInstance = new HeyooEventManager();
+            mInstance = new HeyooEventManager(context);
         }
         return mInstance;
     }
 
-    private HeyooEventManager(){
+    private HeyooEventManager(Context context){
         super();
-        mHeyooEndpoint = Rest.getInstance().getHeyooEndpoint();
+        mCaller = Rest.getInstance().getHeyooEndpoint();
         mMap = new SparseArray<>();
+        mContext = context;
+        mPref = new Preferences(mContext);
+        mEvents = EventsManager.getInstance().getDataEventBus();
     }
 
     public SparseArray<HeyooEvent> getMapEvents(){
@@ -69,5 +80,9 @@ public class HeyooEventManager {
             }
         }
         return eventList;
+    }
+
+    public void loadEvents(){
+//        Call<EventRetrievalResponse> call =
     }
 }

@@ -3,8 +3,13 @@ package com.phdlabs.sungwon.heyoo.structure.acevents.eventedit;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.phdlabs.sungwon.heyoo.api.event.CalendarRetrievalEvent;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,7 @@ public class EventEditController implements EventEditContract.Controller {
 
     private EventEditContract.View mView;
     private HeyooEventManager mEventManager;
+    private HeyooCalendarManager mCalendarManager;
 
     EventEditController(EventEditContract.View mView){
         this.mView = mView;
@@ -26,6 +32,9 @@ public class EventEditController implements EventEditContract.Controller {
 
     @Override
     public void onStart() {
+        mCalendarManager = HeyooCalendarManager.getInstance(mView.getContext());
+        mCalendarManager.getEventBus().register(this);
+        mCalendarManager.loadCalendars();
     }
 
     @Override
@@ -36,6 +45,16 @@ public class EventEditController implements EventEditContract.Controller {
     @Override
     public void onPause() {
 
+    }
+
+
+    @Subscribe
+    public void onEventMainThread(CalendarRetrievalEvent event){
+        if (event.isSuccess()){
+            mView.showEventEdit();
+        } else {
+            mView.showError(event.getErrorMessage());
+        }
     }
 
     @Override
@@ -81,6 +100,16 @@ public class EventEditController implements EventEditContract.Controller {
     }
 
     @Override
+    public List<HeyooCalendar> getCalendars() {
+        return mCalendarManager.getCalendars();
+    }
+
+    @Override
+    public int getSelectedPosition(int calID) {
+        return mCalendarManager.getPosition(calID);
+    }
+
+    @Override
     public Context getContext() {
         return mView.getContext();
     }
@@ -92,6 +121,6 @@ public class EventEditController implements EventEditContract.Controller {
 
     @Override
     public void onStop() {
-
+        mCalendarManager.getEventBus().unregister(this);
     }
 }
