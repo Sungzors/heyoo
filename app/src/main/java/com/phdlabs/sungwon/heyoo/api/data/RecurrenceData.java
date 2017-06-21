@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by SungWon on 6/21/2017.
  */
 
-class RecurrenceData {
+public class RecurrenceData {
     public static final String WEEKLY = "weekly";
     public static final String MONTHLY = "monthly";
 

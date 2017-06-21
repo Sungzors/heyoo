@@ -9,4 +9,8 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 public class EventPatchResponse extends ErrorResponse{
 
     HeyooEvent calEvent;
+
+    public HeyooEvent getCalEvent() {
+        return calEvent;
+    }
 }
