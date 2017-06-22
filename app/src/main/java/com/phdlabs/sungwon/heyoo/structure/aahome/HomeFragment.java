@@ -29,6 +29,7 @@ import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.EventDecorator;
+import com.phdlabs.sungwon.heyoo.utility.Preferences;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -116,7 +117,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 //        mTestText = findById(R.id.test_text2);
 //        mTestText.setText("hello");
         mCalID = getArguments().getInt(Constants.BundleKeys.HOME_CALENDAR_ID, -1);
-        mCalendarManager = HeyooCalendarManager.getInstance(getContext());
+        mCalendarManager = HeyooCalendarManager.getInstance(new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
         if(mCalID == -1){
             getBaseActivity().setToolbarTitle(R.string.home);
         } else {

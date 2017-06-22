@@ -1,6 +1,5 @@
 package com.phdlabs.sungwon.heyoo.model;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
@@ -17,8 +16,6 @@ import com.phdlabs.sungwon.heyoo.api.response.EventRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
-import com.phdlabs.sungwon.heyoo.utility.Constants;
-import com.phdlabs.sungwon.heyoo.utility.Preferences;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,25 +33,27 @@ import retrofit2.Call;
 public class HeyooEventManager {
     private static HeyooEventManager mInstance;
     private final HeyooEndpoint mCaller;
-    private Context mContext;
-    private Preferences mPref;
+    private String mToken;
     private EventBus mEvents;
 
     private SparseArray<HeyooEvent> mMap;
 
-    public static HeyooEventManager getInstance(Context context){
+    public static HeyooEventManager getInstance(String token){
         if (mInstance == null) {
-            mInstance = new HeyooEventManager(context);
+            mInstance = new HeyooEventManager(token);
         }
         return mInstance;
     }
 
-    private HeyooEventManager(Context context){
+    public static HeyooEventManager getInstance(){
+        return mInstance;
+    }
+
+    private HeyooEventManager(String token){
         super();
         mCaller = Rest.getInstance().getHeyooEndpoint();
         mMap = new SparseArray<>();
-        mContext = context;
-        mPref = new Preferences(mContext);
+        mToken = token;
         mEvents = EventsManager.getInstance().getDataEventBus();
     }
 
@@ -97,7 +96,7 @@ public class HeyooEventManager {
     }
 
     public void loadEvents(){
-        Call<EventRetrievalResponse> call = mCaller.getEvents(mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
+        Call<EventRetrievalResponse> call = mCaller.getEvents(mToken);
         call.enqueue(new HCallback<EventRetrievalResponse, EventRetrievalEvent>(mEvents) {
             @Override
             protected void onSuccess(EventRetrievalResponse data) {
@@ -112,7 +111,7 @@ public class HeyooEventManager {
 
     public void postEvent(final HeyooEvent event, @Nullable RecurrenceData recur){
         EventPostData data = new EventPostData(event, recur);
-        Call<EventPostResponse> call = mCaller.postEvents(mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null), data);
+        Call<EventPostResponse> call = mCaller.postEvents(mToken, data);
         call.enqueue(new HCallback<EventPostResponse, EventPostEvent>(mEvents) {
             @Override
             protected void onSuccess(EventPostResponse data) {
@@ -123,7 +122,7 @@ public class HeyooEventManager {
     }
 
     public void patchEvent(int eventID, EventPatchData data){
-        Call<EventPatchResponse> call = mCaller.patchEvents(eventID, mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null), data);
+        Call<EventPatchResponse> call = mCaller.patchEvents(eventID, mToken, data);
         call.enqueue(new HCallback<EventPatchResponse, EventPatchEvent>(mEvents) {
             @Override
             protected void onSuccess(EventPatchResponse data) {

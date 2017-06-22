@@ -23,7 +23,7 @@ public class HomeController implements HomeContract.Controller{
 
     @Override
     public void onStart() {
-        mEventManager = HeyooEventManager.getInstance(mView.getContext());
+        mEventManager = HeyooEventManager.getInstance();
         if (mEventManager.getEvents().isEmpty()){
             getTestEvents();
         }

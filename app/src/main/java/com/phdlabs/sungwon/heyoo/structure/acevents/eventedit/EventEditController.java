@@ -8,6 +8,8 @@ import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
+import com.phdlabs.sungwon.heyoo.utility.Constants;
+import com.phdlabs.sungwon.heyoo.utility.Preferences;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -32,7 +34,7 @@ public class EventEditController implements EventEditContract.Controller {
 
     @Override
     public void onStart() {
-        mCalendarManager = HeyooCalendarManager.getInstance(mView.getContext());
+        mCalendarManager = HeyooCalendarManager.getInstance(new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
         mCalendarManager.getEventBus().register(this);
         mCalendarManager.loadCalendars();
     }

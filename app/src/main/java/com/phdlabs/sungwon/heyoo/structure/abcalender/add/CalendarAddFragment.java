@@ -18,6 +18,8 @@ import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.CalendarContract;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
+import com.phdlabs.sungwon.heyoo.utility.Constants;
+import com.phdlabs.sungwon.heyoo.utility.Preferences;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -84,7 +86,7 @@ public class CalendarAddFragment extends BaseFragment<CalendarContract.Add.Contr
         mEmptyShare = findById(R.id.fca_empty_share);
         mRecycler = findById(R.id.fca_share_list);
         mPublish = findById(R.id.fca_publish_button);
-        mCalendarManager = HeyooCalendarManager.getInstance(getContext());
+        mCalendarManager = HeyooCalendarManager.getInstance(new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
         mEventBus = mCalendarManager.getEventBus();
         mAddPeople.setOnClickListener(this);
         mPublish.setOnClickListener(this);

@@ -71,7 +71,7 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         } else {
             getBaseActivity().setToolbarTitle(mEvent.getName());
         }
-        mEventManager = HeyooEventManager.getInstance(getContext());
+        mEventManager = HeyooEventManager.getInstance();
         if(getChildFragmentManager().getBackStackEntryCount() == 0){
             ((MainActivity)getActivity()).eraseBackArrow();
         }

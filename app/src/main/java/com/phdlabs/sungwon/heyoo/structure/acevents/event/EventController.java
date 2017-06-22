@@ -8,6 +8,8 @@ import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
+import com.phdlabs.sungwon.heyoo.utility.Constants;
+import com.phdlabs.sungwon.heyoo.utility.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ public class EventController implements EventContract.Controller{
 
     @Override
     public void onStart() {
-        mCalendarManager = HeyooCalendarManager.getInstance(getContext());
+        mCalendarManager = HeyooCalendarManager.getInstance(new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
     }
 
     @Override

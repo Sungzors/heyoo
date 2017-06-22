@@ -1,7 +1,5 @@
 package com.phdlabs.sungwon.heyoo.model;
 
-import android.content.Context;
-
 import com.phdlabs.sungwon.heyoo.api.data.CalendarPostData;
 import com.phdlabs.sungwon.heyoo.api.event.CalendarPostEvent;
 import com.phdlabs.sungwon.heyoo.api.event.CalendarRetrievalEvent;
@@ -10,8 +8,6 @@ import com.phdlabs.sungwon.heyoo.api.response.CalendarRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
-import com.phdlabs.sungwon.heyoo.utility.Constants;
-import com.phdlabs.sungwon.heyoo.utility.Preferences;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,31 +24,33 @@ public class HeyooCalendarManager {
 
     private static HeyooCalendarManager mInstance;
     private final HeyooEndpoint mCaller;
-    private Context mContext;
-    private Preferences mPref;
+    private String mToken;
     private EventBus mEvents;
 
     private List<HeyooCalendar> mCalendars;
 
 
-    public static HeyooCalendarManager getInstance(Context context){
+    public static HeyooCalendarManager getInstance(String token){
         if (mInstance == null) {
-            mInstance = new HeyooCalendarManager(context);
+            mInstance = new HeyooCalendarManager(token);
         }
         return mInstance;
     }
 
-    private HeyooCalendarManager(Context context){
+    public static HeyooCalendarManager getInstance(){
+        return mInstance;
+    }
+
+    private HeyooCalendarManager(String token){
         super();
         mCaller = Rest.getInstance().getHeyooEndpoint();
-        mContext = context;
-        mPref = new Preferences(mContext);
+        mToken = token;
         mEvents = new EventBus();
         mCalendars = new ArrayList<>();
     }
 
     public void loadCalendars(){
-        Call<CalendarRetrievalResponse> call = mCaller.getCalendar(mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
+        Call<CalendarRetrievalResponse> call = mCaller.getCalendar(mToken);
         call.enqueue(new HCallback<CalendarRetrievalResponse, CalendarRetrievalEvent>(mEvents) {
             @Override
             protected void onSuccess(CalendarRetrievalResponse data) {
@@ -64,7 +62,7 @@ public class HeyooCalendarManager {
 
     public void postCalendars(String name, String color, List<User> users){
         CalendarPostData data = new CalendarPostData(name, color, users);
-        Call<CalendarPostResponse> call = mCaller.postCalendar(mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null), data);
+        Call<CalendarPostResponse> call = mCaller.postCalendar(mToken, data);
         call.enqueue(new HCallback<CalendarPostResponse, CalendarPostEvent>(mEvents) {
             @Override
             protected void onSuccess(CalendarPostResponse data) {

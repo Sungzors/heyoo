@@ -89,7 +89,7 @@ public class EventDraftFragment extends BaseFragment<EventContract.Draft.Control
         dummydate.setTime(10000);
         mDummyHeyooEvent = new HeyooEvent(0, "dummy", dummydate, dummydate, "dummy event. If you see this, something has gone wrong", false, 9999, null);
         mLastHeyooEvent = mDummyHeyooEvent;
-        mEventManager = HeyooEventManager.getInstance(getContext());
+        mEventManager = HeyooEventManager.getInstance();
         mEventList = mEventManager.getUnpublishedEvents();
         mToday = Calendar.getInstance();
         mPublishAllButton = findById(R.id.draft_publish_all_button);
