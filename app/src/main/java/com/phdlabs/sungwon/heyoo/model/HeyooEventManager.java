@@ -84,6 +84,10 @@ public class HeyooEventManager {
         return eventList;
     }
 
+    public HeyooEvent getEvent(int eventID){
+        return mMap.get(eventID);
+    }
+
     public List<HeyooEvent> getUnpublishedEvents(){
         List<HeyooEvent> eventList = new ArrayList<>();
         for (int i = 0; i < mMap.size(); i++) {
@@ -95,14 +99,18 @@ public class HeyooEventManager {
         return eventList;
     }
 
+    public EventBus getEventBus(){
+        return mEvents;
+    }
+
     public void loadEvents(){
         Call<EventRetrievalResponse> call = mCaller.getEvents(mToken);
         call.enqueue(new HCallback<EventRetrievalResponse, EventRetrievalEvent>(mEvents) {
             @Override
             protected void onSuccess(EventRetrievalResponse data) {
+                mMap.clear();
                 for (int i = 0; i < data.getCalEvents().size(); i++) {
-                    mMap.clear();
-                    addEvents(data.getCalEvents().get(0));
+                    addEvents(data.getCalEvents().get(i));
                 }
                 mEvents.post(new EventRetrievalEvent());
             }

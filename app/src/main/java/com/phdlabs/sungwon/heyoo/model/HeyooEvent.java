@@ -16,11 +16,10 @@ public class HeyooEvent implements Serializable{
     private String name;
     private Date start_time;
     private Calendar startCalendar;
-    private transient int startTimeHash;
     private Calendar endCalendar;
     private Date end_time;
     private boolean allDay;
-    private List<Integer> calendars;
+    private List<HeyooCalendarEventNest> calendars;
     private String privacy;
     private String description;
     private String address;
@@ -41,14 +40,13 @@ public class HeyooEvent implements Serializable{
         this.start_time = start_time;
         startCalendar = Calendar.getInstance();
         startCalendar.setTime(start_time);
-        startTimeHash = hashCode(startCalendar);
         this.end_time = end_time;
         endCalendar = Calendar.getInstance();
         endCalendar.setTime(end_time);
         this.description = description;
         this.allDay = allDay;
         this.calendars = new ArrayList<>();
-        this.calendars.add(calendars);
+        this.calendars.add(new HeyooCalendarEventNest(calendars, null));
         this.address = address;
     }
 
@@ -69,7 +67,9 @@ public class HeyooEvent implements Serializable{
     }
 
     public int getStartTimeHash() {
-        return startTimeHash;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(start_time);
+        return hashCode(cal);
     }
 
     public int getId() {
@@ -113,11 +113,11 @@ public class HeyooEvent implements Serializable{
     }
 
     public int getCalendars() {
-        return calendars.get(0);
+        return calendars.get(0).getId();
     }
 
     public void setCalendars(int calendars) {
-        this.calendars.set(0,calendars);
+        this.calendars.set(0,new HeyooCalendarEventNest(calendars, null));
     }
 
     public String getAddress() {

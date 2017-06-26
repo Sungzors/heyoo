@@ -16,7 +16,6 @@ import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -40,7 +39,7 @@ public class LoginController implements LoginContract.Controller {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe
     public void onEventMainThread(RegisterDataEvent event){
         Toast.makeText(mContext, event.getErrorMessage(), Toast.LENGTH_SHORT).show();
 

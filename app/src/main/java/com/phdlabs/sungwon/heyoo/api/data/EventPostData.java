@@ -21,7 +21,7 @@ public class EventPostData {
     private boolean published;
     private String description;
     private List<HeyooAttendee> attendees;
-    private int calendar;
+    private int calendar_id;
     private List<HeyooMedia> media;
     private List<HeyooAttachment> attachments;
     private RecurrenceData recurrence;
@@ -34,7 +34,7 @@ public class EventPostData {
         published = event.isPublished();
         description = event.getDescription();
         attendees = event.getAttendees();
-        calendar = event.getCalendars();
+        calendar_id = event.getCalendars();
         media = event.getMedia();
         attachments = event.getAttachments();
         this.recurrence = recurrence;

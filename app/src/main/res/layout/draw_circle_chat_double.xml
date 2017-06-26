@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
     <ImageView
+        android:id="@+id/dccd_icon_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/circle_chat_double"
+        android:background="@drawable/circle_chat_double"
         android:layout_gravity="center"/>
     <ImageView
         android:layout_width="16dp"

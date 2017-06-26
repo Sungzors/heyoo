@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.event.CalendarRetrievalEvent;
 import com.phdlabs.sungwon.heyoo.api.event.EventRetrievalEvent;
-import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
@@ -42,15 +41,7 @@ public class LaunchActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPref = new Preferences(this);
-        mToken = mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
-        if(TextUtils.isEmpty(mToken)){
-            showLogin();
-        } else {
-            mCalendarManager = HeyooCalendarManager.getInstance(mToken);
-            mEventManager = HeyooEventManager.getInstance(mToken);
-            mCalendarManager.loadCalendars();
-        }
+
     }
 
     private void showLogin() {
@@ -65,23 +56,44 @@ public class LaunchActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EventsManager.getInstance().getDataEventBus().register(this);
+        mPref = new Preferences(this);
+        mToken = mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
+        if(TextUtils.isEmpty(mToken)){
+            showLogin();
+        } else {
+            mCalendarManager = HeyooCalendarManager.getInstance(mToken);
+            mEventManager = HeyooEventManager.getInstance(mToken);
+            mCalendarManager.getEventBus().register(this);
+            mCalendarManager.loadCalendars();
+            showProgress();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EventsManager.getInstance().getDataEventBus().unregister(this);
     }
 
     @Subscribe
     public void onEventMainThread(CalendarRetrievalEvent event){
-        mEventManager.loadEvents();
+        if (event.isSuccess()){
+            mCalendarManager.getEventBus().unregister(this);
+            mEventManager.getEventBus().register(this);
+            mEventManager.loadEvents();
+        } else {
+            showError(event.getErrorMessage());
+        }
     }
 
 
     @Subscribe
     public void onEventMainThread(EventRetrievalEvent event){
-        openApp();
+        if (event.isSuccess()){
+            hideProgress();
+            mEventManager.getEventBus().unregister(this);
+            openApp();
+        } else {
+            showError(event.getErrorMessage());
+        }
     }
 }

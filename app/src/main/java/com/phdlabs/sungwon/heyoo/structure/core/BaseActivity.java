@@ -88,18 +88,18 @@ public abstract class BaseActivity extends CoreActivity {
     }
 
 
-//
-//    public void showProgress() {
-//        View progress = findById(R.id.progress_view);
-//        if (progress != null) {
-//            progress.setVisibility(View.VISIBLE);
-//        }
-//    }
-//
-//    public void hideProgress() {
-//        View progress = findById(R.id.progress_view);
-//        if (progress != null) {
-//            progress.setVisibility(View.GONE);
-//        }
-//    }
+
+    public void showProgress() {
+        View progress = findById(R.id.progress_view);
+        if (progress != null) {
+            progress.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideProgress() {
+        View progress = findById(R.id.progress_view);
+        if (progress != null) {
+            progress.setVisibility(View.GONE);
+        }
+    }
 }

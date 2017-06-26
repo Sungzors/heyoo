@@ -119,11 +119,8 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     public void saveEvent() {
         HeyooEvent event = mAdapter.getEvent();
         event.setPublished(false);
-        if(event.getId()==-1){
-            event.setId(mEventManager.getMapEvents().size());
-        }
-        mEventManager.addEvents(event);
-        //TODO: post to server
+        mEventManager.postEvent(event, null);
+        //TODO: set up recurrence
 //        Intent intent = new Intent(getContext(), HomeActivity.class);
 //        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 //        startActivity(intent);
@@ -136,11 +133,8 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         if(!event.isPublished()){
             event.setPublished(true);
         }
-        if(event.getId()==-1){
-            event.setId(mEventManager.getMapEvents().size());
-        }
-        mEventManager.addEvents(event);
-        //TODO: post to server. For now, ID will be place in map
+        mEventManager.postEvent(event, null);
+        //TODO: set up recurrence
 //        Intent intent = new Intent(getContext(), HomeActivity.class);
 //        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 //        startActivity(intent);
