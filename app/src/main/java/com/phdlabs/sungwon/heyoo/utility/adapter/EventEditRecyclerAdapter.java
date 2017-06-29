@@ -63,6 +63,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         this.mController = mController;
         if (values.get(0)!=null){
             isNull = false;
+            mEvent = values.get(0);
         }
     }
 
@@ -128,7 +129,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         };
         mCalendarSpinner.setAdapter(spinnerAdapter);
         if(!isNull){
-            mCalendarSpinner.setSelection(mController.getSelectedPosition(mEvent.getCalendars()));
+            mCalendarSpinner.setSelection(mController.getSelectedPosition(event.getCalendars()));
         }
         mTitle = baseViewHolder.get(R.id.cvete_event_title);
         mStartDate = baseViewHolder.get(R.id.cvete_start_date);
@@ -150,7 +151,6 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
             mTitle.setText(event.getName());
         }
         mAllDay = baseViewHolder.get(R.id.cvete_toggle_allday);
-        mEvent = event;
     }
 
     private void bindImageHolder(BaseViewHolder baseViewHolder, HeyooEvent event){

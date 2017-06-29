@@ -22,6 +22,7 @@ public interface EventEditContract {
         void saveEvent();
         void postEvent();
 
+        void openMediaAdd();
     }
 
     interface Controller extends Contract.BaseController{

@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
+import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
@@ -25,6 +26,7 @@ public class EventController implements EventContract.Controller{
     private EventContract.View mView;
 
     private HeyooCalendarManager mCalendarManager;
+    private HeyooEventManager mEventManager;
 
     EventController(EventContract.View mView){
         this.mView = mView;
@@ -33,6 +35,7 @@ public class EventController implements EventContract.Controller{
     @Override
     public void onStart() {
         mCalendarManager = HeyooCalendarManager.getInstance(new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
+        mEventManager = HeyooEventManager.getInstance();
     }
 
     @Override
@@ -125,6 +128,9 @@ public class EventController implements EventContract.Controller{
     @Override
     public List<HeyooMedia> getAssociatedMedia() {
         List<HeyooMedia> list = getDummyMedia();
+        if(mView.getEventid()!= -1){
+            list = mEventManager.getEvent(mView.getEventid()).getMedia();
+        }
         List<HeyooMedia> asslist = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if(list.get(i).getEvent_id() == mView.getEventid()){

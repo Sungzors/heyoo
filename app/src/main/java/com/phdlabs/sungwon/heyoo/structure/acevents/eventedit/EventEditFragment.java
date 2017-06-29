@@ -14,6 +14,7 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.structure.image.ImageFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
@@ -141,15 +142,9 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         getBaseActivity().onBackPressed();
     }
 
-//    @Override
-//    public boolean onBackPressed() {
-//        getBaseActivity().finish();
-//        return true;
-//    }
-
     @Override
-    public void hideProgress() {
-
+    public void openMediaAdd() {
+        getBaseActivity().replaceFragment(ImageFragment.newInstance(mEvent),true);
     }
 
     @Override

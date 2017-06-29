@@ -1,10 +1,12 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import java.io.Serializable;
+
 /**
  * Created by SungWon on 6/22/2017.
  */
 
-public class HeyooCalendarEventNest {
+public class HeyooCalendarEventNest implements Serializable {
 
     private int id;
     private HeyooCalendarDetailNest calendars_events;

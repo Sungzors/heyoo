@@ -15,8 +15,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.id.list;
-
 /**
  * Created by SungWon on 5/30/2017.
  */
@@ -63,7 +61,7 @@ public class EventEditController implements EventEditContract.Controller {
 
     @Override
     public void onMediaAddClicked() {
-
+        mView.openMediaAdd();
     }
 
     @Override

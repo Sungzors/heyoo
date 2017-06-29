@@ -148,6 +148,10 @@ public class HeyooEvent implements Serializable{
         return media;
     }
 
+    public void addMedia(String url){
+        media.add(new HeyooMedia(null, null, url, id));
+    }
+
     public void setMedia(List<HeyooMedia> media) {
         this.media = media;
     }

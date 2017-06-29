@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by SungWon on 5/22/2017.
  */
 
-public class HeyooAttendee {
+public class HeyooAttendee implements Serializable{
 
     private int id;
     private String first_name;
