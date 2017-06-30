@@ -53,6 +53,10 @@ public class AccountManager {
         return mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
     }//TODO:debug, get rid of
 
+    public String getKey(){
+        return mAccessToken;
+    }
+
     public void bindAccountData(VerifyDataResponse data, Context context) {
         mAccessToken = data.getToken();
         mPref = new Preferences(context);

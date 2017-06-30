@@ -1,7 +1,6 @@
 package com.phdlabs.sungwon.heyoo.api.rest;
 
 import com.phdlabs.sungwon.heyoo.api.data.CalendarPostData;
-import com.phdlabs.sungwon.heyoo.api.data.EventMediaPostData;
 import com.phdlabs.sungwon.heyoo.api.data.EventPatchData;
 import com.phdlabs.sungwon.heyoo.api.data.EventPostData;
 import com.phdlabs.sungwon.heyoo.api.data.LoginData;
@@ -17,14 +16,13 @@ import com.phdlabs.sungwon.heyoo.api.response.ResendResponse;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
 import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 /**
@@ -64,8 +62,7 @@ public interface HeyooEndpoint {
     @PATCH("/events/{id}")
     Call<EventPatchResponse> patchEvents(@Path("id") int eventID, @Header(TOKEN)String token, @Body EventPatchData data);
 
-    @Multipart
     @POST("/events/{id}/media")
-    Call<EventMediaPostResponse> postEventMedia(@Path("id") int eventID, @Header(TOKEN)String token, @Part EventMediaPostData data);
+    Call<EventMediaPostResponse> postEventMedia(@Path("id") int eventID, @Header(TOKEN)String token, @Body RequestBody data);
 
 }

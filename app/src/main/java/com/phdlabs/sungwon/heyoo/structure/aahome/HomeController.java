@@ -24,9 +24,6 @@ public class HomeController implements HomeContract.Controller{
     @Override
     public void onStart() {
         mEventManager = HeyooEventManager.getInstance();
-        if (mEventManager.getEvents().isEmpty()){
-            getTestEvents();
-        }
         List<HeyooEvent> heyooEvents = mEventManager.getEvents();
         mView.showEvents(heyooEvents);
     }

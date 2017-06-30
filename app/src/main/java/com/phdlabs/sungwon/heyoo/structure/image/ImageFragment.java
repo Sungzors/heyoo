@@ -4,7 +4,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,10 +16,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.api.data.EventMediaPostData;
 import com.phdlabs.sungwon.heyoo.api.event.EventMediaPostEvent;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.response.EventMediaPostResponse;
@@ -29,21 +28,22 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
+import com.phdlabs.sungwon.heyoo.utility.Files;
+import com.phdlabs.sungwon.heyoo.utility.ImagePicker;
+import com.phdlabs.sungwon.heyoo.utility.PostMultipart;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
+import com.phdlabs.sungwon.heyoo.utility.Procedure;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by SungWon on 6/26/2017.
@@ -56,6 +56,7 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     private Button mAddButton;
     private Button mDiscardButton;
     private Uri outputFileUri;
+    private File chosenFile;
 
     private HeyooEvent mEvent;
 
@@ -104,18 +105,24 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
         mEventBus = EventsManager.getInstance().getDataEventBus();
         mToken = new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
         openImageIntent();
+        ImagePicker.startImagePicker(this, "Select Image");
     }
+
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fi_add_button:
-                mEvent.addMedia(outputFileUri.getPath());
-                File file = new File(outputFileUri.getPath());
-                RequestBody formBody = RequestBody.create(MediaType.parse("image/*"), file);
-                EventMediaPostData data = new EventMediaPostData(formBody, outputFileUri.getPath());
+//                mEvent.addMedia(outputFileUri.getPath());
+//                File file = new File(Environment.getExternalStorageDirectory(), "/My device/MyDir/img_1498624680067.jpg");
+//                RequestBody formBody = RequestBody.create(MediaType.parse("image/*"), file);
+                RequestBody formBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("filename", "dumbo")
+                        .addFormDataPart("file", chosenFile.getPath(), RequestBody.create(MediaType.parse("image/png"),chosenFile)).build();
+
+
                 showProgress();
-                Call<EventMediaPostResponse> call = mEndpoint.postEventMedia(mEvent.getId(), mToken, data);
+                Call<EventMediaPostResponse> call = mEndpoint.postEventMedia(4, mToken, formBody);
                 call.enqueue(new HCallback<EventMediaPostResponse, EventMediaPostEvent>(mEventBus) {
                     @Override
                     protected void onSuccess(EventMediaPostResponse data) {
@@ -127,7 +134,12 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
 
                 break;
             case R.id.fi_discard_button:
-                onBackPressed();
+//                onBackPressed();
+                try {
+                    PostMultipart.main();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
@@ -171,35 +183,55 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == YOUR_SELECT_PICTURE_REQUEST_CODE) {
-                final boolean isCamera;
-                if (data == null) {
-                    isCamera = true;
-                } else {
-                    final String action = data.getAction();
-                    if (action == null) {
-                        isCamera = false;
-                    } else {
-                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    }
-                }
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == YOUR_SELECT_PICTURE_REQUEST_CODE) {
+//                final boolean isCamera;
+//                if (data == null) {
+//                    isCamera = true;
+//                } else {
+//                    final String action = data.getAction();
+//                    if (action == null) {
+//                        isCamera = false;
+//                    } else {
+//                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    }
+//                }
+//
+//                Uri selectedImageUri;
+//                if (isCamera) {
+//                    selectedImageUri = outputFileUri;
+//                } else {
+//                    selectedImageUri = data == null ? null : data.getData();
+//                }
+//                Drawable selectedImage;
+//                try {
+//                    InputStream inputStream = getBaseActivity().getContentResolver().openInputStream(selectedImageUri);
+//                    selectedImage = Drawable.createFromStream(inputStream, selectedImageUri.toString() );
+////                    outputFileUri = selectedImageUri;
+//                    mImage.setBackground(selectedImage);
+//                } catch (FileNotFoundException e) {
+//                    Toast.makeText(getContext(), "Image Cannot Be Found", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
 
-                Uri selectedImageUri;
-                if (isCamera) {
-                    selectedImageUri = outputFileUri;
-                } else {
-                    selectedImageUri = data == null ? null : data.getData();
-                }
-                Drawable selectedImage;
-                try {
-                    InputStream inputStream = getBaseActivity().getContentResolver().openInputStream(selectedImageUri);
-                    selectedImage = Drawable.createFromStream(inputStream, selectedImageUri.toString() );
-                    mImage.setBackground(selectedImage);
-                } catch (FileNotFoundException e) {
-                    Toast.makeText(getContext(), "Image Cannot Be Found", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
+        ImagePicker.getImageFromResultAsync(getActivity(), requestCode, resultCode, data,
+                new ImagePicker.Properties(Files.getTempFile(getContext())),
+                new Procedure<ImagePicker.ImageResult>() {
+                    @Override
+                    public void apply(ImagePicker.ImageResult imageResult) {
+                        Bitmap bmp = BitmapFactory.decodeFile(imageResult.file.getAbsolutePath());
+                        mImage.setImageBitmap(imageResult.bitmap);
+                        chosenFile = imageResult.file;
+                    }
+                },
+                new Procedure<ImagePicker.ImageResult>() {
+                    @Override
+                    public void apply(ImagePicker.ImageResult imageResult) {
+                        ImagePicker.ImageResult x = imageResult;
+                        Bitmap y = imageResult.bitmap;
+                        File z = imageResult.file;
+                    }
+                });
     }
 }
