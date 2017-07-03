@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,14 +24,15 @@ import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
-import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
+import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.Files;
 import com.phdlabs.sungwon.heyoo.utility.ImagePicker;
-import com.phdlabs.sungwon.heyoo.utility.PostMultipart;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
 import com.phdlabs.sungwon.heyoo.utility.Procedure;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -63,6 +63,8 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     private HeyooEndpoint mEndpoint;
     private String mToken;
     private EventBus mEventBus;
+
+    private boolean isNull = false;
 
     private final int YOUR_SELECT_PICTURE_REQUEST_CODE = 3636;
 
@@ -104,7 +106,6 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
         mEndpoint = Rest.getInstance().getHeyooEndpoint();
         mEventBus = EventsManager.getInstance().getDataEventBus();
         mToken = new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
-        openImageIntent();
         ImagePicker.startImagePicker(this, "Select Image");
     }
 
@@ -117,29 +118,42 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
 //                File file = new File(Environment.getExternalStorageDirectory(), "/My device/MyDir/img_1498624680067.jpg");
 //                RequestBody formBody = RequestBody.create(MediaType.parse("image/*"), file);
                 RequestBody formBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("filename", "dumbo")
+                        .addFormDataPart("name", chosenFile.getPath())
                         .addFormDataPart("file", chosenFile.getPath(), RequestBody.create(MediaType.parse("image/png"),chosenFile)).build();
 
 
                 showProgress();
-                Call<EventMediaPostResponse> call = mEndpoint.postEventMedia(4, mToken, formBody);
-                call.enqueue(new HCallback<EventMediaPostResponse, EventMediaPostEvent>(mEventBus) {
-                    @Override
-                    protected void onSuccess(EventMediaPostResponse data) {
-                        hideProgress();
-                        getBaseActivity().replaceFragment(EventEditFragment.newInstance(mEvent), false);
-                        mEventBus.post(new EventMediaPostEvent());
-                    }
-                });
-
+                if(mEvent.getId() == -1){
+                    Call<EventMediaPostResponse> call = mEndpoint.postEmptyMedia(mToken, formBody);
+                    call.enqueue(new HCallback<EventMediaPostResponse, EventMediaPostEvent>(mEventBus) {
+                        @Override
+                        protected void onSuccess(EventMediaPostResponse data) {
+                            hideProgress();
+                            mEvent.addMedia(data.getMedium().getFile_path());
+                            mEvent.setId(data.getMedium().getEvent_id());
+                            ((HomeActivity)getBaseActivity()).setEvent(mEvent);
+                            ((HomeActivity)getBaseActivity()).setImageEventID(mEvent.getId());
+                            mEventBus.post(new EventMediaPostEvent());
+                            onBackPressed();
+                        }
+                    });
+                } else {
+                    Call<EventMediaPostResponse> call = mEndpoint.postEventMedia(mEvent.getId(), mToken, formBody);
+                    call.enqueue(new HCallback<EventMediaPostResponse, EventMediaPostEvent>(mEventBus) {
+                        @Override
+                        protected void onSuccess(EventMediaPostResponse data) {
+                            hideProgress();
+                            HeyooEventManager manager = HeyooEventManager.getInstance();
+                            mEvent.addMedia(data.getMedium().getFile_path());
+                            manager.setEvents(mEvent.getId(), mEvent);
+                            mEventBus.post(new EventMediaPostEvent());
+                            onBackPressed();
+                        }
+                    });
+                }
                 break;
             case R.id.fi_discard_button:
-//                onBackPressed();
-                try {
-                    PostMultipart.main();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                onBackPressed();
                 break;
         }
     }
@@ -220,8 +234,9 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
                 new Procedure<ImagePicker.ImageResult>() {
                     @Override
                     public void apply(ImagePicker.ImageResult imageResult) {
-                        Bitmap bmp = BitmapFactory.decodeFile(imageResult.file.getAbsolutePath());
-                        mImage.setImageBitmap(imageResult.bitmap);
+//                        Bitmap bmp = BitmapFactory.decodeFile(imageResult.file.getAbsolutePath());
+//                        mImage.setImageBitmap(imageResult.bitmap);
+                        Picasso.with(getContext()).load(imageResult.file).into(mImage);
                         chosenFile = imageResult.file;
                     }
                 },

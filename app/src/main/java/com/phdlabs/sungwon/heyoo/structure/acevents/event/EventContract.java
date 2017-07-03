@@ -26,6 +26,8 @@ public interface EventContract {
         void showEventDetails();
 
         void showEdit();
+
+        void showMediaAdd();
     }
 
     interface Controller extends Contract.BaseController{

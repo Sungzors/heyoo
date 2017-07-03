@@ -85,7 +85,7 @@ public class EventController implements EventContract.Controller{
 
     @Override
     public void onMediaAddClicked() {
-
+        mView.showMediaAdd();
     }
 
     @Override
@@ -127,7 +127,7 @@ public class EventController implements EventContract.Controller{
 
     @Override
     public List<HeyooMedia> getAssociatedMedia() {
-        List<HeyooMedia> list = getDummyMedia();
+        List<HeyooMedia> list = new ArrayList<>();
         if(mView.getEventid()!= -1){
             list = mEventManager.getEvent(mView.getEventid()).getMedia();
         }
@@ -163,20 +163,6 @@ public class EventController implements EventContract.Controller{
         return list;
     }
 
-    public List<HeyooMedia> getDummyMedia(){
-        List<HeyooMedia> list = new ArrayList<>();
-        HeyooMedia media1 = new HeyooMedia("Dummy Media", "dummy", "http://i.imgur.com/T7N4qg6.jpg", mView.getEventid());
-        HeyooMedia media2 = new HeyooMedia("Dummy Media 2", "dummy2", "http://i.imgur.com/nMRJBTj.jpg", mView.getEventid());
-        HeyooMedia media3 = new HeyooMedia("Dummy Media 3", "dummy3", "http://i.imgur.com/HfWzk0i.jpg", mView.getEventid());
-        HeyooMedia media4 = new HeyooMedia("Dummy Media 4", "dummy4", "http://i.imgur.com/pPVBUld.jpg", mView.getEventid());
-        HeyooMedia media5 = new HeyooMedia("Dummy Media 5", "dummy5", "http://i.imgur.com/SMUFKgO.jpg", mView.getEventid());
-        list.add(media1);
-        list.add(media2);
-        list.add(media3);
-        list.add(media4);
-        list.add(media5);
-        return list;
-    }
 
     @Override
     public List<HeyooCalendar> getSelectedCalendar() {

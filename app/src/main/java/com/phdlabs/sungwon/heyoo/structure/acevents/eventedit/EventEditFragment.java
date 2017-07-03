@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.api.data.EventPatchData;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.image.ImageFragment;
@@ -66,7 +68,13 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     public void onStart() {
         super.onStart();
         Bundle args = getArguments();
-        mEvent = (HeyooEvent) args.getSerializable(Constants.BundleKeys.EVENT_DETAIL);
+        int i = ((HomeActivity)getBaseActivity()).getImageEventID();
+        if (i != -1){
+            mEvent = ((HomeActivity)getBaseActivity()).getEvent();
+        } else {
+            mEvent = (HeyooEvent) args.getSerializable(Constants.BundleKeys.EVENT_DETAIL);
+        }
+
         if(mEvent==null){
             getBaseActivity().setToolbarTitle("New Event");
         } else {
@@ -96,10 +104,6 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     }
 
 
-    @Override
-    public void showProgress() {
-
-    }
 
     @Override
     public void showEventEdit() {
@@ -120,7 +124,17 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     public void saveEvent() {
         HeyooEvent event = mAdapter.getEvent();
         event.setPublished(false);
-        mEventManager.postEvent(event, null);
+        if (mEventManager.eventExists(event.getId())){
+            mEventManager.patchEvent(event.getId(),
+                    new EventPatchData(event.getName(),
+                            event.getStart_time(),
+                            event.getEnd_time(),
+                            event.getPrivacy(),
+                            event.isPublished(),
+                            event.getDescription()));
+        } else {
+            mEventManager.postEvent(event, null);
+        }
         //TODO: set up recurrence
 //        Intent intent = new Intent(getContext(), HomeActivity.class);
 //        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -134,7 +148,18 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         if(!event.isPublished()){
             event.setPublished(true);
         }
-        mEventManager.postEvent(event, null);
+        if (mEventManager.eventExists(event.getId())){
+            mEventManager.patchEvent(event.getId(),
+                    new EventPatchData(event.getName(),
+                            event.getStart_time(),
+                            event.getEnd_time(),
+                            event.getPrivacy(),
+                            event.isPublished(),
+                            event.getDescription()));
+        } else {
+            mEventManager.postEvent(event, null);
+        }
+
         //TODO: set up recurrence
 //        Intent intent = new Intent(getContext(), HomeActivity.class);
 //        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);

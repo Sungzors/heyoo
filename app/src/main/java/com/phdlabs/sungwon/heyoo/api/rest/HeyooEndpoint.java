@@ -65,4 +65,7 @@ public interface HeyooEndpoint {
     @POST("/events/{id}/media")
     Call<EventMediaPostResponse> postEventMedia(@Path("id") int eventID, @Header(TOKEN)String token, @Body RequestBody data);
 
+    @POST("/media")
+    Call<EventMediaPostResponse> postEmptyMedia(@Header(TOKEN)String token, @Body RequestBody data);
+
 }

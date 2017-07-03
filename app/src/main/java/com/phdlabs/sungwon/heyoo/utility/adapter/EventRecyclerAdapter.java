@@ -321,7 +321,6 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
 //                mController.onTitleNoClicked();
 //                break;
             case R.id.cvei_add_button:
-                Toast.makeText(mController.getContext(), "Add button clicked", Toast.LENGTH_SHORT).show();
                 mController.onMediaAddClicked();
                 break;
             case R.id.cvea_add_button:

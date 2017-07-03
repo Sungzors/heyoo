@@ -205,6 +205,12 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
     }
 
     public HeyooEvent getEvent(){
+        String title;
+        if(TextUtils.isEmpty(mTitle.getText().toString())){
+            title = "";
+        } else {
+            title = mTitle.getText().toString();
+        }
         Date startDate;
         Date endDate;
         if(isNull){
@@ -250,7 +256,7 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         }
         HeyooEvent event = new HeyooEvent(
                 mController.getEventid(),
-                mTitle.getText().toString(),
+                title,
                 startDate,
                 endDate,
                 notes,

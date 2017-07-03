@@ -99,6 +99,11 @@ public class HeyooEventManager {
         return eventList;
     }
 
+    public boolean eventExists(int eventID){
+        HeyooEvent event = mMap.get(eventID);
+        return event != null;
+    }
+
     public EventBus getEventBus(){
         return mEvents;
     }
