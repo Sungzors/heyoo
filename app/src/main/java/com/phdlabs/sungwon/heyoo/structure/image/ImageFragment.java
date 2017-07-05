@@ -1,15 +1,9 @@
 package com.phdlabs.sungwon.heyoo.structure.image;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -37,8 +31,6 @@ import com.squareup.picasso.Picasso;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -134,7 +126,7 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
                             ((HomeActivity)getBaseActivity()).setEvent(mEvent);
                             ((HomeActivity)getBaseActivity()).setImageEventID(mEvent.getId());
                             mEventBus.post(new EventMediaPostEvent());
-                            onBackPressed();
+                            getBaseActivity().onBackPressed();
                         }
                     });
                 } else {
@@ -147,87 +139,22 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
                             mEvent.addMedia(data.getMedium().getFile_path());
                             manager.setEvents(mEvent.getId(), mEvent);
                             mEventBus.post(new EventMediaPostEvent());
-                            onBackPressed();
+                            getBaseActivity().onBackPressed();
                         }
                     });
                 }
                 break;
             case R.id.fi_discard_button:
-                onBackPressed();
+                getBaseActivity().onBackPressed();
                 break;
         }
     }
 
-    private void openImageIntent() {
 
-        // Determine Uri of camera image to save.
-        final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
-        root.mkdirs();
-        final String fname = "img_"+ System.currentTimeMillis() + ".jpg";
-        final File sdImageMainDirectory = new File(root, fname);
-        outputFileUri = Uri.fromFile(sdImageMainDirectory);
-
-        // Camera.
-        final List<Intent> cameraIntents = new ArrayList<Intent>();
-        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        final PackageManager packageManager = getBaseActivity().getPackageManager();
-        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for(ResolveInfo res : listCam) {
-            final String packageName = res.activityInfo.packageName;
-            final Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
-            intent.setPackage(packageName);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            cameraIntents.add(intent);
-        }
-
-        // Filesystem.
-        final Intent galleryIntent = new Intent();
-        galleryIntent.setType("image/*");
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-        // Chooser of filesystem options.
-        final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
-
-        // Add the camera options.
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
-
-        startActivityForResult(chooserIntent, YOUR_SELECT_PICTURE_REQUEST_CODE);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        if (resultCode == RESULT_OK) {
-//            if (requestCode == YOUR_SELECT_PICTURE_REQUEST_CODE) {
-//                final boolean isCamera;
-//                if (data == null) {
-//                    isCamera = true;
-//                } else {
-//                    final String action = data.getAction();
-//                    if (action == null) {
-//                        isCamera = false;
-//                    } else {
-//                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                    }
-//                }
-//
-//                Uri selectedImageUri;
-//                if (isCamera) {
-//                    selectedImageUri = outputFileUri;
-//                } else {
-//                    selectedImageUri = data == null ? null : data.getData();
-//                }
-//                Drawable selectedImage;
-//                try {
-//                    InputStream inputStream = getBaseActivity().getContentResolver().openInputStream(selectedImageUri);
-//                    selectedImage = Drawable.createFromStream(inputStream, selectedImageUri.toString() );
-////                    outputFileUri = selectedImageUri;
-//                    mImage.setBackground(selectedImage);
-//                } catch (FileNotFoundException e) {
-//                    Toast.makeText(getContext(), "Image Cannot Be Found", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
+
 
         ImagePicker.getImageFromResultAsync(getActivity(), requestCode, resultCode, data,
                 new ImagePicker.Properties(Files.getTempFile(getContext())),
@@ -236,7 +163,7 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
                     public void apply(ImagePicker.ImageResult imageResult) {
 //                        Bitmap bmp = BitmapFactory.decodeFile(imageResult.file.getAbsolutePath());
 //                        mImage.setImageBitmap(imageResult.bitmap);
-                        Picasso.with(getContext()).load(imageResult.file).into(mImage);
+                        Picasso.with(getContext()).load(new File(imageResult.file.toString())).into(mImage);
                         chosenFile = imageResult.file;
                     }
                 },

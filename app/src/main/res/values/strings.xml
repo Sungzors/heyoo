@@ -36,4 +36,6 @@
     <string name="palered">paleRed</string>
     <string name="dimyellow">dimYellow</string>
     <string name="darkpink">darkPink</string>
+    <string name="enter_name_phone_or_email">Enter Name, Phone #, or Email</string>
+    <string name="view">View</string>
 </resources>

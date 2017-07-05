@@ -163,8 +163,10 @@ public class EventEditRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent
         }
         if(mediaList.size()== 0){
             baseViewHolder.get(R.id.cvei_container).setVisibility(View.GONE);
+            baseViewHolder.get(R.id.cvei_empty_prompt).setVisibility(View.VISIBLE);
         } else {
             baseViewHolder.get(R.id.cvei_container).setVisibility(View.VISIBLE);
+            baseViewHolder.get(R.id.cvei_empty_prompt).setVisibility(View.GONE);
         }
         ImageExpander expander = new ImageExpander(mController.getContext(), urlList);
         mImageDisplayList = expander.insertExpandingImage(baseViewHolder.get(R.id.cvei_container));
