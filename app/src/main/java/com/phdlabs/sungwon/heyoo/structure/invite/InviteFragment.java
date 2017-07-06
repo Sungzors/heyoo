@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -11,6 +13,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 
 import java.util.List;
@@ -47,6 +50,27 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     @Override
     public void onStart() {
         super.onStart();
+        getBaseActivity().setToolbarTitle("Invite People");
+        MainActivity activity = (MainActivity)getBaseActivity();
+        activity.showBackArrow(android.R.drawable.ic_menu_close_clear_cancel);
+        Toolbar toolbar = activity.getToolbar();
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_check);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return onOptionsItemSelected(item);
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_confirm:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -57,6 +81,8 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mSearchText = findById(R.id.fi_search_text);
+        mSearchList = findById(R.id.fi_search_list);
     }
 
     @Override
