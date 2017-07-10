@@ -24,6 +24,7 @@ public class HeyooAttendee implements Serializable{
     private boolean verified;
     private String city;
     private List<Integer> eventidlist = new ArrayList<>();
+    private transient boolean isChecked = false;
 
     public HeyooAttendee(int id, String first_name, String last_name, String profile_picture, String status, String avatar) {
         this.id = id;
@@ -32,6 +33,14 @@ public class HeyooAttendee implements Serializable{
         this.profile_picture = profile_picture;
         this.status = status;
         this.avatar = avatar;
+    }
+
+    public HeyooAttendee(String first_name, String last_name, String phone, String country_code, String status) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.phone = phone;
+        this.country_code = country_code;
+        this.status = status;
     }
 
     public String getStatus() {
@@ -72,6 +81,38 @@ public class HeyooAttendee implements Serializable{
 
     public void setLast_name(String last_name) {
         this.last_name = last_name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCountry_code() {
+        return country_code;
+    }
+
+    public void setCountry_code(String country_code) {
+        this.country_code = country_code;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public String getProfile_picture() {

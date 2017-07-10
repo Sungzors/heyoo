@@ -23,6 +23,8 @@ public interface EventEditContract {
         void postEvent();
 
         void openMediaAdd();
+
+        void showAttendeeAdd();
     }
 
     interface Controller extends Contract.BaseController{
@@ -33,6 +35,7 @@ public interface EventEditContract {
         List<HeyooCalendar> getCalendars();
 
         void onMediaAddClicked();
+        void onAttendeeAddClicked();
 
         Context getContext();
 

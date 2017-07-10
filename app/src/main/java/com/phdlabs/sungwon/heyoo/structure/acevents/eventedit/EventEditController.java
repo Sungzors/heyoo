@@ -90,6 +90,11 @@ public class EventEditController implements EventEditContract.Controller {
     }
 
     @Override
+    public void onAttendeeAddClicked() {
+        mView.showAttendeeAdd();
+    }
+
+    @Override
     public List<HeyooCalendar> getCalendars() {
         return mCalendarManager.getCalendars();
     }

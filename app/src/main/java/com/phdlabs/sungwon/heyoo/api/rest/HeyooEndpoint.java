@@ -14,7 +14,11 @@ import com.phdlabs.sungwon.heyoo.api.response.EventPostResponse;
 import com.phdlabs.sungwon.heyoo.api.response.EventRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.response.ResendResponse;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
+import com.phdlabs.sungwon.heyoo.api.response.UserRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
+import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
+
+import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -65,7 +69,13 @@ public interface HeyooEndpoint {
     @POST("/events/{id}/media")
     Call<EventMediaPostResponse> postEventMedia(@Path("id") int eventID, @Header(TOKEN)String token, @Body RequestBody data);
 
+    @POST("/events/{id}/attendees")
+    Call<EventPostResponse> postAttendees(@Path("id") int eventID, @Header(TOKEN)String token, @Body List<HeyooAttendee> data);
+
     @POST("/media")
     Call<EventMediaPostResponse> postEmptyMedia(@Header(TOKEN)String token, @Body RequestBody data);
+
+    @GET("/users")
+    Call<UserRetrievalResponse> getUsers(@Header(TOKEN)String token);
 
 }

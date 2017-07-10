@@ -104,6 +104,11 @@ public class EventController implements EventContract.Controller{
     }
 
     @Override
+    public void onAttendeeAddClicked() {
+        mView.showAttendeeAdd();
+    }
+
+    @Override
     public void onAttachmentClicked() {
 
     }

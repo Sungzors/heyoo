@@ -28,6 +28,8 @@ public interface EventContract {
         void showEdit();
 
         void showMediaAdd();
+
+        void showAttendeeAdd();
     }
 
     interface Controller extends Contract.BaseController{
@@ -47,6 +49,7 @@ public interface EventContract {
         void onSummaryReminderClicked();
 
         void onAttendeeClicked(HeyooAttendee attendee);
+        void onAttendeeAddClicked();
 
         void onAttachmentClicked();
         void onAttachmentAddClicked();

@@ -17,6 +17,7 @@ import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.image.ImageFragment;
+import com.phdlabs.sungwon.heyoo.structure.invite.InviteFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
@@ -169,7 +170,12 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
 
     @Override
     public void openMediaAdd() {
-        getBaseActivity().replaceFragment(ImageFragment.newInstance(mEvent),true);
+        getBaseActivity().replaceFragment(ImageFragment.newInstance(mEvent), true);
+    }
+
+    @Override
+    public void showAttendeeAdd() {
+        getBaseActivity().replaceFragment(InviteFragment.newInstance(mEvent), true);
     }
 
     @Override

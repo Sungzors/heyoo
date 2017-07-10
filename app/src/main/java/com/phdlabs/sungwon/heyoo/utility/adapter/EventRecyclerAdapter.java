@@ -136,8 +136,10 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         }
         if(mediaList.size()== 0){
             baseViewHolder.get(R.id.cvei_container).setVisibility(View.GONE);
+            baseViewHolder.get(R.id.cvei_empty_prompt).setVisibility(View.VISIBLE);
         } else {
             baseViewHolder.get(R.id.cvei_container).setVisibility(View.VISIBLE);
+            baseViewHolder.get(R.id.cvei_empty_prompt).setVisibility(View.GONE);
         }
         ImageExpander expander = new ImageExpander(mController.getContext(), urlList);
         mImageDisplayList = expander.insertExpandingImage(baseViewHolder.get(R.id.cvei_container));
@@ -166,6 +168,7 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
     }
 
     private void bindPeopleHolder(BaseViewHolder baseViewHolder, HeyooEvent event){
+        baseViewHolder.get(R.id.cvep_add_button).setOnClickListener(this);
         List<HeyooAttendee> attendeesList = mController.getAssociatedAttendees();
         List<HeyooAttendee> goingList = new ArrayList<>();
         for (int i = 0; i < attendeesList.size(); i++) {
@@ -320,12 +323,16 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
 //                Toast.makeText(mController.getContext(), "No button clicked", Toast.LENGTH_SHORT).show();
 //                mController.onTitleNoClicked();
 //                break;
+            case R.id.cvep_add_button:
+                mController.onAttendeeAddClicked();
+                break;
             case R.id.cvei_add_button:
                 mController.onMediaAddClicked();
                 break;
             case R.id.cvea_add_button:
                 Toast.makeText(mController.getContext(), "Add button for Attachment clicked", Toast.LENGTH_SHORT).show();
                 mController.onAttachmentAddClicked();
+                break;
         }
     }
 }

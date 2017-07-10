@@ -14,6 +14,7 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.image.ImageFragment;
+import com.phdlabs.sungwon.heyoo.structure.invite.InviteFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.adapter.EventRecyclerAdapter;
@@ -121,6 +122,11 @@ public class EventFragment extends BaseFragment<EventContract.Controller>
     @Override
     public void showMediaAdd() {
         getBaseActivity().replaceFragment(ImageFragment.newInstance(mEvent), true);
+    }
+
+    @Override
+    public void showAttendeeAdd() {
+        getBaseActivity().replaceFragment(InviteFragment.newInstance(mEvent), true);
     }
 
     @Override
