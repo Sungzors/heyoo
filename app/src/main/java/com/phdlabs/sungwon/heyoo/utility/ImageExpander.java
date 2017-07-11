@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.phdlabs.sungwon.heyoo.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class ImageExpander {
         Picasso.with(mContext)
                 .load(url)
                 .transform(new RoundedCornersTransformation(3, 0))
+                .placeholder(R.drawable.pandapic)
                 .into(view);
     }
 

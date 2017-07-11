@@ -22,9 +22,9 @@
         android:id="@+id/card_view_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardElevation="5dp"
+        style="@style/CardView.Margins"
+        app:cardElevation="3dp"
         app:contentPadding="0dp"
-        android:layout_margin="2dp"
         app:cardCornerRadius="3dp">
         
         <RelativeLayout
@@ -87,17 +87,18 @@
                 android:layout_marginLeft="11dp"
                 android:layout_marginStart="11dp"
                 fontPath="fonts/Avenir-Medium-webfont"/>
-            <ImageView
+            <FrameLayout
                 android:id="@+id/cvh_event_video_icon"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_below="@id/cvh_event_title"
                 android:layout_toEndOf="@id/cvh_event_message_number"
                 android:layout_toRightOf="@id/cvh_event_message_number"
-                android:src="@drawable/itopensitseyes"
                 android:layout_marginTop="7dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"/>
+                android:layout_marginStart="20dp">
+                <include layout="@layout/draw_circle_record_change"/>
+            </FrameLayout>
             <TextView
                 android:id="@+id/cvh_event_video_number"
                 android:layout_width="wrap_content"

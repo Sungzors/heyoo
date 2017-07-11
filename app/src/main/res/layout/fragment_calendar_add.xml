@@ -10,9 +10,9 @@
         android:id="@+id/card_view_calendar_add_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="5dp"
-        app:contentPadding="0dp"
         android:layout_margin="5dp"
+        app:cardElevation="3dp"
+        app:contentPadding="0dp"
         app:cardCornerRadius="3dp">
 
         <RelativeLayout
@@ -153,7 +153,7 @@
         android:id="@+id/card_view_calendar_add_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="5dp"
+        app:cardElevation="3dp"
         app:contentPadding="0dp"
         android:layout_margin="5dp"
         app:cardCornerRadius="3dp">
@@ -164,7 +164,7 @@
                 android:id="@+id/fca_share_icon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                style="@style/CardView.GeneralMargins">
+                style="@style/CardView.ContentMargins">
                 <include layout="@layout/draw_circle_people_orange"/>
             </FrameLayout>
 

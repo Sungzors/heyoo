@@ -11,9 +11,9 @@
         android:id="@+id/card_view_event_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="5dp"
-        app:contentPadding="0dp"
         style="@style/CardView.Margins"
+        app:cardElevation="3dp"
+        app:contentPadding="0dp"
         app:cardCornerRadius="3dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -41,13 +41,22 @@
                 android:textSize="14sp"/>
 
             <TextView
+                android:id="@+id/cvep_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="30sp"
+                />
+            <TextView
                 android:id="@+id/cvep_going_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Going (#)"
                 android:layout_below="@id/cvep_people_icon"
                 android:layout_marginTop="19dp"
-                android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 />
             <android.support.v7.widget.RecyclerView
@@ -55,7 +64,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cvep_going_text"
-                android:padding="15dp"/>
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="15dp"/>
 
             <View
                 android:id="@+id/cvep_divider_1"
@@ -72,7 +83,6 @@
                 android:text="Maybe (#)"
                 android:layout_below="@id/cvep_divider_1"
                 android:layout_marginTop="19dp"
-                android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 />
 
@@ -81,7 +91,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cvep_maybe_text"
-                android:padding="15dp"/>
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="15dp"/>
 
             <View
                 android:id="@+id/cvep_divider_2"
@@ -98,7 +110,6 @@
                 android:text="No (#)"
                 android:layout_below="@id/cvep_divider_2"
                 android:layout_marginTop="19dp"
-                android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 />
 
@@ -107,7 +118,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cvep_no_text"
-                android:padding="15dp"/>
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="15dp"/>
 
             <View
                 android:id="@+id/cvep_divider_3"
@@ -124,7 +137,6 @@
                 android:text="Have not Replied (#)"
                 android:layout_below="@id/cvep_divider_3"
                 android:layout_marginTop="19dp"
-                android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 />
 
@@ -133,7 +145,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cvep_noreply_text"
-                android:padding="15dp"/>
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="15dp"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

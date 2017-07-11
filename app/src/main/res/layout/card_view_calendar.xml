@@ -10,10 +10,11 @@
         android:id="@+id/card_view_calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardElevation="5dp"
+        style="@style/CardView.Margins"
+        app:cardElevation="3dp"
         app:contentPadding="0dp"
-        android:layout_margin="2dp"
-        app:cardCornerRadius="3dp">
+        app:cardCornerRadius="3dp"
+        android:layout_margin="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"

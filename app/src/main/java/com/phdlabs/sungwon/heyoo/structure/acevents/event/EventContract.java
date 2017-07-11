@@ -3,6 +3,7 @@ package com.phdlabs.sungwon.heyoo.structure.acevents.event;
 import android.content.Context;
 
 import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooMedia;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
@@ -20,9 +21,15 @@ public interface EventContract {
     interface View extends Contract.BaseView{
         int getEventid();
 
+        HeyooEvent getEvent();
+
         void showEventDetails();
 
         void showEdit();
+
+        void showMediaAdd();
+
+        void showAttendeeAdd();
     }
 
     interface Controller extends Contract.BaseController{
@@ -42,6 +49,7 @@ public interface EventContract {
         void onSummaryReminderClicked();
 
         void onAttendeeClicked(HeyooAttendee attendee);
+        void onAttendeeAddClicked();
 
         void onAttachmentClicked();
         void onAttachmentAddClicked();
@@ -51,6 +59,8 @@ public interface EventContract {
         List<HeyooMedia> getAssociatedMedia();
 
         Context getContext();
+
+        List<HeyooCalendar> getSelectedCalendar();
 
     }
 

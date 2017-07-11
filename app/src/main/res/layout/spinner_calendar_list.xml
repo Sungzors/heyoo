@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/scl_blue_dot_of_death_knell"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_circle_blue"/>
+    <TextView
+        android:id="@+id/scl_text_of_deadliness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="blurb"
+        style="@style/TextAppearance.General"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="11dp"
+        />
+
+</LinearLayout>

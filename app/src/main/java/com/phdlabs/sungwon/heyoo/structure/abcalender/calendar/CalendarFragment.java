@@ -25,6 +25,7 @@ import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
+import com.phdlabs.sungwon.heyoo.utility.Preferences;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 
@@ -111,7 +112,7 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
 //            }
 //        });
 
-        mCalendarManager = HeyooCalendarManager.getInstance(getContext());
+        mCalendarManager = HeyooCalendarManager.getInstance(new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
         mCalendarManager.loadCalendars();
         mCalendarAdd.setOnClickListener(new View.OnClickListener() {
             @Override

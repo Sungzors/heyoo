@@ -1,6 +1,5 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome;
 
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventFragment;
@@ -29,6 +29,7 @@ import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.EventDecorator;
+import com.phdlabs.sungwon.heyoo.utility.Preferences;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -116,13 +117,16 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 //        mTestText = findById(R.id.test_text2);
 //        mTestText.setText("hello");
         mCalID = getArguments().getInt(Constants.BundleKeys.HOME_CALENDAR_ID, -1);
-        mCalendarManager = HeyooCalendarManager.getInstance(getContext());
+        mCalendarManager = HeyooCalendarManager.getInstance(new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
         if(mCalID == -1){
             getBaseActivity().setToolbarTitle(R.string.home);
         } else {
             getBaseActivity().setToolbarTitle(mCalendarManager.getCalendar(mCalID).getName());
         }
-        mTabLayout = findById(R.id.tab_layout);
+        mTabLayout = ((MainActivity)getBaseActivity()).getTabLayout();
+        if(mCalID == -1){
+            mTabLayout.getTabAt(0).select();
+        }
         mCalendarView = findById(R.id.material_calendar_view);
         mCalendarView.addDecorator(this);
         mCalendarView.addDecorator(decorateBackground(getDummyDates()));
@@ -130,6 +134,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mToolbar = ((MainActivity)getActivity()).getToolbar();
         mMenu = mToolbar.getMenu();
         mMenu.clear();
+        if(mCalID!= -1){
+            mToolbar.setBackgroundColor(Constants.getColor(mCalendarManager.getCalendar(mCalID).getColor()));
+        }
         Date dummydate = new Date();
         dummydate.setTime(10000);
         mDummyHeyooEvent = new HeyooEvent(0, "dummy", dummydate, dummydate, "dummy event. If you see this, something has gone wrong", false, 9999, null);
@@ -149,9 +156,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mEventList = findById(R.id.event_list);
         mEventList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mEventList.setAdapter(mRecyclerAdapter);
-
-
-
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -243,24 +247,33 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
 
     private void bindItemViewHolder(BaseViewHolder viewHolder, HeyooEvent heyooEvent){
         mTabLeft = viewHolder.get(R.id.cvh_tab_left);
+        if(viewHolder.getAdapterPosition()!=0){
+            mLastHeyooEvent = mRecyclerAdapter.getItem(viewHolder.getAdapterPosition()-1);
+        }
+//        int x = heyooEvent.getStartTimeHash();
+//        int y = HeyooEvent.hashCode(mToday);
         if(heyooEvent.getStartTimeHash() == mLastHeyooEvent.getStartTimeHash()){
             (viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.GONE);
         } else if (heyooEvent.getStartTimeHash()== HeyooEvent.hashCode(mToday)){
             SimpleDateFormat formatter = new SimpleDateFormat("MMM dd");
-            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText("Today - " + formatter.format(heyooEvent.getStartCalendar().getTime()));
+            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText("Today - " + formatter.format(heyooEvent.getStart_time().getTime()));
             (viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.VISIBLE);
         } else {
             SimpleDateFormat formatter = new SimpleDateFormat("EEE - MMM dd");
-            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText(formatter.format(heyooEvent.getStartCalendar().getTime()));
+            ((TextView)viewHolder.get(R.id.cvh_top_date_text)).setText(formatter.format(heyooEvent.getStart_time()));
             (viewHolder.get(R.id.cvh_top_date_text)).setVisibility(TextView.VISIBLE);
         }
-        mLastHeyooEvent = heyooEvent;
         SimpleDateFormat formatter = new SimpleDateFormat("h:mm");
-        ((TextView)viewHolder.get(R.id.cvh_time)).setText(formatter.format(heyooEvent.getStartCalendar().getTime()) + getAMPM(heyooEvent.getStartCalendar()));
+        ((TextView)viewHolder.get(R.id.cvh_time)).setText(formatter.format(heyooEvent.getStart_time()) + getAMPM(heyooEvent.getStart_time()));
         ((TextView)viewHolder.get(R.id.cvh_event_title)).setText(heyooEvent.getName());
-        if(heyooEvent.getCalendars() == 1){
-            changeTabColor();
-        }
+        HeyooCalendar chosenCalendar = mCalendarManager.getCalendar(heyooEvent.getCalendars());
+        changeTabColor(chosenCalendar);
+        ImageView msgIcon = viewHolder.get(R.id.dccd_icon_chat);
+        GradientDrawable msgIconcolor = (GradientDrawable)msgIcon.getBackground();
+        msgIconcolor.setColor(Constants.getColor(chosenCalendar.getColor()));
+        ImageView recordIcon = viewHolder.get(R.id.dcrc_icon_record);
+        GradientDrawable recIconColor = (GradientDrawable)recordIcon.getBackground();
+        recIconColor.setColor(Constants.getColor(chosenCalendar.getColor()));
     }
 
 
@@ -313,7 +326,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mRecyclerAdapter.notifyDataSetChanged();
     }
 
-    public String getAMPM(Calendar calendar){
+    public String getAMPM(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         String ampm = "a";
         int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
         if(hourOfDay>12) {
@@ -324,9 +339,9 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         return ampm;
     }
 
-    public void changeTabColor(/*Calendar calendar*/){//TODO: implement dynamically changing color based on heyoocalendar's color id
+    public void changeTabColor(HeyooCalendar calendar){//TODO: implement dynamically changing color based on heyoocalendar's color id
         GradientDrawable bgshape = (GradientDrawable)mTabLeft.getBackground();
-        bgshape.setColor(Color.BLUE);
+        bgshape.setColor(Constants.getColor(calendar.getColor()));
     }
 
 
@@ -369,18 +384,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     public void onClick(View view) {
 
     }
-
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
 
     @Override
     public void showEvents(List<HeyooEvent> heyooEvents) {

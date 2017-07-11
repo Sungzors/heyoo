@@ -1,10 +1,12 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import java.io.Serializable;
+
 /**
  * Created by SungWon on 5/22/2017.
  */
 
-public class HeyooMedia {
+public class HeyooMedia implements Serializable{
 
     private String title;
     private String name;

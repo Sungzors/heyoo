@@ -10,10 +10,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.api.data.EventPatchData;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.structure.image.ImageFragment;
+import com.phdlabs.sungwon.heyoo.structure.invite.InviteFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.adapter.EventEditRecyclerAdapter;
@@ -65,7 +69,13 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     public void onStart() {
         super.onStart();
         Bundle args = getArguments();
-        mEvent = (HeyooEvent) args.getSerializable(Constants.BundleKeys.EVENT_DETAIL);
+        int i = ((HomeActivity)getBaseActivity()).getImageEventID();
+        if (i != -1){
+            mEvent = ((HomeActivity)getBaseActivity()).getEvent();
+        } else {
+            mEvent = (HeyooEvent) args.getSerializable(Constants.BundleKeys.EVENT_DETAIL);
+        }
+
         if(mEvent==null){
             getBaseActivity().setToolbarTitle("New Event");
         } else {
@@ -76,7 +86,6 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
             ((MainActivity)getActivity()).eraseBackArrow();
         }
         showEventOption();
-        showEventEdit();
     }
 
     @Override
@@ -96,10 +105,6 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     }
 
 
-    @Override
-    public void showProgress() {
-
-    }
 
     @Override
     public void showEventEdit() {
@@ -120,11 +125,18 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
     public void saveEvent() {
         HeyooEvent event = mAdapter.getEvent();
         event.setPublished(false);
-        if(event.getId()==-1){
-            event.setId(mEventManager.getMapEvents().size());
+        if (mEventManager.eventExists(event.getId())){
+            mEventManager.patchEvent(event.getId(),
+                    new EventPatchData(event.getName(),
+                            event.getStart_time(),
+                            event.getEnd_time(),
+                            event.getPrivacy(),
+                            event.isPublished(),
+                            event.getDescription()));
+        } else {
+            mEventManager.postEvent(event, null);
         }
-        mEventManager.addEvents(event);
-        //TODO: post to server
+        //TODO: set up recurrence
 //        Intent intent = new Intent(getContext(), HomeActivity.class);
 //        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 //        startActivity(intent);
@@ -137,26 +149,33 @@ public class EventEditFragment extends BaseFragment<EventEditContract.Controller
         if(!event.isPublished()){
             event.setPublished(true);
         }
-        if(event.getId()==-1){
-            event.setId(mEventManager.getMapEvents().size());
+        if (mEventManager.eventExists(event.getId())){
+            mEventManager.patchEvent(event.getId(),
+                    new EventPatchData(event.getName(),
+                            event.getStart_time(),
+                            event.getEnd_time(),
+                            event.getPrivacy(),
+                            event.isPublished(),
+                            event.getDescription()));
+        } else {
+            mEventManager.postEvent(event, null);
         }
-        mEventManager.addEvents(event);
-        //TODO: post to server. For now, ID will be place in map
+
+        //TODO: set up recurrence
 //        Intent intent = new Intent(getContext(), HomeActivity.class);
 //        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 //        startActivity(intent);
         getBaseActivity().onBackPressed();
     }
 
-//    @Override
-//    public boolean onBackPressed() {
-//        getBaseActivity().finish();
-//        return true;
-//    }
+    @Override
+    public void openMediaAdd() {
+        getBaseActivity().replaceFragment(ImageFragment.newInstance(mEvent), true);
+    }
 
     @Override
-    public void hideProgress() {
-
+    public void showAttendeeAdd() {
+        getBaseActivity().replaceFragment(InviteFragment.newInstance(mEvent), true);
     }
 
     @Override

@@ -13,6 +13,8 @@ import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
+import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
+import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginContract;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,6 +49,8 @@ public class RegisterController implements LoginContract.Register.Controller {
                 mEvents.post(new VerifyDataEvent());
                 AccountManager account = AccountManager.getInstance();
                 account.bindAccountData(data, mView.getContext());
+                HeyooEventManager.getInstance(account.getKey());
+                HeyooCalendarManager.getInstance(account.getKey());
                 mView.openApp();
             }
         });

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingPrefix">
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_invite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/CardView.Margins"
+        app:cardElevation="3dp"
+        app:contentPadding="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ToggleButton
+                android:id="@+id/cvi_button_selected"
+                android:button="@drawable/button_toggle_style"
+                android:background="@android:color/transparent"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:textOn=""
+                android:textOff=""/>
+            <ImageView
+                android:id="@+id/cvi_attendee_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="45dp"
+                android:src="@drawable/bg_shadow_box"/>
+
+            <TextView
+                android:id="@+id/cvi_attendee_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/cvi_attendee_icon"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="15dp"
+                android:textSize="13sp"
+                android:text="Person Name"
+                fontPath="fonts/Avenir-Roman-webfont.ttf"
+                />
+
+            <ImageView
+                android:id="@+id/cvi_attendee_status_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_toEndOf="@id/cvi_attendee_icon"
+                android:layout_below="@id/cvi_attendee_name"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="15dp" />
+
+            <TextView
+                android:id="@+id/cvi_attendee_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/cvi_attendee_status_icon"
+                android:layout_below="@id/cvi_attendee_name"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="15dp"
+                android:textSize="11sp"
+                android:text="Person Status"
+                fontPath="fonts/Avenir-Medium-webfont.ttf"/>
+
+            <TextView
+                android:id="@+id/cvi_attendee_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/view"
+                android:textColor="@color/tabselected"
+                fontPath="fonts/Avenir-Roman-webfont.ttf"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

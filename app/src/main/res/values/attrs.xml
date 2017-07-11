@@ -15,4 +15,6 @@
         <attr name="mrl_rippleInAdapter" format="boolean" localization="suggested" />
         <attr name="mrl_rippleRoundedCorners" format="dimension" localization="suggested" />
     </declare-styleable>
+
+
 </resources>

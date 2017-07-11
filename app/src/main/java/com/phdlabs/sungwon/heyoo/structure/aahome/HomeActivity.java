@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -15,6 +16,10 @@ public class HomeActivity extends MainActivity<HomeContract.Activity.Controller>
 
 
     private HomeFragment mHomeFragment;
+
+    private int imageEventID = -1;
+    private HeyooEvent event;
+
 
     @NonNull
     @Override
@@ -42,14 +47,22 @@ public class HomeActivity extends MainActivity<HomeContract.Activity.Controller>
         return fragment;
     }
 
-    @Override
-    public void showProgress() {
-
+    public int getImageEventID(){
+        int i = imageEventID;
+        imageEventID = -1;
+        return i;
     }
 
-    @Override
-    public void hideProgress() {
+    public void setImageEventID(int ID){
+        imageEventID = ID;
+    }
 
+    public void setEvent(HeyooEvent event){
+        this.event = event;
+    }
+
+    public HeyooEvent getEvent(){
+        return event;
     }
 
     @Override

@@ -11,9 +11,9 @@
         android:id="@+id/card_view_event_images"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="5dp"
-        app:contentPadding="0dp"
         style="@style/CardView.Margins"
+        app:cardElevation="3dp"
+        app:contentPadding="0dp"
         app:cardCornerRadius="3dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -61,6 +61,17 @@
                 android:layout_marginTop="10dp"
                 android:padding="15dp"
                 android:orientation="vertical"/>
+            <FrameLayout
+                android:id="@+id/cvei_empty_prompt"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/cvei_record_orange">
+                <include layout="@layout/image_empty_prompt"/>
+            </FrameLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

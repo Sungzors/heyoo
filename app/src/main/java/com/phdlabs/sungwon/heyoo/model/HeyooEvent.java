@@ -1,6 +1,7 @@
 package com.phdlabs.sungwon.heyoo.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,11 +16,10 @@ public class HeyooEvent implements Serializable{
     private String name;
     private Date start_time;
     private Calendar startCalendar;
-    private transient int startTimeHash;
     private Calendar endCalendar;
     private Date end_time;
     private boolean allDay;
-    private int calendars;
+    private List<HeyooCalendarEventNest> calendars;
     private String privacy;
     private String description;
     private String address;
@@ -40,13 +40,13 @@ public class HeyooEvent implements Serializable{
         this.start_time = start_time;
         startCalendar = Calendar.getInstance();
         startCalendar.setTime(start_time);
-        startTimeHash = hashCode(startCalendar);
         this.end_time = end_time;
         endCalendar = Calendar.getInstance();
         endCalendar.setTime(end_time);
         this.description = description;
         this.allDay = allDay;
-        this.calendars = calendars;
+        this.calendars = new ArrayList<>();
+        this.calendars.add(new HeyooCalendarEventNest(calendars, null));
         this.address = address;
     }
 
@@ -67,7 +67,9 @@ public class HeyooEvent implements Serializable{
     }
 
     public int getStartTimeHash() {
-        return startTimeHash;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(start_time);
+        return hashCode(cal);
     }
 
     public int getId() {
@@ -111,11 +113,11 @@ public class HeyooEvent implements Serializable{
     }
 
     public int getCalendars() {
-        return calendars;
+        return calendars.get(0).getId();
     }
 
     public void setCalendars(int calendars) {
-        this.calendars = calendars;
+        this.calendars.set(0,new HeyooCalendarEventNest(calendars, null));
     }
 
     public String getAddress() {
@@ -146,6 +148,10 @@ public class HeyooEvent implements Serializable{
         return media;
     }
 
+    public void addMedia(String url){
+        media.add(new HeyooMedia(null, null, url, id));
+    }
+
     public void setMedia(List<HeyooMedia> media) {
         this.media = media;
     }
@@ -156,5 +162,21 @@ public class HeyooEvent implements Serializable{
 
     public void setAttachments(List<HeyooAttachment> attachments) {
         this.attachments = attachments;
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
+    public int getRecurrence_id() {
+        return recurrence_id;
+    }
+
+    public void setRecurrence_id(int recurrence_id) {
+        this.recurrence_id = recurrence_id;
     }
 }

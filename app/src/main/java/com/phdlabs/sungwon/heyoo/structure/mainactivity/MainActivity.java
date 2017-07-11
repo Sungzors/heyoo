@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.data.AccountManager;
-import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
-import com.phdlabs.sungwon.heyoo.structure.abcalender.calendar.CalendarActivity;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeFragment;
+import com.phdlabs.sungwon.heyoo.structure.abcalender.calendar.CalendarFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
@@ -76,7 +76,6 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         setupTabs(mTabLayout);
         mTabLayout.addOnTabSelectedListener(this);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
-
     }
 
     private void setupTabs(TabLayout mTabLayout) {
@@ -143,6 +142,10 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         mToolbar.setNavigationOnClickListener(null);
     }
 
+    public TabLayout getTabLayout(){
+        return mTabLayout;
+    }
+
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -150,19 +153,17 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-        onTabSelected(tab);
+
     }
 
     @Override
     public void showHomePage() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        this.startActivity(intent);
+        replaceFragment(HomeFragment.newInstance(), false);
     }
 
     @Override
     public void showCalendarPage() {
-        Intent intent = new Intent(this, CalendarActivity.class);
-        this.startActivity(intent);
+        replaceFragment(CalendarFragment.newInstance(), false);
     }
 
     @Override

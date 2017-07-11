@@ -1,14 +1,30 @@
 package com.phdlabs.sungwon.heyoo.model;
 
+import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
+import com.phdlabs.sungwon.heyoo.api.data.EventPatchData;
+import com.phdlabs.sungwon.heyoo.api.data.EventPostData;
+import com.phdlabs.sungwon.heyoo.api.data.RecurrenceData;
+import com.phdlabs.sungwon.heyoo.api.event.EventPatchEvent;
+import com.phdlabs.sungwon.heyoo.api.event.EventPostEvent;
+import com.phdlabs.sungwon.heyoo.api.event.EventRetrievalEvent;
+import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
+import com.phdlabs.sungwon.heyoo.api.response.EventPatchResponse;
+import com.phdlabs.sungwon.heyoo.api.response.EventPostResponse;
+import com.phdlabs.sungwon.heyoo.api.response.EventRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
+import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import retrofit2.Call;
 
 /**
  * Created by SungWon on 5/8/2017.
@@ -16,21 +32,29 @@ import java.util.List;
 
 public class HeyooEventManager {
     private static HeyooEventManager mInstance;
-    private final HeyooEndpoint mHeyooEndpoint;
+    private final HeyooEndpoint mCaller;
+    private String mToken;
+    private EventBus mEvents;
 
     private SparseArray<HeyooEvent> mMap;
 
-    public static HeyooEventManager getInstance(){
+    public static HeyooEventManager getInstance(String token){
         if (mInstance == null) {
-            mInstance = new HeyooEventManager();
+            mInstance = new HeyooEventManager(token);
         }
         return mInstance;
     }
 
-    private HeyooEventManager(){
+    public static HeyooEventManager getInstance(){
+        return mInstance;
+    }
+
+    private HeyooEventManager(String token){
         super();
-        mHeyooEndpoint = Rest.getInstance().getHeyooEndpoint();
+        mCaller = Rest.getInstance().getHeyooEndpoint();
         mMap = new SparseArray<>();
+        mToken = token;
+        mEvents = EventsManager.getInstance().getDataEventBus();
     }
 
     public SparseArray<HeyooEvent> getMapEvents(){
@@ -60,6 +84,10 @@ public class HeyooEventManager {
         return eventList;
     }
 
+    public HeyooEvent getEvent(int eventID){
+        return mMap.get(eventID);
+    }
+
     public List<HeyooEvent> getUnpublishedEvents(){
         List<HeyooEvent> eventList = new ArrayList<>();
         for (int i = 0; i < mMap.size(); i++) {
@@ -69,5 +97,51 @@ public class HeyooEventManager {
             }
         }
         return eventList;
+    }
+
+    public boolean eventExists(int eventID){
+        HeyooEvent event = mMap.get(eventID);
+        return event != null;
+    }
+
+    public EventBus getEventBus(){
+        return mEvents;
+    }
+
+    public void loadEvents(){
+        Call<EventRetrievalResponse> call = mCaller.getEvents(mToken);
+        call.enqueue(new HCallback<EventRetrievalResponse, EventRetrievalEvent>(mEvents) {
+            @Override
+            protected void onSuccess(EventRetrievalResponse data) {
+                mMap.clear();
+                for (int i = 0; i < data.getCalEvents().size(); i++) {
+                    addEvents(data.getCalEvents().get(i));
+                }
+                mEvents.post(new EventRetrievalEvent());
+            }
+        });
+    }
+
+    public void postEvent(final HeyooEvent event, @Nullable RecurrenceData recur){
+        EventPostData data = new EventPostData(event, recur);
+        Call<EventPostResponse> call = mCaller.postEvents(mToken, data);
+        call.enqueue(new HCallback<EventPostResponse, EventPostEvent>(mEvents) {
+            @Override
+            protected void onSuccess(EventPostResponse data) {
+                addEvents(event);
+                mEvents.post(new EventPostEvent());
+            }
+        });
+    }
+
+    public void patchEvent(int eventID, EventPatchData data){
+        Call<EventPatchResponse> call = mCaller.patchEvents(eventID, mToken, data);
+        call.enqueue(new HCallback<EventPatchResponse, EventPatchEvent>(mEvents) {
+            @Override
+            protected void onSuccess(EventPatchResponse data) {
+                addEvents(data.getCalEvent());
+                mEvents.post(new EventPatchEvent());
+            }
+        });
     }
 }
