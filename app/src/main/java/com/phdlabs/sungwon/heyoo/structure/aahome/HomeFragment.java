@@ -102,6 +102,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     }
 
     @Override
+    protected int layoutId() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         ((MainActivity)getActivity()).eraseBackArrow();
@@ -159,10 +164,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override
-    protected int layoutId() {
-        return R.layout.fragment_home;
-    }
 
     public void showAddOption(){
 //        TextView addbutton = findById(R.id.right_action);
