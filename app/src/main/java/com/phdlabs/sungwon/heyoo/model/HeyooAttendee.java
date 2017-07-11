@@ -24,14 +24,15 @@ public class HeyooAttendee implements Serializable{
     private boolean verified;
     private String city;
     private List<Integer> eventidlist = new ArrayList<>();
+    private HeyooAttendeeStatusNest attendees;
     private transient boolean isChecked = false;
 
-    public HeyooAttendee(int id, String first_name, String last_name, String profile_picture, String status, String avatar) {
+    public HeyooAttendee(int id, String first_name, String last_name, String profile_picture, HeyooAttendeeStatusNest attendees, String avatar) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.profile_picture = profile_picture;
-        this.status = status;
+        this.attendees = attendees;
         this.avatar = avatar;
     }
 
@@ -121,6 +122,14 @@ public class HeyooAttendee implements Serializable{
 
     public void setProfile_picture(String profile_picture) {
         this.profile_picture = profile_picture;
+    }
+
+    public HeyooAttendeeStatusNest getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(HeyooAttendeeStatusNest attendees) {
+        this.attendees = attendees;
     }
 
     public String getAvatar() {

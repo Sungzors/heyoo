@@ -172,25 +172,25 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         List<HeyooAttendee> attendeesList = mController.getAssociatedAttendees();
         List<HeyooAttendee> goingList = new ArrayList<>();
         for (int i = 0; i < attendeesList.size(); i++) {
-            if (attendeesList.get(i).getStatus().equals("going")){
+            if (attendeesList.get(i).getAttendees().getStatus().equals("yes")){
                 goingList.add(attendeesList.get(i));
             }
         }
         List<HeyooAttendee> maybeList = new ArrayList<>();
         for (int i = 0; i < attendeesList.size(); i++) {
-            if (attendeesList.get(i).getStatus().equals("maybe")){
+            if (attendeesList.get(i).getAttendees().getStatus().equals("maybe")){
                 maybeList.add(attendeesList.get(i));
             }
         }
         List<HeyooAttendee> noList = new ArrayList<>();
         for (int i = 0; i < attendeesList.size(); i++) {
-            if (attendeesList.get(i).getStatus().equals("no")){
+            if (attendeesList.get(i).getAttendees().getStatus().equals("no")){
                 noList.add(attendeesList.get(i));
             }
         }
         List<HeyooAttendee> noReplyList = new ArrayList<>();
         for (int i = 0; i < attendeesList.size(); i++) {
-            if (attendeesList.get(i).getStatus().equals("noreply")){
+            if (attendeesList.get(i).getAttendees().getStatus().equals("pending")){
                 noReplyList.add(attendeesList.get(i));
             }
         }

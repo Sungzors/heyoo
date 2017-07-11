@@ -18,7 +18,7 @@ public class HeyooApp extends Application {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Avenir-Black-webfont.ttf")
+                .setDefaultFontPath("fonts/NunitoSans-Black.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

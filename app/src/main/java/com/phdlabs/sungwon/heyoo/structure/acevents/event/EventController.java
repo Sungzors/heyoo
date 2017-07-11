@@ -120,14 +120,7 @@ public class EventController implements EventContract.Controller{
 
     @Override
     public List<HeyooAttendee> getAssociatedAttendees() {
-        List<HeyooAttendee> list = getDummyAttendee();
-        List<HeyooAttendee> asslist = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getEventidlist().contains(mView.getEventid())){
-                asslist.add(list.get(i));
-            }
-        }
-        return asslist;
+        return mView.getEvent().getAttendees();
     }
 
     @Override
@@ -143,29 +136,6 @@ public class EventController implements EventContract.Controller{
             }
         }
         return asslist;
-    }
-
-    public List<HeyooAttendee> getDummyAttendee(){
-        List<HeyooAttendee> list = new ArrayList<>();
-        HeyooAttendee guy1 = new HeyooAttendee(0, "Guy", "One", "http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/prototypen/m_sexy_gr.jpg","going", "Heyoo Member");
-        HeyooAttendee guy2 = new HeyooAttendee(1, "Guy", "Two", "http://static.tvtropes.org/pmwiki/pub/images/AverageMan1.jpg", "maybe", "Facebook Member");
-        HeyooAttendee girl1 = new HeyooAttendee(2, "Girl", "One", "http://www.uni-regensburg.de/Fakultaeten/phil_Fak_II/Psychologie/Psy_II/beautycheck/english/prototypen/w_sexy_gr.jpg", "no", "Heyoo Member");
-        List<Integer> guy1list = new ArrayList<>();
-        guy1list.add(0);
-        guy1list.add(2);
-        List<Integer> guy2list = new ArrayList<>();
-        guy2list.add(1);
-        List<Integer> girl1list = new ArrayList<>();
-        girl1list.add(0);
-        girl1list.add(1);
-        girl1list.add(2);
-        guy1.setEventidlist(guy1list);
-        guy2.setEventidlist(guy2list);
-        girl1.setEventidlist(girl1list);
-        list.add(guy1);
-        list.add(guy2);
-        list.add(girl1);
-        return list;
     }
 
 

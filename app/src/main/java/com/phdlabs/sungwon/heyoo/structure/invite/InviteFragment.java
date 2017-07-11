@@ -22,14 +22,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.api.data.AttendeePostData;
+import com.phdlabs.sungwon.heyoo.api.event.AttendeePostEvent;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.event.UserRetrievalEvent;
+import com.phdlabs.sungwon.heyoo.api.response.EventPostResponse;
 import com.phdlabs.sungwon.heyoo.api.response.UserRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
@@ -52,13 +55,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by SungWon on 7/5/2017.
  */
 
 public class InviteFragment extends BaseFragment<InviteContract.Controller>
-        implements InviteContract.View, View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>, SearchView.OnQueryTextListener{
+        implements InviteContract.View, LoaderManager.LoaderCallbacks<Cursor>, SearchView.OnQueryTextListener{
 
     android.widget.SearchView mSearchText;
     RecyclerView mSearchList;
@@ -68,10 +72,12 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     Preferences mPref;
     EventBus mEventBus;
 
+    HeyooEvent mEvent;
+
     final int DETAILS_QUERY_ID = 0;
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final String SORT_ORDER = ContactsContract.CommonDataKinds.Phone.TYPE + " ASC ";
-    private List<Boolean> mSelectionList = new ArrayList<>();
+    private List<HeyooAttendee> mSelectionList = new ArrayList<>();
     private List<HeyooAttendee> mAttendeeList = new ArrayList<>();
     private List<HeyooAttendee> mFilteredList = new ArrayList<>();
 
@@ -119,8 +125,9 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_confirm:
+        switch (item.getTitle().toString()){
+            case "Yes":
+                onCheckSelected();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -140,6 +147,7 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
         mCaller = Rest.getInstance().getHeyooEndpoint();
         mPref = new Preferences(getContext());
         mEventBus = EventsManager.getInstance().getDataEventBus();
+        mEvent = (HeyooEvent)getArguments().getSerializable(Constants.BundleKeys.EVENT_DETAIL);
 
         SearchManager searchManager = (SearchManager)getBaseActivity().getSystemService(Context.SEARCH_SERVICE);
         mSearchText.setSearchableInfo(searchManager.getSearchableInfo(getBaseActivity().getComponentName()));
@@ -170,6 +178,8 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
             getLoaderManager().initLoader(DETAILS_QUERY_ID, null, this);
         }
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -222,12 +232,12 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
                             firstName = x.substring(0, x.lastIndexOf(' '));
                         }
                         else{
+                            lastName = "";
                             firstName = x;
                         }
                         mAttendeeList.add(new HeyooAttendee(firstName, lastName, yClean, "+1", "Contacts"));
                     }
                 }
-                mFilteredList = mAttendeeList;
             } finally {
                 cursor.close();
             }
@@ -244,31 +254,54 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
         call.enqueue(new HCallback<UserRetrievalResponse, UserRetrievalEvent>(mEventBus) {
             @Override
             protected void onSuccess(UserRetrievalResponse data) {
+                for (HeyooAttendee attendee : data.getUsers()){
+                    attendee.setStatus("Heyoo Member");
+                }
                 mAttendeeList.addAll(data.getUsers());
-                mFilteredList = mAttendeeList;
                 hideProgress();
                 showList(mAttendeeList);
+                mEventBus.post(new UserRetrievalEvent());
+            }
+        });
+    }
+
+
+    @Override
+    public void onCheckSelected() {
+        mSelectionList.clear();
+        for (HeyooAttendee attendee : mAttendeeList){
+            if(attendee.isChecked()){
+                mSelectionList.add(attendee);
+            }
+        }
+        AttendeePostData data = new AttendeePostData(mSelectionList);
+        Call<EventPostResponse> call = mCaller.postAttendees(mEvent.getId(), mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null), data);
+        call.enqueue(new HCallback<EventPostResponse, AttendeePostEvent>(mEventBus) {
+            @Override
+            protected void onSuccess(EventPostResponse data) {
+                mEventBus.post(new AttendeePostEvent());
+                getBaseActivity().onBackPressed();
+            }
+
+            @Override
+            public void onResponse(Call<EventPostResponse> call, Response<EventPostResponse> response) {
+                super.onResponse(call, response);
+            }
+
+            @Override
+            protected void onError(Response<EventPostResponse> response) {
+                super.onError(response);
+            }
+
+            @Override
+            public void onFailure(Call<EventPostResponse> call, Throwable t) {
+                super.onFailure(call, t);
             }
         });
     }
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-//        mFilteredList.clear();
-//        for (HeyooAttendee attendee : mAttendeeList){
-//            if(attendee.getFirst_name().toLowerCase().contains(s.toLowerCase())||attendee.getLast_name().toLowerCase().contains(s.toLowerCase())||attendee.getPhone().contains(s.toLowerCase())){
-//                mFilteredList.add(attendee);
-//
-//            }
-//        }
-//        mAdapter.clear();
-//        mAdapter.setItems(mFilteredList);
-//        mAdapter.notifyDataSetChanged();
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
         mFilteredList.clear();
         for (HeyooAttendee attendee : mAttendeeList){
             if(attendee.getFirst_name().toLowerCase().contains(s.toLowerCase())||attendee.getLast_name().toLowerCase().contains(s.toLowerCase())||attendee.getPhone().contains(s.toLowerCase())){
@@ -279,6 +312,21 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
         mAdapter.clear();
         mAdapter.setItems(mFilteredList);
         mAdapter.notifyDataSetChanged();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+//        mFilteredList.clear();
+//        for (HeyooAttendee attendee : mAttendeeList){
+//            if(attendee.getFirst_name().toLowerCase().contains(s.toLowerCase())||attendee.getLast_name().toLowerCase().contains(s.toLowerCase())||attendee.getPhone().contains(s.toLowerCase())){
+//                mFilteredList.add(attendee);
+//
+//            }
+//        }
+//        mAdapter.clear();
+//        mAdapter.setItems(mFilteredList);
+//        mAdapter.notifyDataSetChanged();
         return false;
     }
 
@@ -319,20 +367,21 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     }
 
     private void bindItemViewHolder(final BaseViewHolder viewHolder, final HeyooAttendee data) {
-        final RadioButton selectButton = viewHolder.get(R.id.cvi_button_selected);
+        final ToggleButton selectButton = viewHolder.get(R.id.cvi_button_selected);
         TextView attendeeName = viewHolder.get(R.id.cvi_attendee_name);
         ImageView attendeeIcon = viewHolder.get(R.id.cvi_attendee_icon);
         TextView attendeeStatus = viewHolder.get(R.id.cvi_attendee_status);
         attendeeName.setText(data.getFirst_name() + " " + data.getLast_name());
+
         selectButton.setChecked(data.isChecked());
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phone = mFilteredList.get(viewHolder.getAdapterPosition()).getPhone();
+                String phone = data.getPhone();
                 for (HeyooAttendee attendee : mAttendeeList){
                     if (attendee.getPhone().equals(phone)){
-                        attendee.setChecked(!selectButton.isChecked());
-                        selectButton.setChecked(!selectButton.isChecked());
+                        attendee.setChecked(selectButton.isChecked());
+                        break;
                     }
                 }
             }
@@ -349,14 +398,5 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     }
 
 
-    @Override
-    public void onCheckSelected() {
-
-    }
-
-    @Override
-    public void onClick(View view) {
-
-    }
 
 }
