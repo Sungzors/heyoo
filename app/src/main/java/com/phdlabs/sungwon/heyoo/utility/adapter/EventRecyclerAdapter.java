@@ -300,7 +300,14 @@ public class EventRecyclerAdapter extends BaseListRecyclerAdapter<HeyooEvent, Ba
         ImageExpander expander = new ImageExpander(mController.getContext());
         expander.displayRoundedImage(attendee.getProfile_picture(), (ImageView)baseViewHolder.get(R.id.cvepa_attendee_icon));
         ((TextView)baseViewHolder.get(R.id.cvepa_attendee_name)).setText(attendee.getFirst_name() + " " + attendee.getLast_name());
-        ((TextView)baseViewHolder.get(R.id.cvepa_attendee_status)).setText(attendee.getAvatar());
+        if(attendee.isVerified()){
+            ((TextView)baseViewHolder.get(R.id.cvepa_attendee_status)).setText("Heyoo Member");
+            ((ImageView)baseViewHolder.get(R.id.cvepa_attendee_colortab)).setImageResource(R.drawable.ic_heyoomembertwocircles);
+        } else {
+            ((TextView)baseViewHolder.get(R.id.cvepa_attendee_status)).setText("Contacts");
+            ((ImageView)baseViewHolder.get(R.id.cvepa_attendee_colortab)).setImageResource(R.drawable.ic_contacts);
+        }
+
     }
 
     private void bindAttachmentHolder(BaseViewHolder baseViewHolder, HeyooEvent event){

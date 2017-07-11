@@ -132,6 +132,14 @@ public class HeyooAttendee implements Serializable{
         this.attendees = attendees;
     }
 
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
     public String getAvatar() {
         return avatar;
     }
