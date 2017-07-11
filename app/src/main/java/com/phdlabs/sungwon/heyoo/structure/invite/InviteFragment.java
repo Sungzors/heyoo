@@ -44,7 +44,6 @@ import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
-import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -55,7 +54,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * Created by SungWon on 7/5/2017.
@@ -155,7 +153,7 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
         mSearchText.setSubmitButtonEnabled(true);
         mSearchText.setOnQueryTextListener(this);
 
-//        showList(mAttendeeList);
+        showList(mSelectionList);
 
         showProgress();
         showContacts();
@@ -235,7 +233,7 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
                             lastName = "";
                             firstName = x;
                         }
-                        mAttendeeList.add(new HeyooAttendee(firstName, lastName, yClean, "+1", "Contacts"));
+                        mAttendeeList.add(new HeyooAttendee(firstName, lastName, yClean, "+1", false));
                     }
                 }
             } finally {
@@ -254,12 +252,8 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
         call.enqueue(new HCallback<UserRetrievalResponse, UserRetrievalEvent>(mEventBus) {
             @Override
             protected void onSuccess(UserRetrievalResponse data) {
-                for (HeyooAttendee attendee : data.getUsers()){
-                    attendee.setStatus("Heyoo Member");
-                }
                 mAttendeeList.addAll(data.getUsers());
                 hideProgress();
-                showList(mAttendeeList);
                 mEventBus.post(new UserRetrievalEvent());
             }
         });
@@ -283,20 +277,6 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
                 getBaseActivity().onBackPressed();
             }
 
-            @Override
-            public void onResponse(Call<EventPostResponse> call, Response<EventPostResponse> response) {
-                super.onResponse(call, response);
-            }
-
-            @Override
-            protected void onError(Response<EventPostResponse> response) {
-                super.onError(response);
-            }
-
-            @Override
-            public void onFailure(Call<EventPostResponse> call, Throwable t) {
-                super.onFailure(call, t);
-            }
         });
     }
 
@@ -309,7 +289,10 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
 
             }
         }
-        mAdapter.clear();
+        if(mAdapter.getItemCount()>0){
+            mAdapter.clear();
+        }
+
         mAdapter.setItems(mFilteredList);
         mAdapter.notifyDataSetChanged();
         return false;
@@ -341,23 +324,6 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
             @Override
             protected BaseViewHolder viewHolder(LayoutInflater inflater, ViewGroup parent, int type) {
                 return new BaseViewHolder(R.layout.card_view_invite, inflater, parent){
-                    @Override
-                    protected void addClicks(ViewMap views) {
-                        views.click(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                switch (view.getId()){
-                                    case R.id.cvi_attendee_view:
-                                        Toast.makeText(getContext(), "view clicked "+getAdapterPosition(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    protected void putViewsIntoMap(ViewMap views) {
-                        views.put(R.id.cvi_attendee_view);
-                    }
                 };
             }
         };
@@ -371,6 +337,7 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
         TextView attendeeName = viewHolder.get(R.id.cvi_attendee_name);
         ImageView attendeeIcon = viewHolder.get(R.id.cvi_attendee_icon);
         TextView attendeeStatus = viewHolder.get(R.id.cvi_attendee_status);
+        ImageView attendeeStatusIcon = viewHolder.get(R.id.cvi_attendee_status_icon);
         attendeeName.setText(data.getFirst_name() + " " + data.getLast_name());
 
         selectButton.setChecked(data.isChecked());
@@ -387,12 +354,18 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
             }
         });
         Picasso.with(getContext()).load(data.getProfile_picture()).placeholder(ContextCompat.getDrawable(getActivity(), R.drawable.pandapic)).into(attendeeIcon);
-        attendeeStatus.setText(data.getStatus());
+        if(data.isVerified()){
+            attendeeStatus.setText("Heyoo Member");
+            Picasso.with(getContext()).load(R.drawable.ic_heyoomembertwocircles).into(attendeeStatusIcon);
+        } else {
+            attendeeStatus.setText("Contacts");
+            Picasso.with(getContext()).load(R.drawable.ic_contacts).into(attendeeStatusIcon);
+        }
         TextView attendeeView = viewHolder.get(R.id.cvi_attendee_view);
         attendeeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO:show contact detail
+                Toast.makeText(getContext(), "view clicked "+ data.getPhone(), Toast.LENGTH_SHORT).show();
             }
         });
     }

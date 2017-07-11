@@ -36,12 +36,12 @@ public class HeyooAttendee implements Serializable{
         this.avatar = avatar;
     }
 
-    public HeyooAttendee(String first_name, String last_name, String phone, String country_code, String status) {
+    public HeyooAttendee(String first_name, String last_name, String phone, String country_code, boolean verified) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.phone = phone;
         this.country_code = country_code;
-        this.status = status;
+        this.verified = verified;
     }
 
     public String getStatus() {
