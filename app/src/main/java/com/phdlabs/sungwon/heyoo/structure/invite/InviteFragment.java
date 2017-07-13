@@ -31,8 +31,10 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.data.AttendeePostData;
 import com.phdlabs.sungwon.heyoo.api.data.CalendarUserPostData;
 import com.phdlabs.sungwon.heyoo.api.event.AttendeePostEvent;
+import com.phdlabs.sungwon.heyoo.api.event.CalendarUserPostEvent;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.event.UserRetrievalEvent;
+import com.phdlabs.sungwon.heyoo.api.response.CalendarPostResponse;
 import com.phdlabs.sungwon.heyoo.api.response.EventPostResponse;
 import com.phdlabs.sungwon.heyoo.api.response.UserRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
@@ -282,6 +284,10 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
             }
         }
         if(mCalID == -1){
+            if(mEvent == null){
+                Toast.makeText(getContext(), "Event failed to pass. Returning to previous screen", Toast.LENGTH_SHORT).show();
+                getBaseActivity().onBackPressed();
+            }
             AttendeePostData data = new AttendeePostData(mSelectionList);
             Call<EventPostResponse> call = mCaller.postAttendees(mEvent.getId(), mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null), data);
             call.enqueue(new HCallback<EventPostResponse, AttendeePostEvent>(mEventBus) {
@@ -294,7 +300,14 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
             });
         } else {
             CalendarUserPostData data = new CalendarUserPostData(mSelectionList);
-
+            Call<CalendarPostResponse> call = mCaller.postCalendarUsers(mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null), mCalID, data);
+            call.enqueue(new HCallback<CalendarPostResponse, CalendarUserPostEvent>(mEventBus) {
+                @Override
+                protected void onSuccess(CalendarPostResponse data) {
+                    mEventBus.post(new CalendarPostResponse());
+                    getBaseActivity().onBackPressed();
+                }
+            });
         }
 
     }

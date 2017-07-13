@@ -25,6 +25,7 @@ import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventdraft.EventDraftFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.structure.invite.InviteFragment;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainActivity;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
@@ -207,6 +208,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
                         showAddEvent();
                         return true;
                     case R.id.action_edit_calendar:
+                        showUserInvite(mCalID);
                         return true;
                     case R.id.action_view_members:
                         return true;
@@ -437,6 +439,10 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     @Override
     public void showEventDetail(HeyooEvent event) {
         getBaseActivity().replaceFragment(EventFragment.newInstance(event), true);
+    }
+
+    public void showUserInvite(int calID){
+        getBaseActivity().replaceFragment(InviteFragment.newInstance(calID), true);
     }
 
 
