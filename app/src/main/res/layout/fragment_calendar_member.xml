@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <FrameLayout
+        android:id="@+id/fcm_calendar_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="10dp">
+        <include layout="@layout/draw_circle_people_double"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/fcm_calendar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/fcm_calendar_icon"
+        android:layout_marginTop="19dp"
+        android:text="Shared Calendar"
+        />
+
+    <TextView
+        android:id="@+id/fcm_calendar_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tabselected"
+        android:text="+"
+        android:textSize="30sp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:layout_alignParentEnd="true"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fcm_calendar_member_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fcm_calendar_icon"
+        android:fastScrollEnabled="true"
+        android:padding="5dp"/>
+
+</RelativeLayout>

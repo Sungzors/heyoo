@@ -18,6 +18,7 @@ public class HeyooCalendar implements Serializable{
     private Date updated_at;
     private transient List<HeyooEvent> eventsList;
     private int user_id;
+    private List<HeyooAttendee> users;
 
 
     public List<HeyooEvent> getEventsList() {
@@ -100,5 +101,13 @@ public class HeyooCalendar implements Serializable{
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public List<HeyooAttendee> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<HeyooAttendee> users) {
+        this.users = users;
     }
 }

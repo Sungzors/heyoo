@@ -185,6 +185,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         if(mCalID!= -1) {
             mMenu.getItem(3).setVisible(true);
             mMenu.getItem(4).setVisible(true);
+            mMenu.getItem(4).setTitle("Members (" + mCalendarManager.getCalendar(mCalID).getUsers().size() + ")");
         } else {
             mMenu.getItem(3).setVisible(false);
             mMenu.getItem(4).setVisible(false);
@@ -211,6 +212,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
                         showUserInvite(mCalID);
                         return true;
                     case R.id.action_view_members:
+                        showMembers(mCalID);
                         return true;
                 }
                 return false;
@@ -445,5 +447,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         getBaseActivity().replaceFragment(InviteFragment.newInstance(calID), true);
     }
 
+    public void showMembers(int calID){
+
+    }
 
 }
