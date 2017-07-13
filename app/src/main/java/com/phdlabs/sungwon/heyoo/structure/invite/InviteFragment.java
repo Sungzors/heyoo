@@ -51,6 +51,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -292,6 +294,12 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
         if(mAdapter.getItemCount()>0){
             mAdapter.clear();
         }
+        Collections.sort(mFilteredList, new Comparator<HeyooAttendee>() {
+            @Override
+            public int compare(HeyooAttendee e1, HeyooAttendee e2) {
+                return e1.getFirst_name().compareTo(e2.getFirst_name());
+            }
+        });
 
         mAdapter.setItems(mFilteredList);
         mAdapter.notifyDataSetChanged();
