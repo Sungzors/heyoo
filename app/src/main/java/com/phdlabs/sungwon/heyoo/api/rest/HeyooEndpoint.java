@@ -2,6 +2,7 @@ package com.phdlabs.sungwon.heyoo.api.rest;
 
 import com.phdlabs.sungwon.heyoo.api.data.AttendeePostData;
 import com.phdlabs.sungwon.heyoo.api.data.CalendarPostData;
+import com.phdlabs.sungwon.heyoo.api.data.CalendarUserPostData;
 import com.phdlabs.sungwon.heyoo.api.data.EventPatchData;
 import com.phdlabs.sungwon.heyoo.api.data.EventPostData;
 import com.phdlabs.sungwon.heyoo.api.data.LoginData;
@@ -75,5 +76,8 @@ public interface HeyooEndpoint {
 
     @GET("/users")
     Call<UserRetrievalResponse> getUsers(@Header(TOKEN)String token);
+
+    @POST("/calendars/{id}/users")
+    Call<CalendarPostResponse> postCalendarUsers(@Header(TOKEN)String token, @Path("id") int calID , @Body CalendarUserPostData data);
 
 }

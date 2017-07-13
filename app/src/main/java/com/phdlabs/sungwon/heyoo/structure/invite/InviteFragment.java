@@ -29,6 +29,7 @@ import android.widget.ToggleButton;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.data.AttendeePostData;
+import com.phdlabs.sungwon.heyoo.api.data.CalendarUserPostData;
 import com.phdlabs.sungwon.heyoo.api.event.AttendeePostEvent;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.event.UserRetrievalEvent;
@@ -73,6 +74,7 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     EventBus mEventBus;
 
     HeyooEvent mEvent;
+    int mCalID = -1;
 
     final int DETAILS_QUERY_ID = 0;
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
@@ -84,6 +86,14 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     public static InviteFragment newInstance(HeyooEvent event){
         Bundle args = new Bundle();
         args.putSerializable(Constants.BundleKeys.EVENT_DETAIL, event);
+        InviteFragment fragment = new InviteFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static InviteFragment newInstance(int calID){
+        Bundle args = new Bundle();
+        args.putInt(Constants.BundleKeys.HOME_CALENDAR_ID, calID);
         InviteFragment fragment = new InviteFragment();
         fragment.setArguments(args);
         return fragment;
@@ -148,6 +158,7 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
         mPref = new Preferences(getContext());
         mEventBus = EventsManager.getInstance().getDataEventBus();
         mEvent = (HeyooEvent)getArguments().getSerializable(Constants.BundleKeys.EVENT_DETAIL);
+        mCalID = getArguments().getInt(Constants.BundleKeys.HOME_CALENDAR_ID, -1);
 
         SearchManager searchManager = (SearchManager)getBaseActivity().getSystemService(Context.SEARCH_SERVICE);
         mSearchText.setSearchableInfo(searchManager.getSearchableInfo(getBaseActivity().getComponentName()));
@@ -270,16 +281,22 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
                 mSelectionList.add(attendee);
             }
         }
-        AttendeePostData data = new AttendeePostData(mSelectionList);
-        Call<EventPostResponse> call = mCaller.postAttendees(mEvent.getId(), mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null), data);
-        call.enqueue(new HCallback<EventPostResponse, AttendeePostEvent>(mEventBus) {
-            @Override
-            protected void onSuccess(EventPostResponse data) {
-                mEventBus.post(new AttendeePostEvent());
-                getBaseActivity().onBackPressed();
-            }
+        if(mCalID == -1){
+            AttendeePostData data = new AttendeePostData(mSelectionList);
+            Call<EventPostResponse> call = mCaller.postAttendees(mEvent.getId(), mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null), data);
+            call.enqueue(new HCallback<EventPostResponse, AttendeePostEvent>(mEventBus) {
+                @Override
+                protected void onSuccess(EventPostResponse data) {
+                    mEventBus.post(new AttendeePostEvent());
+                    getBaseActivity().onBackPressed();
+                }
 
-        });
+            });
+        } else {
+            CalendarUserPostData data = new CalendarUserPostData(mSelectionList);
+
+        }
+
     }
 
     @Override
