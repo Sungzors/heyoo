@@ -1,5 +1,9 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome;
 
+import com.phdlabs.sungwon.heyoo.R;
+import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.utility.Constants;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -181,6 +185,13 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mToolbar.inflateMenu(R.menu.menu_calendar);
         mMenu.setGroupCheckable(R.id.menu_group_calendar, true, true);
         mMenu.getItem(1).setChecked(true);
+        if(mCalID!= -1) {
+            mMenu.getItem(3).setVisible(true);
+            mMenu.getItem(4).setVisible(true);
+        } else {
+            mMenu.getItem(3).setVisible(false);
+            mMenu.getItem(4).setVisible(false);
+        }
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -198,6 +209,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
                         return true;
                     case R.id.action_new_event:
                         showAddEvent();
+                        return true;
+                    case R.id.action_edit_calendar:
                         return true;
                 }
                 return false;
@@ -275,6 +288,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         ImageView recordIcon = viewHolder.get(R.id.dcrc_icon_record);
         GradientDrawable recIconColor = (GradientDrawable)recordIcon.getBackground();
         recIconColor.setColor(Constants.getColor(chosenCalendar.getColor()));
+
     }
 
 

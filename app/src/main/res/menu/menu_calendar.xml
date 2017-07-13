@@ -29,8 +29,20 @@
             android:title="@string/new_event"
             app:showAsAction="never"
             android:checkable="false"/>
+        <item
+            android:id="@+id/action_edit_calendar"
+            android:title="Edit Calendar"
+            android:titleCondensed="Edit"
+            app:showAsAction="never"
+            android:checkable="false"
+            android:visible="false"/>
+        <item
+            android:id="@+id/action_view_members"
+            android:title="Members ()"
+            app:showAsAction="never"
+            android:checkable="false"
+            android:visible="false"/>
     </group>
-
 
 
 </menu>
