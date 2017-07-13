@@ -27,6 +27,18 @@ public interface CalendarContract {
         interface View extends Contract.BaseView{
 
         }
+
+        interface Controller extends Contract.BaseController{
+
+        }
+    }
+
+    interface Member{
+        interface View extends Contract.BaseView{
+            void onMemberClicked();
+            void onAddClicked();
+        }
+
         interface Controller extends Contract.BaseController{
 
         }
