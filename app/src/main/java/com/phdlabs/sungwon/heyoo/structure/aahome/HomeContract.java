@@ -34,10 +34,12 @@ public interface HomeContract {
         int getSelectedTab();// TODO: 4/18/2017
 
         void showEvents(List<HeyooEvent> heyooEvents);
+
+        int getCalendarId();
     }
 
     interface Controller extends Contract.BaseController{
-        void onDaySelected();// TODO: 4/18/2017
+        void onDaySelected();
 
         void onDayUnselected();// TODO: 4/18/2017
 

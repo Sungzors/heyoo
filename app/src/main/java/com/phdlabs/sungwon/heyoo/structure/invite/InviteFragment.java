@@ -318,6 +318,7 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
 //        mAdapter.clear();
 //        mAdapter.setItems(mFilteredList);
 //        mAdapter.notifyDataSetChanged();
+        //if used, make sure to include sort
         return false;
     }
 

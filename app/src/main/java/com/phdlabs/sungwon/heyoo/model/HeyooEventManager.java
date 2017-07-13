@@ -84,12 +84,16 @@ public class HeyooEventManager {
         return eventList;
     }
 
-    public List<HeyooEvent> getEvents(HeyooCalendar calendar){
+    //if the calid is -1 which is the case for when there are no calendars submitted to home screen, it returns the normal getevents()
+    public List<HeyooEvent> getEvents(int calendarId){
+        if(calendarId == -1){
+            getEvents();
+        }
         List<HeyooEvent> eventList = new ArrayList<>();
         for (int i = 0; i < mMap.size(); i++) {
             HeyooEvent event = mMap.valueAt(i);
             if(event.isPublished()){
-                if(event.getCalendars() == calendar.getId()){
+                if(event.getCalendars() == calendarId){
                     eventList.add(event);
                 }
             }

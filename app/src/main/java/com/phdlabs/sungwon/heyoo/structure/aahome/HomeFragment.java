@@ -381,6 +381,11 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     }
 
     @Override
+    public int getCalendarId() {
+        return mCalID;
+    }
+
+    @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
     }
