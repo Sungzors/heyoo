@@ -84,6 +84,25 @@ public class HeyooEventManager {
         return eventList;
     }
 
+    public List<HeyooEvent> getEvents(HeyooCalendar calendar){
+        List<HeyooEvent> eventList = new ArrayList<>();
+        for (int i = 0; i < mMap.size(); i++) {
+            HeyooEvent event = mMap.valueAt(i);
+            if(event.isPublished()){
+                if(event.getCalendars() == calendar.getId()){
+                    eventList.add(event);
+                }
+            }
+        }
+        Collections.sort(eventList, new Comparator<HeyooEvent>() {
+            @Override
+            public int compare(HeyooEvent e1, HeyooEvent e2) {
+                return e1.getStart_time().compareTo(e2.getStart_time());
+            }
+        });
+        return eventList;
+    }
+
     public HeyooEvent getEvent(int eventID){
         return mMap.get(eventID);
     }

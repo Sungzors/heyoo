@@ -1,9 +1,5 @@
 package com.phdlabs.sungwon.heyoo.structure.aahome;
 
-import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
-import com.phdlabs.sungwon.heyoo.utility.Constants;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -212,6 +208,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
                         return true;
                     case R.id.action_edit_calendar:
                         return true;
+                    case R.id.action_view_members:
+                        return true;
                 }
                 return false;
             }
@@ -263,6 +261,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
         mTabLeft = viewHolder.get(R.id.cvh_tab_left);
         if(viewHolder.getAdapterPosition()!=0){
             mLastHeyooEvent = mRecyclerAdapter.getItem(viewHolder.getAdapterPosition()-1);
+        } else {
+            mLastHeyooEvent = mDummyHeyooEvent;
         }
 //        int x = heyooEvent.getStartTimeHash();
 //        int y = HeyooEvent.hashCode(mToday);
