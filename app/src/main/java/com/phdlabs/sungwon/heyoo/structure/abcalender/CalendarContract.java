@@ -1,5 +1,6 @@
 package com.phdlabs.sungwon.heyoo.structure.abcalender;
 
+import com.phdlabs.sungwon.heyoo.model.HeyooAttendee;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.structure.core.Contract;
 import com.phdlabs.sungwon.heyoo.structure.mainactivity.MainContract;
@@ -35,7 +36,7 @@ public interface CalendarContract {
 
     interface Member{
         interface View extends Contract.BaseView{
-            void onMemberClicked();
+            void onMemberClicked(HeyooAttendee attendee);
             void onAddClicked();
         }
 
