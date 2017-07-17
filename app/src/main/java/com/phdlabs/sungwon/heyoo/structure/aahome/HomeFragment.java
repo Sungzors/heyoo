@@ -21,6 +21,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
+import com.phdlabs.sungwon.heyoo.structure.abcalender.member.CalendarMemberFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventdraft.EventDraftFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
@@ -448,7 +449,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     }
 
     public void showMembers(int calID){
-
+        getBaseActivity().replaceFragment(CalendarMemberFragment.newInstance(calID), true);
     }
 
 }

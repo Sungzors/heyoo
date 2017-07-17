@@ -15,12 +15,14 @@ public class Constants {
     }
 
     public interface BundleKeys{
+        String ATTENDEE_DETAIL = "attendeedetail";
         String EVENT_ID = "eventid";
         String EVENT_DETAIL = "eventdetail";
         String LOGIN_PHONE = "loginphone";
         String LOGIN_COUNTRY_CODE = "logincountrycode";
         String LOGIN_REGISTER_STATUS = "isregister";
         String HOME_CALENDAR_ID = "homecalid";
+
     }
 
     public static int getColor(String color){

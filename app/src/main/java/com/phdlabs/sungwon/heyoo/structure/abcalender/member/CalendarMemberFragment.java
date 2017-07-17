@@ -19,6 +19,7 @@ import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.CalendarContract;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.structure.invite.InviteFragment;
+import com.phdlabs.sungwon.heyoo.structure.member.MemberViewFragment;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.ViewMap;
@@ -74,6 +75,7 @@ public class CalendarMemberFragment extends BaseFragment<CalendarContract.Member
         mAddButton = findById(R.id.fcm_calendar_add);
         mAddButton.setOnClickListener(this);
         mRecycler = findById(R.id.fcm_calendar_member_list);
+        setUpRecycler();
     }
 
     private void setUpRecycler(){
@@ -105,7 +107,7 @@ public class CalendarMemberFragment extends BaseFragment<CalendarContract.Member
 
     @Override
     public void onMemberClicked(HeyooAttendee attendee) {
-
+        getBaseActivity().replaceFragment(MemberViewFragment.newInstance(attendee), true);
     }
 
     @Override
