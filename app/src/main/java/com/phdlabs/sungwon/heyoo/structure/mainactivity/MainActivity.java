@@ -90,7 +90,6 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
         mTabLayout.addTab(tasks);
         mTabLayout.addTab(messages);
         mTabLayout.addTab(alerts);
-        TabLayout.Tab tab = mTabLayout.getTabAt(0);
     }
 
     @Tab
