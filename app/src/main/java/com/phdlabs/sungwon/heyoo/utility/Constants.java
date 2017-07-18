@@ -25,6 +25,10 @@ public class Constants {
 
     }
 
+    public interface IntentFlags{
+        String HOME_FLAG = "com.phdlabs.sungwon.heyoo.structure.aahome";
+    }
+
     public static int getColor(String color){
         switch (color){
             case "butterscotch":
