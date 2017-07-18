@@ -8,6 +8,7 @@ import com.phdlabs.sungwon.heyoo.api.data.EventPostData;
 import com.phdlabs.sungwon.heyoo.api.data.LoginData;
 import com.phdlabs.sungwon.heyoo.api.data.ResendData;
 import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
+import com.phdlabs.sungwon.heyoo.api.response.AlertRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.response.CalendarPostResponse;
 import com.phdlabs.sungwon.heyoo.api.response.CalendarRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.response.EventMediaPostResponse;
@@ -79,5 +80,9 @@ public interface HeyooEndpoint {
 
     @POST("/calendars/{id}/users")
     Call<CalendarPostResponse> postCalendarUsers(@Header(TOKEN)String token, @Path("id") int calID , @Body CalendarUserPostData data);
+
+    @GET("/alerts")
+    Call<AlertRetrievalResponse> getAlerts(@Header(TOKEN)String token);
+
 
 }
