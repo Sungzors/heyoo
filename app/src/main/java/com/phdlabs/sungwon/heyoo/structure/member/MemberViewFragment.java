@@ -50,7 +50,7 @@ public class MemberViewFragment extends BaseFragment<MemberViewContract.Controll
         HeyooAttendee attendee = (HeyooAttendee) getArguments().getSerializable(Constants.BundleKeys.ATTENDEE_DETAIL);
         Picasso.with(getContext()).load(attendee.getProfile_picture()).placeholder(R.drawable.pandapic).into(((ImageView)findById(R.id.fmv_avatar)));
         ((TextView)findById(R.id.fmv_name)).setText(attendee.getFirst_name() + " " + attendee.getLast_name());
-        ((TextView)findById(R.id.fmv_location)).setText(attendee.getPhone());
+        ((TextView)findById(R.id.fmv_location)).setText(attendee.getCity());
         (findById(R.id.fmv_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

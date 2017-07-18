@@ -124,6 +124,14 @@ public class HeyooAttendee implements Serializable{
         this.profile_picture = profile_picture;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public HeyooAttendeeStatusNest getAttendees() {
         return attendees;
     }
