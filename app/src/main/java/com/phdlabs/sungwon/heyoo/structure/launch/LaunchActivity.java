@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.event.CalendarRetrievalEvent;
 import com.phdlabs.sungwon.heyoo.api.event.EventRetrievalEvent;
+import com.phdlabs.sungwon.heyoo.model.HeyooAlertManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
@@ -25,6 +26,7 @@ public class LaunchActivity extends BaseActivity {
 
     private HeyooCalendarManager mCalendarManager;
     private HeyooEventManager mEventManager;
+    private HeyooAlertManager mAlertManager;
     private Preferences mPref;
     private String mToken;
 
@@ -63,8 +65,10 @@ public class LaunchActivity extends BaseActivity {
         } else {
             mCalendarManager = HeyooCalendarManager.getInstance(mToken);
             mEventManager = HeyooEventManager.getInstance(mToken);
+            mAlertManager = HeyooAlertManager.getInstance(mToken);
             mCalendarManager.getEventBus().register(this);
             mCalendarManager.loadCalendars();
+            mAlertManager.loadAlerts();
             showProgress();
         }
     }

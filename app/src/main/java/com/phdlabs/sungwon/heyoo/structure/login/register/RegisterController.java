@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.phdlabs.sungwon.heyoo.api.data.AccountManager;
 import com.phdlabs.sungwon.heyoo.api.data.ResendData;
 import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
+import com.phdlabs.sungwon.heyoo.api.event.EventRetrievalEvent;
 import com.phdlabs.sungwon.heyoo.api.event.EventsManager;
 import com.phdlabs.sungwon.heyoo.api.event.RegisterResendCodeEvent;
 import com.phdlabs.sungwon.heyoo.api.event.VerifyDataEvent;
@@ -13,6 +14,7 @@ import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 import com.phdlabs.sungwon.heyoo.api.rest.HeyooEndpoint;
 import com.phdlabs.sungwon.heyoo.api.rest.Rest;
 import com.phdlabs.sungwon.heyoo.api.utility.HCallback;
+import com.phdlabs.sungwon.heyoo.model.HeyooAlertManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginContract;
@@ -49,9 +51,12 @@ public class RegisterController implements LoginContract.Register.Controller {
                 mEvents.post(new VerifyDataEvent());
                 AccountManager account = AccountManager.getInstance();
                 account.bindAccountData(data, mView.getContext());
-                HeyooEventManager.getInstance(account.getKey());
-                HeyooCalendarManager.getInstance(account.getKey());
-                mView.openApp();
+                HeyooEventManager manager = HeyooEventManager.getInstance(account.getKey());
+                manager.getEventBus().register(this);
+                manager.loadEvents();
+                HeyooCalendarManager.getInstance(account.getKey()).loadCalendars();
+                HeyooAlertManager.getInstance(account.getKey()).loadAlerts();
+
             }
         });
 
@@ -73,6 +78,11 @@ public class RegisterController implements LoginContract.Register.Controller {
 
             }
         });
+    }
+
+    @Subscribe
+    public void onEventMainThread(EventRetrievalEvent event){
+
     }
 
     @Subscribe
