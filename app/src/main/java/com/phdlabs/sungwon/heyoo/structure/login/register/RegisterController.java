@@ -82,7 +82,14 @@ public class RegisterController implements LoginContract.Register.Controller {
 
     @Subscribe
     public void onEventMainThread(EventRetrievalEvent event){
-
+        if (event.isSuccess()){
+            HeyooCalendarManager.getInstance().getEventBus().unregister(this);
+            mView.openApp();
+        } else {
+            HeyooEventManager.getInstance().loadEvents();
+            HeyooCalendarManager.getInstance().loadCalendars();
+            HeyooAlertManager.getInstance().loadAlerts();
+        }
     }
 
     @Subscribe
