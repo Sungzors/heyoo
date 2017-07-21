@@ -8,13 +8,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
-import com.phdlabs.sungwon.heyoo.api.data.AccountManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeFragment;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.calendar.CalendarFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
+import com.phdlabs.sungwon.heyoo.structure.aealerts.AlertFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
 
@@ -179,8 +178,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showAlertsPage() {
-        String key = AccountManager.getInstance().debugGetKey(this);
-        Toast.makeText(this, AccountManager.getInstance().debugGetKey(this), Toast.LENGTH_SHORT).show();
+        replaceFragment(AlertFragment.newInstance(), false);
     }
 
     @Override

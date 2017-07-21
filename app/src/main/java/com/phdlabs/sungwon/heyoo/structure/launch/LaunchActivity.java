@@ -86,6 +86,7 @@ public class LaunchActivity extends BaseActivity {
             mEventManager.loadEvents();
         } else {
             showError(event.getErrorMessage());
+            mCalendarManager.loadCalendars();
         }
     }
 
@@ -98,6 +99,7 @@ public class LaunchActivity extends BaseActivity {
             openApp();
         } else {
             showError(event.getErrorMessage());
+            mEventManager.loadEvents();
         }
     }
 }

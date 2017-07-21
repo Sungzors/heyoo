@@ -46,6 +46,10 @@ public class HeyooAlertManager {
 
     public List<HeyooAlert> getAlerts() {return mAlerts;}
 
+    public EventBus getmEvents() {
+        return mEvents;
+    }
+
     public void loadAlerts(){
         Call<AlertRetrievalResponse> call = mCaller.getAlerts(mToken);
         call.enqueue(new HCallback<AlertRetrievalResponse, AlertRetrievalEvent>(mEvents) {
@@ -53,6 +57,7 @@ public class HeyooAlertManager {
             protected void onSuccess(AlertRetrievalResponse data) {
                 mAlerts.clear();
                 mAlerts.addAll(data.getAlerts());
+                mEvents.post(new AlertRetrievalEvent());
             }
         });
     }
