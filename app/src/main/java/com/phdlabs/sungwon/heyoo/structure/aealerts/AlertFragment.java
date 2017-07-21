@@ -11,13 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.event.AlertRetrievalEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooAlert;
 import com.phdlabs.sungwon.heyoo.model.HeyooAlertManager;
+import com.phdlabs.sungwon.heyoo.structure.aahome.HomeFragment;
+import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.utility.BaseViewHolder;
+import com.phdlabs.sungwon.heyoo.utility.ViewMap;
 import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -92,7 +96,21 @@ public class AlertFragment extends BaseFragment<AlertContract.Controller>
 
             @Override
             protected BaseViewHolder viewHolder(LayoutInflater inflater, ViewGroup parent, int type) {
-                return new BaseViewHolder(R.layout.card_view_alert, inflater, parent);
+                return new BaseViewHolder(R.layout.card_view_alert, inflater, parent){
+                    @Override
+                    protected void addClicks(ViewMap views) {
+                        super.addClicks(views);
+                        HeyooAlert alert = getItem(getAdapterPosition());
+                        if(alert.getSource().equals("calendar")){
+                            (getBaseActivity()).replaceFragment(HomeFragment.newInstance(alert.getCalendar().getId()), true);
+                        } else if (alert.getSource().equals("event")){
+                            (getBaseActivity()).replaceFragment(EventFragment.newInstance(alert.getEvent()), true);
+                        } else {
+                            Toast.makeText(getContext(), "Alert does not have a source", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                };
             }
         };
         mAdapter.setItems(mAlerts);
