@@ -26,6 +26,10 @@ public class Constants {
 
     }
 
+    public interface GcmTopics{
+        String MAIN = "/topics/my_little_topic";
+    }
+
     public interface IntentFlags{
         String HOME_FLAG = "com.phdlabs.sungwon.heyoo.structure.aahome";
     }

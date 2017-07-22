@@ -3,7 +3,9 @@ package com.phdlabs.sungwon.heyoo.api.utility.gms;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
@@ -36,5 +38,14 @@ public class RegistrationService extends IntentService {
         }
         Preferences pref = new Preferences(this);
         pref.putPreference(Constants.PreferenceConstants.GCM_TOKEN, registrationToken);
+        Log.d("Registration token: ", registrationToken);
+
+        GcmPubSub subscription = GcmPubSub.getInstance(this);
+        try {
+            subscription.subscribe(registrationToken, Constants.GcmTopics.MAIN, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
