@@ -12,6 +12,7 @@ public class Constants {
 
     public interface PreferenceConstants {
         String KEY_TOKEN = "token";
+        String GCM_TOKEN = "gcmtoken";
     }
 
     public interface BundleKeys{
