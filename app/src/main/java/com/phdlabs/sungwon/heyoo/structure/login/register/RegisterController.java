@@ -52,7 +52,6 @@ public class RegisterController implements LoginContract.Register.Controller {
                 AccountManager account = AccountManager.getInstance();
                 account.bindAccountData(data, mView.getContext());
                 HeyooEventManager manager = HeyooEventManager.getInstance(account.getKey());
-                manager.getEventBus().register(this);
                 manager.loadEvents();
                 HeyooCalendarManager.getInstance(account.getKey()).loadCalendars();
                 HeyooAlertManager.getInstance(account.getKey()).loadAlerts();
@@ -83,7 +82,6 @@ public class RegisterController implements LoginContract.Register.Controller {
     @Subscribe
     public void onEventMainThread(EventRetrievalEvent event){
         if (event.isSuccess()){
-            HeyooCalendarManager.getInstance().getEventBus().unregister(this);
             mView.openApp();
         } else {
             HeyooEventManager.getInstance().loadEvents();
