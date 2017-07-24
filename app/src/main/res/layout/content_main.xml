@@ -38,7 +38,7 @@
             android:background="@color/white"
             app:elevation="5dp"
             app:tabSelectedTextColor="@color/tabselected"
-            app:tabMode="scrollable"
+            app:tabMaxWidth="0dp"
             app:tabIndicatorHeight="3dp"
             app:tabIndicatorColor="@color/tabselected"
             app:tabTextAppearance="@style/TextAppearance.Tab"

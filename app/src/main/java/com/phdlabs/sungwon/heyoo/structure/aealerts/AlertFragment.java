@@ -64,7 +64,7 @@ public class AlertFragment extends BaseFragment<AlertContract.Controller>
     public void onStart() {
         super.onStart();
         getBaseActivity().setToolbarTitle("Alerts");
-        (getBaseActivity()).getToolbar().getMenu().clear();
+        getBaseActivity().getToolbar().getMenu().clear();
     }
 
     @Override
