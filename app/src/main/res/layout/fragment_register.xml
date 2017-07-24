@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -8,89 +8,98 @@
     android:background="@color/white"
     tools:ignore="MissingPrefix">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
-        <ImageView
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/cardview_dark_background"/>
-        <ImageView
-            android:layout_width="wrap_content"
+            android:layout_height="200dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/cardview_dark_background"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/heyoo_logo_backdrop"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <TextView
+            style="@style/TextAppearance.LoginSubtext"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/heyoo_logo_backdrop"
-            android:layout_gravity="center"/>
-    </FrameLayout>
+            android:text="@string/enter_confirmation_code"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"/>
 
-    <TextView
-        style="@style/TextAppearance.LoginSubtext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/enter_confirmation_code"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_marginTop="19dp"
+            style="@style/TextAppearance.LoginSmallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/confirmation_code"/>
 
-    <TextView
-        android:layout_marginTop="19dp"
-        style="@style/TextAppearance.LoginSmallText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/confirmation_code"/>
+        <EditText
+            android:id="@+id/fr_confirmation_code"
+            style="@style/TextAppearance.LoginBigText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_shadow_box"
+            android:inputType="number"
+            android:imeOptions="actionDone"
+            android:hint="@string/enter_confirmation_code"
+            android:textColorHint="@color/shadow"/>
 
-    <EditText
-        android:id="@+id/fr_confirmation_code"
-        style="@style/TextAppearance.LoginBigText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_shadow_box"
-        android:inputType="number"
-        android:imeOptions="actionDone"
-        android:hint="@string/enter_confirmation_code"
-        android:textColorHint="@color/shadow"/>
-
-    <TextView
-        android:id="@+id/fr_resend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginEnd="120dp"
-        android:textColor="@color/tabselected"
-        android:text="@string/resend_code"
-        fontPath="fonts/NunitoSans-Regular.ttf"
-        />
-
-    <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/button_curve_corner">
-        <Button
-            android:id="@+id/fr_create_button"
-            android:layout_width="230dp"
-            android:layout_height="40dp"
-            android:text="Create Account"
-            android:background="@android:color/transparent"
-            android:textColor="@color/white"
+        <TextView
+            android:id="@+id/fr_resend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginEnd="120dp"
+            android:textColor="@color/tabselected"
+            android:text="@string/resend_code"
             fontPath="fonts/NunitoSans-Regular.ttf"
-            android:elevation="5dp"/>
+            />
 
-    </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
+        <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/button_curve_corner">
+            <Button
+                android:id="@+id/fr_create_button"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
+                android:text="Create Account"
+                android:background="@android:color/transparent"
+                android:textColor="@color/white"
+                fontPath="fonts/NunitoSans-Regular.ttf"
+                android:elevation="5dp"/>
 
-    <TextView
-        android:id="@+id/fr_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/tabselected"
-        android:textSize="18sp"
-        fontPath="fonts/NunitoSans-Regular.ttf"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginEnd="120dp"
-        android:textAlignment="center"
-        android:text="@string/cancel"/>
+        </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/fr_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tabselected"
+            android:textSize="18sp"
+            fontPath="fonts/NunitoSans-Regular.ttf"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginEnd="120dp"
+            android:textAlignment="center"
+            android:text="@string/cancel"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/progress_view"/>
+
+
+</FrameLayout>

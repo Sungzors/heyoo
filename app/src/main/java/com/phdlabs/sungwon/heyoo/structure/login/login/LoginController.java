@@ -73,12 +73,14 @@ public class LoginController implements LoginContract.Controller {
     @Override
     public void onRegisterClicked(boolean isRegister) {
 
+        mView.showProgress();
         if(isRegister){
             LoginData data = new LoginData(mView.getPhone(), mView.getCountryCode(), mView.getEmail());
             Call<UserDataResponse> call = mCaller.register(data);
             call.enqueue(new HCallback<UserDataResponse, RegisterDataEvent>(mEvents) {
                 @Override
                 protected void onSuccess(UserDataResponse data) {
+                    mView.hideProgress();
                     mView.showVerify(mView.getPhone(), mView.getCountryCode());
                     mEvents.post(new RegisterDataEvent());
                 }
@@ -95,6 +97,7 @@ public class LoginController implements LoginContract.Controller {
             call.enqueue(new HCallback<ResendResponse, RegisterResendCodeEvent>(mEvents) {
                 @Override
                 protected void onSuccess(ResendResponse data) {
+                    mView.hideProgress();
                     mView.showVerify(mView.getPhone(), mView.getCountryCode());
                     mEvents.post(new RegisterResendCodeEvent());
                 }

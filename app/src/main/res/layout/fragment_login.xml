@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -8,106 +8,114 @@
     android:background="@color/white"
     tools:ignore="MissingPrefix">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
-        <ImageView
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/cardview_dark_background"/>
-        <ImageView
-            android:layout_width="wrap_content"
+            android:layout_height="200dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/cardview_dark_background"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/heyoo_logo_backdrop"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/login_title"
+            style="@style/TextAppearance.LoginSubtext"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/heyoo_logo_backdrop"
-            android:layout_gravity="center"/>
-    </FrameLayout>
+            android:text="@string/create_your_account"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:id="@+id/login_title"
-        style="@style/TextAppearance.LoginSubtext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create_your_account"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/login_email_text"
+            android:layout_marginTop="19dp"
+            style="@style/TextAppearance.LoginSmallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/email"/>
 
-    <TextView
-        android:id="@+id/login_email_text"
-        android:layout_marginTop="19dp"
-        style="@style/TextAppearance.LoginSmallText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/email"/>
+        <EditText
+            android:id="@+id/login_email"
+            style="@style/TextAppearance.LoginBigText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_shadow_box"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
+            android:hint="@string/email_hint"
+            android:textColorHint="@color/shadow"/>
 
-    <EditText
-        android:id="@+id/login_email"
-        style="@style/TextAppearance.LoginBigText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_shadow_box"
-        android:inputType="textEmailAddress"
-        android:imeOptions="actionNext"
-        android:hint="@string/email_hint"
-        android:textColorHint="@color/shadow"/>
+        <TextView
+            android:layout_marginTop="30dp"
+            style="@style/TextAppearance.LoginSmallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_number_enter"/>
 
-    <TextView
-        android:layout_marginTop="30dp"
-        style="@style/TextAppearance.LoginSmallText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/phone_number_enter"/>
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/login_ccp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingStart="12dp"
+            app:contentColor="@color/tabselected"
+            app:showFullName="true"
+            app:countryPreference="US"
+            app:defaultNameCode="US"
+            />
 
-    <com.hbb20.CountryCodePicker
-        android:id="@+id/login_ccp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingLeft="12dp"
-        android:paddingStart="12dp"
-        app:contentColor="@color/tabselected"
-        app:showFullName="true"
-        app:countryPreference="US"
-        app:defaultNameCode="US"
-        />
+        <EditText
+            android:id="@+id/login_phone_number"
+            style="@style/TextAppearance.LoginBigText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-2dp"
+            android:background="@drawable/bg_shadow_box"
+            android:inputType="phone"
+            android:imeOptions="actionDone"
+            android:hint="@string/phone_number_hint"
+            android:textColorHint="@color/shadow"/>
 
-    <EditText
-        android:id="@+id/login_phone_number"
-        style="@style/TextAppearance.LoginBigText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-2dp"
-        android:background="@drawable/bg_shadow_box"
-        android:inputType="phone"
-        android:imeOptions="actionDone"
-        android:hint="@string/phone_number_hint"
-        android:textColorHint="@color/shadow"/>
+        <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp">
+            <Button
+                android:id="@+id/login_sign_button"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
+                android:text="@string/sign_up"
+                android:background="@drawable/button_curve_corner"
+                android:textColor="@color/white"
+                android:elevation="5dp"/>
 
-    <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp">
-        <Button
-            android:id="@+id/login_sign_button"
-            android:layout_width="230dp"
-            android:layout_height="40dp"
-            android:text="@string/sign_up"
-            android:background="@drawable/button_curve_corner"
-            android:textColor="@color/white"
-            android:elevation="5dp"/>
+        </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
 
-    </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
+        <TextView
+            android:id="@+id/login_already_sign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tabselected"
+            android:textSize="18sp"
+            fontPath="fonts/NunitoSans-Regular.ttf"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:text="@string/sign_in_inquiry"/>
 
-    <TextView
-        android:id="@+id/login_already_sign"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/tabselected"
-        android:textSize="18sp"
-        fontPath="fonts/NunitoSans-Regular.ttf"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:textAlignment="center"
-        android:text="@string/sign_in_inquiry"/>
+    </LinearLayout>
 
-</LinearLayout>
+    <include layout="@layout/progress_view"/>
+
+</FrameLayout>

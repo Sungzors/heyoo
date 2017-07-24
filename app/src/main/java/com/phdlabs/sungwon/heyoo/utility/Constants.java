@@ -55,4 +55,11 @@ public class Constants {
         }
 
     }
+
+    public interface REQUEST_CODE {
+        int CAPTURE_IMAGE = 0;
+        int GALLARY_IMAGE = 1;
+        int CAMERA_PERMISSION = 2;
+        int WRITE_EXTERNAL_PERMISSION = 3;
+    }
 }
