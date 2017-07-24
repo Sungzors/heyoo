@@ -32,6 +32,9 @@
                 <category android:name="com.phdlabs.sungwon.heyoo" />
             </intent-filter>
         </receiver>
+        <service
+            android:name=".api.utility.gms.RegistrationService"
+            android:exported="false"/>
         <activity
             android:name=".structure.launch.LaunchActivity"
             android:screenOrientation="portrait">
