@@ -57,6 +57,7 @@ public class Constants {
     }
 
     public interface REQUEST_CODE {
+        int REQUEST_IMAGE_CAPTURE = 1;
         int CAPTURE_IMAGE = 0;
         int GALLARY_IMAGE = 1;
         int CAMERA_PERMISSION = 2;

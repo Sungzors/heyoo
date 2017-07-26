@@ -1,7 +1,9 @@
 package com.phdlabs.sungwon.heyoo.structure.launch;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
 import com.phdlabs.sungwon.heyoo.R;
@@ -78,6 +80,20 @@ public class LaunchActivity extends BaseActivity {
         super.onStop();
     }
 
+    public void showError(String errorMessage, final boolean isCalendar) {
+        new AlertDialog.Builder(this).setMessage(errorMessage)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(isCalendar){
+                            mCalendarManager.loadCalendars();
+                        } else {
+                            mEventManager.loadEvents();
+                        }
+                    }
+                }).show();
+    }
+
     @Subscribe
     public void onEventMainThread(CalendarRetrievalEvent event){
         if (event.isSuccess()){
@@ -85,11 +101,9 @@ public class LaunchActivity extends BaseActivity {
             mEventManager.getEventBus().register(this);
             mEventManager.loadEvents();
         } else {
-            showError(event.getErrorMessage());
-            mCalendarManager.loadCalendars();
+            showError(event.getErrorMessage(), true);
         }
     }
-
 
     @Subscribe
     public void onEventMainThread(EventRetrievalEvent event){
@@ -98,8 +112,7 @@ public class LaunchActivity extends BaseActivity {
             mEventManager.getEventBus().unregister(this);
             openApp();
         } else {
-            showError(event.getErrorMessage());
-            mEventManager.loadEvents();
+            showError(event.getErrorMessage(), false);
         }
     }
 }

@@ -14,10 +14,10 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", '"http://heyoo-backend.herokuapp.com"')
+            buildConfigField("String", "BASE_URL", '"https://heyoo-backend.herokuapp.com"')
         }
         release {
-            buildConfigField("String", "BASE_URL", '"http://heyoo-backend.herokuapp.com"')
+            buildConfigField("String", "BASE_URL", '"https://heyoo-backend.herokuapp.com"')
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

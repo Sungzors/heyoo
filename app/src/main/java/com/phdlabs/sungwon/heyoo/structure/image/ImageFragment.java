@@ -1,11 +1,17 @@
 package com.phdlabs.sungwon.heyoo.structure.image;
 
+import android.Manifest;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,16 +27,14 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
+import com.phdlabs.sungwon.heyoo.utility.BitmapUtils;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
-import com.phdlabs.sungwon.heyoo.utility.Files;
-import com.phdlabs.sungwon.heyoo.utility.ImagePicker;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
-import com.phdlabs.sungwon.heyoo.utility.Procedure;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.Calendar;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -49,6 +53,7 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     private Button mDiscardButton;
     private Uri outputFileUri;
     private File chosenFile;
+    private String selectedImagePath;
 
     private HeyooEvent mEvent;
 
@@ -98,7 +103,8 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
         mEndpoint = Rest.getInstance().getHeyooEndpoint();
         mEventBus = EventsManager.getInstance().getDataEventBus();
         mToken = new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
-        ImagePicker.startImagePicker(this, "Select Image");
+//        ImagePicker.startImagePicker(this, "Select Image");
+
     }
 
 
@@ -150,30 +156,69 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
         }
     }
 
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getBaseActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, Constants.REQUEST_CODE.REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    private void checkCameraPermission() {
+        String[] whatPermission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission[0]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getBaseActivity(),
+                    whatPermission,
+                    Constants.REQUEST_CODE.CAMERA_PERMISSION);
+        } else {
+            openCamera();
+        }
+    }
+
+    private void checkGalleryPermission() {
+        String whatPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        if (ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getBaseActivity(),
+                    new String[]{whatPermission},
+                    Constants.REQUEST_CODE.WRITE_EXTERNAL_PERMISSION);
+        } else {
+            outputFileUri = BitmapUtils.onOpenGallery(getBaseActivity());
+        }
+    }
+
+    private void openCamera() {
+        selectedImagePath = getBaseActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/heyoo" + Calendar.getInstance().getTimeInMillis() + ".jpeg";
+        File file = new File(selectedImagePath);
+        Uri outputFileUri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getApplicationContext().getPackageName() + ".provider", file);
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+        getBaseActivity().startActivityForResult(intent, Constants.REQUEST_CODE.CAPTURE_IMAGE);
+    }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
 
-        ImagePicker.getImageFromResultAsync(getActivity(), requestCode, resultCode, data,
-                new ImagePicker.Properties(Files.getTempFile(getContext())),
-                new Procedure<ImagePicker.ImageResult>() {
-                    @Override
-                    public void apply(ImagePicker.ImageResult imageResult) {
-//                        Bitmap bmp = BitmapFactory.decodeFile(imageResult.file.getAbsolutePath());
-//                        mImage.setImageBitmap(imageResult.bitmap);
-                        Picasso.with(getContext()).load(new File(imageResult.file.toString())).into(mImage);
-                        chosenFile = imageResult.file;
-                    }
-                },
-                new Procedure<ImagePicker.ImageResult>() {
-                    @Override
-                    public void apply(ImagePicker.ImageResult imageResult) {
-                        ImagePicker.ImageResult x = imageResult;
-                        Bitmap y = imageResult.bitmap;
-                        File z = imageResult.file;
-                    }
-                });
+
+
+//        ImagePicker.getImageFromResultAsync(getActivity(), requestCode, resultCode, data,
+//                new ImagePicker.Properties(Files.getTempFile(getContext())),
+//                new Procedure<ImagePicker.ImageResult>() {
+//                    @Override
+//                    public void apply(ImagePicker.ImageResult imageResult) {
+////                        Bitmap bmp = BitmapFactory.decodeFile(imageResult.file.getAbsolutePath());
+////                        mImage.setImageBitmap(imageResult.bitmap);
+//                        Picasso.with(getContext()).load(new File(imageResult.file.toString())).into(mImage);
+//                        chosenFile = imageResult.file;
+//                    }
+//                },
+//                new Procedure<ImagePicker.ImageResult>() {
+//                    @Override
+//                    public void apply(ImagePicker.ImageResult imageResult) {
+//                        ImagePicker.ImageResult x = imageResult;
+//                        Bitmap y = imageResult.bitmap;
+//                        File z = imageResult.file;
+//                    }
+//                });
     }
 }
