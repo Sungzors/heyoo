@@ -7,6 +7,7 @@ import com.phdlabs.sungwon.heyoo.api.data.EventPatchData;
 import com.phdlabs.sungwon.heyoo.api.data.EventPostData;
 import com.phdlabs.sungwon.heyoo.api.data.LoginData;
 import com.phdlabs.sungwon.heyoo.api.data.ResendData;
+import com.phdlabs.sungwon.heyoo.api.data.UserPatchData;
 import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
 import com.phdlabs.sungwon.heyoo.api.response.AlertRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.response.CalendarPostResponse;
@@ -17,6 +18,7 @@ import com.phdlabs.sungwon.heyoo.api.response.EventPostResponse;
 import com.phdlabs.sungwon.heyoo.api.response.EventRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.response.ResendResponse;
 import com.phdlabs.sungwon.heyoo.api.response.UserDataResponse;
+import com.phdlabs.sungwon.heyoo.api.response.UserPatchResponse;
 import com.phdlabs.sungwon.heyoo.api.response.UserRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.response.VerifyDataResponse;
 
@@ -44,6 +46,9 @@ public interface HeyooEndpoint {
 
     @POST("/users")
     Call<UserDataResponse> register(@Body LoginData loginData);
+
+    @PATCH("/users/{id}")
+    Call<UserPatchResponse> postProfile(@Path("id") int userID, @Header(TOKEN)String token, @Body UserPatchData data);
 
     @POST("/auth/verify")
     Call<VerifyDataResponse> verify(@Body VerifyData verifyData);

@@ -11,7 +11,7 @@
         <ImageView
             android:id="@+id/fi_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:layout_margin="15dp"/>
         <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
             android:layout_width="match_parent"
