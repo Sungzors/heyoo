@@ -5,6 +5,7 @@
     <color name="colorAccent">#304ffe</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="deepgrey">#616161</color>
     <color name="tabselected">#4dd0e1</color>
     <color name="tabnotselected">#000000</color>
     <color name="lightGrey">#f4f5f5</color>

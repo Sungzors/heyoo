@@ -1,11 +1,17 @@
 package com.phdlabs.sungwon.heyoo.structure.image;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,11 +36,14 @@ import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.utility.BitmapUtils;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -54,6 +63,7 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     private Uri outputFileUri;
     private File chosenFile;
     private String selectedImagePath;
+    private String galleryImagePath;
 
     private HeyooEvent mEvent;
 
@@ -89,6 +99,7 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     public void onStart() {
         super.onStart();
         getBaseActivity().setToolbarTitle("Adding Image");
+        (getBaseActivity()).getToolbar().getMenu().clear();
     }
 
     @Override
@@ -104,7 +115,19 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
         mEventBus = EventsManager.getInstance().getDataEventBus();
         mToken = new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
 //        ImagePicker.startImagePicker(this, "Select Image");
-
+        showProgress();
+        String[] whatPermission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission[0]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getBaseActivity(),
+                    whatPermission,
+                    Constants.REQUEST_CODE.CAMERA_PERMISSION);
+        } else if(ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission[1]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getBaseActivity(),
+                    new String[]{whatPermission[1]},
+                    Constants.REQUEST_CODE.WRITE_EXTERNAL_PERMISSION);
+        }
+        hideProgress();
+        dispatchTakePictureIntent();
     }
 
 
@@ -157,10 +180,36 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     }
 
     private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getBaseActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, Constants.REQUEST_CODE.REQUEST_IMAGE_CAPTURE);
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (takePictureIntent.resolveActivity(getBaseActivity().getPackageManager()) != null) {
+//            startActivityForResult(takePictureIntent, Constants.REQUEST_CODE.REQUEST_IMAGE_CAPTURE);
+//        }
+        final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+        root.mkdirs();
+        final String fname = "img_"+ System.currentTimeMillis() + ".jpg";
+        final File sdImageMainDirectory = new File(root, fname);
+        outputFileUri = Uri.fromFile(sdImageMainDirectory);
+
+        final List<Intent> cameraIntents = new ArrayList<Intent>();
+        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        final PackageManager packageManager = getBaseActivity().getPackageManager();
+        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for(ResolveInfo res : listCam) {
+            final String packageName = res.activityInfo.packageName;
+            final Intent intent = new Intent(captureIntent);
+            intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
+            intent.setPackage(packageName);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+            cameraIntents.add(intent);
         }
+
+
+        Intent imageIntent = new Intent();
+        imageIntent.setType("image/*");
+        imageIntent.setAction(Intent.ACTION_GET_CONTENT);
+        Intent chooserIntent = Intent.createChooser(imageIntent, "Select Source");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
+        startActivityForResult(chooserIntent, Constants.REQUEST_CODE.REQUEST_IMAGE_CAPTURE);
     }
 
     private void checkCameraPermission() {
@@ -198,7 +247,56 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case Constants.REQUEST_CODE.CAPTURE_IMAGE:
+                    if (selectedImagePath != null) {
+                        showProgress();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Bitmap myBitmap = BitmapFactory.decodeFile(selectedImagePath);
+                                if (myBitmap != null) {
+                                    Bitmap bitmap = BitmapUtils.imageOrientationValidator(BitmapUtils.getScaledBitmap(myBitmap), selectedImagePath);
+                                    final File galleryPathFile = BitmapUtils.saveBitmap(bitmap);
+                                    view.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            hideProgress();
+                                            Picasso.with(getContext()).load(galleryPathFile.getAbsolutePath()).into(mImage);
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
+                    }
+                    break;
+                case Constants.REQUEST_CODE.GALLARY_IMAGE:
+                    galleryImagePath = BitmapUtils.getPath(getBaseActivity(), data, outputFileUri);
+                    if (galleryImagePath == null) {
+                        galleryImagePath = data.getData().getPath();
+                    }
+                    showProgress();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Bitmap myBitmap = BitmapFactory.decodeFile(galleryImagePath);
+                            if (myBitmap != null) {
+                                Bitmap bitmap = BitmapUtils.imageOrientationValidator(BitmapUtils.getScaledBitmap(myBitmap), galleryImagePath);
+                                final File galleryPathFile = BitmapUtils.saveBitmap(bitmap);
+                                view.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        hideProgress();
+                                        Picasso.with(getContext()).load(galleryPathFile.getAbsolutePath()).into(mImage);
+                                    }
+                                });
+                            }
+                        }
+                    }).start();
+                    break;
+            }
+        }
 
 
 //        ImagePicker.getImageFromResultAsync(getActivity(), requestCode, resultCode, data,

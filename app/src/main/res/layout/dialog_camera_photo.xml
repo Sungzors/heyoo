@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="17dp"
+        android:text="Select Sourch"
+        android:textColor="@android:color/black"
+        android:textSize="13sp"
+        fontPath="fonts/NunitoSans-ExtraBold.ttf" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.4"
+        android:background="@android:color/darker_gray" />
+
+    <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Camera"
+            android:textColor="@color/deepgrey"
+            android:textSize="13sp"
+            fontPath="fonts/NunitoSans-Bold.ttf"  />
+    </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.8"
+        android:background="@android:color/darker_gray" />
+
+    <com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Gallery"
+            android:textColor="@color/deepgrey"
+            android:textSize="13sp"
+            fontPath="fonts/NunitoSans-Bold.ttf" />
+    </com.phdlabs.sungwon.heyoo.utility.MaterialRippleEffect>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.8"
+        android:background="@android:color/darker_gray" />
+
+
+</LinearLayout>
+

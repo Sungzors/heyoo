@@ -21,6 +21,9 @@ import com.phdlabs.sungwon.heyoo.BuildConfig;
  */
 
 public abstract class CoreFragment extends Fragment implements CoreActivity.OnBackPressListener {
+
+    public View view;
+
     @SuppressLint("CommitTransaction")
     public void addFragmentInternal(int containerId, Fragment fragment, boolean addToBackStack) {
         String name = fragment.getClass().getName();
@@ -70,7 +73,8 @@ public abstract class CoreFragment extends Fragment implements CoreActivity.OnBa
     @NonNull
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(layoutId(), container, false);
+        view = inflater.inflate(layoutId(), container, false);
+        return view;
     }
 
     protected abstract int layoutId();

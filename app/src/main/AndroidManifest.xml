@@ -35,6 +35,15 @@
         <service
             android:name=".api.utility.gms.RegistrationService"
             android:exported="false"/>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.phdlabs.sungwon.heyoo"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepath" />
+        </provider>
         <activity
             android:name=".structure.launch.LaunchActivity"
             android:screenOrientation="portrait">
