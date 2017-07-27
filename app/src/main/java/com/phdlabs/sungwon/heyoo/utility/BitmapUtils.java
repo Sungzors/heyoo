@@ -1,6 +1,5 @@
 package com.phdlabs.sungwon.heyoo.utility;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+
+import com.phdlabs.sungwon.heyoo.structure.image.ImageFragment;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -106,19 +107,19 @@ public class BitmapUtils {
     }
 
 
-    public static Uri onOpenGallery(Activity context) {
+    public static Uri onOpenGallery(ImageFragment context) {
         Uri mCapturedImageURI = null;
         if (Environment.getExternalStorageState().equals("mounted")) {
 
             ContentValues values = new ContentValues();
-            values.put(MediaStore.MediaColumns.TITLE, context.getPackageName());
-            mCapturedImageURI = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            values.put(MediaStore.MediaColumns.TITLE, context.getContext().getPackageName());
+            mCapturedImageURI = context.getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickImageIntent.setType("image/*");
             //setCropImage(pickImageIntent, mCapturedImageURI);
             pickImageIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-            context.startActivityForResult(pickImageIntent, Constants.REQUEST_CODE.GALLARY_IMAGE);
+            context.startActivityForResult(pickImageIntent, Constants.REQUEST_CODE.GALLERY_IMAGE);
         }
 
         return mCapturedImageURI;
@@ -155,10 +156,9 @@ public class BitmapUtils {
 
 
     public static File saveBitmap(Bitmap bitmap) {
-        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/fieldLink";
+        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/heyoo";
         File dir = new File(file_path);
         if (!dir.exists()) {
-            dir.delete();
             dir.mkdirs();
         }
         String format = new SimpleDateFormat("yyyyMMddHHmmss", java.util.Locale.getDefault()).format(new Date());

@@ -2,6 +2,7 @@ package com.phdlabs.sungwon.heyoo.structure.image;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
@@ -19,8 +21,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.event.EventMediaPostEvent;
@@ -35,6 +39,7 @@ import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
 import com.phdlabs.sungwon.heyoo.utility.BitmapUtils;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
+import com.phdlabs.sungwon.heyoo.utility.DialogSelectListener;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
 import com.squareup.picasso.Picasso;
 
@@ -50,6 +55,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 
+import static android.os.Build.VERSION_CODES.M;
+
 /**
  * Created by SungWon on 6/26/2017.
  */
@@ -61,9 +68,11 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     private Button mAddButton;
     private Button mDiscardButton;
     private Uri outputFileUri;
+    private Uri mCapturedImageURI;
     private File chosenFile;
     private String selectedImagePath;
     private String galleryImagePath;
+    private Bitmap mBitmap;
 
     private HeyooEvent mEvent;
 
@@ -115,19 +124,8 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
         mEventBus = EventsManager.getInstance().getDataEventBus();
         mToken = new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
 //        ImagePicker.startImagePicker(this, "Select Image");
-        showProgress();
-        String[] whatPermission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission[0]) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getBaseActivity(),
-                    whatPermission,
-                    Constants.REQUEST_CODE.CAMERA_PERMISSION);
-        } else if(ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission[1]) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getBaseActivity(),
-                    new String[]{whatPermission[1]},
-                    Constants.REQUEST_CODE.WRITE_EXTERNAL_PERMISSION);
-        }
-        hideProgress();
-        dispatchTakePictureIntent();
+//        dispatchTakePictureIntent();
+        openDialogSource();
     }
 
 
@@ -174,9 +172,49 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
                 }
                 break;
             case R.id.fi_discard_button:
-                getBaseActivity().onBackPressed();
+                mImage.setImageBitmap(mBitmap);
+//                getBaseActivity().onBackPressed();
                 break;
         }
+    }
+
+    private void openDialogSource(){
+        final Dialog privacyDialog = new Dialog(getBaseActivity());
+        privacyDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        privacyDialog.setContentView(R.layout.dialog_camera_photo);
+        TextView camera = (TextView) privacyDialog.findViewById(R.id.tv_camera);
+        TextView gallery = (TextView) privacyDialog.findViewById(R.id.tv_gallery);
+        final DialogSelectListener listener = new DialogSelectListener() {
+            @Override
+            public void onClick(boolean isCamera) {
+                if (Build.VERSION.SDK_INT >= M) {
+                    if (isCamera)
+                        checkCameraPermission();
+                    else
+                        checkGalleryPermission();
+                } else {
+                    if (isCamera) {
+                        openCamera();
+                    } else
+                        mCapturedImageURI = BitmapUtils.onOpenGallery(ImageFragment.this);
+                }
+            }
+        };
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClick(true);
+                privacyDialog.dismiss();
+            }
+        });
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClick(false);
+                privacyDialog.dismiss();
+            }
+        });
+        privacyDialog.show();
     }
 
     private void dispatchTakePictureIntent() {
@@ -230,17 +268,17 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
                     new String[]{whatPermission},
                     Constants.REQUEST_CODE.WRITE_EXTERNAL_PERMISSION);
         } else {
-            outputFileUri = BitmapUtils.onOpenGallery(getBaseActivity());
+            outputFileUri = BitmapUtils.onOpenGallery(this);
         }
     }
 
     private void openCamera() {
-        selectedImagePath = getBaseActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/heyoo" + Calendar.getInstance().getTimeInMillis() + ".jpeg";
+        selectedImagePath = Environment.getExternalStorageDirectory() + "/heyoo" + Calendar.getInstance().getTimeInMillis() + ".jpeg";
         File file = new File(selectedImagePath);
         Uri outputFileUri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getApplicationContext().getPackageName() + ".provider", file);
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-        getBaseActivity().startActivityForResult(intent, Constants.REQUEST_CODE.CAPTURE_IMAGE);
+        startActivityForResult(intent, Constants.REQUEST_CODE.CAPTURE_IMAGE);
     }
 
 
@@ -271,26 +309,27 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
                         }).start();
                     }
                     break;
-                case Constants.REQUEST_CODE.GALLARY_IMAGE:
-                    galleryImagePath = BitmapUtils.getPath(getBaseActivity(), data, outputFileUri);
+                case Constants.REQUEST_CODE.GALLERY_IMAGE:
+                    galleryImagePath = BitmapUtils.getPath(getContext(), data, outputFileUri);
                     if (galleryImagePath == null) {
                         galleryImagePath = data.getData().getPath();
                     }
-                    showProgress();
+//                    showProgress();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             Bitmap myBitmap = BitmapFactory.decodeFile(galleryImagePath);
                             if (myBitmap != null) {
                                 Bitmap bitmap = BitmapUtils.imageOrientationValidator(BitmapUtils.getScaledBitmap(myBitmap), galleryImagePath);
-                                final File galleryPathFile = BitmapUtils.saveBitmap(bitmap);
-                                view.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        hideProgress();
-                                        Picasso.with(getContext()).load(galleryPathFile.getAbsolutePath()).into(mImage);
-                                    }
-                                });
+                                mBitmap = bitmap;
+//                                final File galleryPathFile = BitmapUtils.saveBitmap(bitmap);
+//                                view.post(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        hideProgress();
+//                                        Picasso.with(getContext()).load(galleryPathFile.getAbsolutePath()).into(mImage);
+//                                    }
+//                                });
                             }
                         }
                     }).start();
