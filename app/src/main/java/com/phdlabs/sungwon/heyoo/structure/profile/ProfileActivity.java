@@ -3,6 +3,8 @@ package com.phdlabs.sungwon.heyoo.structure.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
@@ -12,6 +14,8 @@ import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
  */
 
 public class ProfileActivity extends BaseActivity {
+
+    private Toolbar mToolbar;
 
     @Override
     protected int layoutId() {
@@ -26,7 +30,27 @@ public class ProfileActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mToolbar = findById(R.id.toolbar);
+        mToolbar.setTitle("Create Your Profile");
+        showBackArrow(R.drawable.ic_back);
         showProfileFragment();
+    }
+
+    public Toolbar getToolbar() {
+        return mToolbar;
+    }
+
+    public void showBackArrow(int icon){
+        mToolbar.setNavigationIcon(icon);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+                    mToolbar.setNavigationIcon(null);
+                }
+            }
+        });
     }
 
     private void showProfileFragment(){
