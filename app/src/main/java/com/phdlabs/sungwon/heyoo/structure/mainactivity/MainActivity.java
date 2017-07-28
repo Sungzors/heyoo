@@ -6,7 +6,9 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
@@ -16,6 +18,8 @@ import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
 import com.phdlabs.sungwon.heyoo.structure.aealerts.AlertFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
+import com.phdlabs.sungwon.heyoo.structure.profile.ProfileActivity;
+import com.squareup.picasso.Picasso;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -120,6 +124,21 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     public Toolbar getToolbar(){
         return mToolbar;
+    }
+
+    public void setProfile(String image){
+        ImageView profile = (ImageView) mToolbar.findViewById(R.id.left_action);
+        if(TextUtils.isEmpty(image)){
+            profile.setImageResource(R.drawable.pandapic);
+        } else {
+            Picasso.with(getContext()).load(image).placeholder(R.drawable.pandapic).into(profile);
+        }
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileActivity.start(getContext());
+            }
+        });
     }
 
     public void showBackArrow(int icon){

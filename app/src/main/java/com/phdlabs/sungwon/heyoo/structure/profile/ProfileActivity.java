@@ -1,5 +1,7 @@
 package com.phdlabs.sungwon.heyoo.structure.profile;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.phdlabs.sungwon.heyoo.R;
@@ -29,5 +31,10 @@ public class ProfileActivity extends BaseActivity {
 
     private void showProfileFragment(){
         replaceFragment(ProfileFragment.newInstance(), true);
+    }
+
+    public static void start(Context context){
+        Intent intent = new Intent(context, ProfileActivity.class);
+        context.startActivity(intent);
     }
 }

@@ -21,12 +21,10 @@
         android:text="Title"
         style="@style/TextAppearance.Toolbar"/>
 
-    <TextView
+    <ImageView
         android:id="@+id/left_action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:textColor="@color/white"/>
 
     <LinearLayout

@@ -12,6 +12,7 @@ import com.phdlabs.sungwon.heyoo.api.event.EventRetrievalEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooAlertManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
+import com.phdlabs.sungwon.heyoo.model.UserManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
 import com.phdlabs.sungwon.heyoo.structure.login.login.LoginFragment;
@@ -62,9 +63,12 @@ public class LaunchActivity extends BaseActivity {
         super.onStart();
         mPref = new Preferences(this);
         mToken = mPref.getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
-        if(TextUtils.isEmpty(mToken)){
+        int userID = mPref.getPreferenceInt(Constants.PreferenceConstants.USER_ID, 0);
+        if(TextUtils.isEmpty(mToken)|| userID==0){
             showLogin();
         } else {
+            UserManager userManager = UserManager.getInstance(mToken, userID);
+            userManager.loadUsers();
             mCalendarManager = HeyooCalendarManager.getInstance(mToken);
             mEventManager = HeyooEventManager.getInstance(mToken);
             mAlertManager = HeyooAlertManager.getInstance(mToken);

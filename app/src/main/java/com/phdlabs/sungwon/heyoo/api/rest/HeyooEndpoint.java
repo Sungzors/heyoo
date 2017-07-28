@@ -47,6 +47,9 @@ public interface HeyooEndpoint {
     @POST("/users")
     Call<UserDataResponse> register(@Body LoginData loginData);
 
+    @GET("/users/{id}")
+    Call<UserPatchResponse> getProfile(@Path("id") int userID, @Header(TOKEN) String token);
+
     @PATCH("/users/{id}")
     Call<UserPatchResponse> postProfile(@Path("id") int userID, @Header(TOKEN)String token, @Body UserPatchData data);
 

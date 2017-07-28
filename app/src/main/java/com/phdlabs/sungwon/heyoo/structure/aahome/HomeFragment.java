@@ -21,6 +21,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
 import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
+import com.phdlabs.sungwon.heyoo.model.UserManager;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.member.CalendarMemberFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.event.EventFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventdraft.EventDraftFragment;
@@ -79,6 +80,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     private RecyclerView mEventList;
 
     private HeyooCalendarManager mCalendarManager;
+    private UserManager mUserManager;
 
     private int mCalID = -1;
 
@@ -112,6 +114,13 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
     public void onStart() {
         super.onStart();
         ((MainActivity)getActivity()).eraseBackArrow();
+        mUserManager = UserManager.getInstance();
+        if(mUserManager.getUser().getProfile_picture() != null){
+            ((MainActivity)getBaseActivity()).setProfile(mUserManager.getUser().getProfile_picture());
+        } else {
+            ((MainActivity)getBaseActivity()).setProfile("");
+        }
+
     }
 
     @Override
