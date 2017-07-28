@@ -57,6 +57,10 @@ public class UserManager {
         this.mUser = user;
     }
 
+    public String getToken() {
+        return mToken;
+    }
+
     public void loadUsers(){
         Call<UserPatchResponse> call = mCaller.getProfile(mUserID, mToken);
         call.enqueue(new HCallback<UserPatchResponse, UserGetEvent>(mEvents) {
