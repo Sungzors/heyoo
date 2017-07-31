@@ -62,7 +62,7 @@ public class AccountManager {
         mPref = new Preferences(context);
         mPref.putPreference(Constants.PreferenceConstants.KEY_TOKEN, mAccessToken);
         mPref.putPreference(Constants.PreferenceConstants.USER_ID, data.getUser().getId());
-        UserManager userManager = UserManager.getInstance();
+        UserManager userManager = UserManager.getInstance(mAccessToken, data.getUser().getId());
         userManager.setUser(data.getUser());
     }
 

@@ -113,6 +113,9 @@ public class HeyooEvent implements Serializable{
     }
 
     public int getCalendars() {
+        if(calendars.isEmpty()){
+            return -1;
+        }
         return calendars.get(0).getId();
     }
 

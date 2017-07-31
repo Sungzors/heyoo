@@ -51,7 +51,6 @@ import com.phdlabs.sungwon.heyoo.utility.adapter.BaseListRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -132,7 +131,6 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     @Override
     public void onResume() {
         super.onResume();
-        mEventBus.register(this);
     }
 
     @Override
@@ -148,7 +146,6 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
     @Override
     public void onStop() {
         super.onStop();
-        mEventBus.unregister(this);
     }
 
     @Override
@@ -176,10 +173,7 @@ public class InviteFragment extends BaseFragment<InviteContract.Controller>
 
     }
 
-    @Subscribe
-    public void onEvent(UserRetrievalEvent event){
 
-    }
 
     private void showContacts() {
         // Check the SDK version and whether the permission is already granted or not.

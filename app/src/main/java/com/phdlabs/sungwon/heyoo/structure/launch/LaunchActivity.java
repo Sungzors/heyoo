@@ -15,7 +15,7 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.model.UserManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
-import com.phdlabs.sungwon.heyoo.structure.login.login.LoginFragment;
+import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
 
@@ -50,7 +50,9 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void showLogin() {
-        replaceFragment(new LoginFragment(), false);
+
+        Intent intent = new Intent(LaunchActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void openApp() {
@@ -84,12 +86,14 @@ public class LaunchActivity extends BaseActivity {
         super.onStop();
     }
 
-    public void showError(String errorMessage, final boolean isCalendar) {
+    public void showError(final String errorMessage, final boolean isCalendar) {
         new AlertDialog.Builder(this).setMessage(errorMessage)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(isCalendar){
+                        if(errorMessage.equals("jwt expired")){
+                            showLogin();
+                        } else if(isCalendar){
                             mCalendarManager.loadCalendars();
                         } else {
                             mEventManager.loadEvents();
