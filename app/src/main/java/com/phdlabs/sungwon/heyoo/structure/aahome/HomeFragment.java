@@ -197,7 +197,7 @@ public class HomeFragment extends BaseFragment<HomeContract.Controller>
             mMenu.getItem(4).setVisible(true);
             mMenu.getItem(4).setTitle("Members (" + mCalendarManager.getCalendar(mCalID).getUsers().size() + ")");
         } else {
-            mMenu.getItem(3).setVisible(false);
+            mMenu.getItem(3).setVisible(true);
             mMenu.getItem(4).setVisible(false);
         }
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
