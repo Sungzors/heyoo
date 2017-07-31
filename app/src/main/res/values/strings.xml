@@ -16,6 +16,7 @@
     <string name="phone_number_hint">Your Number</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in_inquiry">Already have an account? Sign in Here</string>
+    <string name="chooser_title">Select Image Source</string>
     <string name="question">"?"</string>
     <string name="edit">Edit</string>
     <string name="publish">Publish</string>
