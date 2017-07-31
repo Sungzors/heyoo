@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
@@ -19,7 +20,7 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     protected int layoutId() {
-        return R.layout.activity_empty;
+        return R.layout.activity_profile;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class ProfileActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mToolbar = findById(R.id.toolbar);
-        mToolbar.setTitle("Create Your Profile");
+        ((TextView)mToolbar.findViewById(R.id.toolbar_title)).setText("Create Your Profile");
         showBackArrow(R.drawable.ic_back);
         showProfileFragment();
     }
@@ -54,7 +55,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void showProfileFragment(){
-        replaceFragment(ProfileFragment.newInstance(), true);
+        replaceFragment(ProfileFragment.newInstance(), false);
     }
 
     public static void start(Context context){
