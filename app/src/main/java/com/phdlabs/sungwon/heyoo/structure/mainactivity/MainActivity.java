@@ -201,6 +201,12 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        (getSupportFragmentManager().findFragmentByTag("com.phdlabs.sungwon.heyoo.structure.image.ImageFragment")).onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         mController.onStart();

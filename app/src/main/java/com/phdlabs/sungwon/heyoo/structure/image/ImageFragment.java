@@ -1,30 +1,15 @@
 package com.phdlabs.sungwon.heyoo.structure.image;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.event.EventMediaPostEvent;
@@ -37,32 +22,29 @@ import com.phdlabs.sungwon.heyoo.model.HeyooEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooEventManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeActivity;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseFragment;
-import com.phdlabs.sungwon.heyoo.utility.BitmapUtils;
+import com.phdlabs.sungwon.heyoo.utility.CameraControl;
 import com.phdlabs.sungwon.heyoo.utility.Constants;
-import com.phdlabs.sungwon.heyoo.utility.DialogSelectListener;
 import com.phdlabs.sungwon.heyoo.utility.Preferences;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 
-import static android.os.Build.VERSION_CODES.M;
 
-/**
- * Created by SungWon on 6/26/2017.
- */
 
 public class ImageFragment extends BaseFragment<ImageContract.Controller>
         implements ImageContract.View, View.OnClickListener{
+
+    private final String TAG = "ImageFragment";
 
     private ImageView mImage;
     private Button mAddButton;
@@ -71,8 +53,8 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
     private Uri mCapturedImageURI;
     private File chosenFile;
     private String selectedImagePath;
-    private String galleryImagePath;
-    private Bitmap mBitmap;
+    private InputStream mProfilePictureInputStream;
+    private Bitmap bitmap;
 
     private HeyooEvent mEvent;
 
@@ -117,6 +99,7 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
         mImage = findById(R.id.fi_image);
         mAddButton = findById(R.id.fi_add_button);
         mDiscardButton = findById(R.id.fi_discard_button);
+        mImage.setOnClickListener(this);
         mAddButton.setOnClickListener(this);
         mDiscardButton.setOnClickListener(this);
         mEvent = (HeyooEvent)getArguments().getSerializable(Constants.BundleKeys.EVENT_DETAIL);
@@ -125,20 +108,32 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
         mToken = new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null);
 //        ImagePicker.startImagePicker(this, "Select Image");
 //        dispatchTakePictureIntent();
-        openDialogSource();
+        CameraControl.chooseProfilePicture(getBaseActivity());
     }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.fi_image:
+                CameraControl.chooseProfilePicture(getBaseActivity());
+                break;
             case R.id.fi_add_button:
-//                mEvent.addMedia(outputFileUri.getPath());
-//                File file = new File(Environment.getExternalStorageDirectory(), "/My device/MyDir/img_1498624680067.jpg");
-//                RequestBody formBody = RequestBody.create(MediaType.parse("image/*"), file);
+                byte[] buff = new byte[8000];
+                int bytesRead = 0;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                try {
+                    while((bytesRead = mProfilePictureInputStream.read(buff)) != -1){
+                        bos.write(buff, 0, bytesRead);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                byte[] byteArray = bos.toByteArray();
                 RequestBody formBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("name", chosenFile.getPath())
-                        .addFormDataPart("file", chosenFile.getPath(), RequestBody.create(MediaType.parse("image/png"),chosenFile)).build();
+                        .addFormDataPart("name", "heyoo" + System.currentTimeMillis())
+                        .addFormDataPart("file", "heyoo" + System.currentTimeMillis(), RequestBody.create(MediaType.parse("image/png"),byteArray))
+                        .build();
 
 
                 showProgress();
@@ -172,190 +167,132 @@ public class ImageFragment extends BaseFragment<ImageContract.Controller>
                 }
                 break;
             case R.id.fi_discard_button:
-                mImage.setImageBitmap(mBitmap);
-//                getBaseActivity().onBackPressed();
+                getBaseActivity().onBackPressed();
                 break;
         }
     }
 
-    private void openDialogSource(){
-        final Dialog privacyDialog = new Dialog(getBaseActivity());
-        privacyDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        privacyDialog.setContentView(R.layout.dialog_camera_photo);
-        TextView camera = (TextView) privacyDialog.findViewById(R.id.tv_camera);
-        TextView gallery = (TextView) privacyDialog.findViewById(R.id.tv_gallery);
-        final DialogSelectListener listener = new DialogSelectListener() {
-            @Override
-            public void onClick(boolean isCamera) {
-                if (Build.VERSION.SDK_INT >= M) {
-                    if (isCamera)
-                        checkCameraPermission();
-                    else
-                        checkGalleryPermission();
-                } else {
-                    if (isCamera) {
-                        openCamera();
-                    } else
-                        mCapturedImageURI = BitmapUtils.onOpenGallery(ImageFragment.this);
-                }
-            }
-        };
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true);
-                privacyDialog.dismiss();
-            }
-        });
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(false);
-                privacyDialog.dismiss();
-            }
-        });
-        privacyDialog.show();
-    }
-
-    private void dispatchTakePictureIntent() {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePictureIntent.resolveActivity(getBaseActivity().getPackageManager()) != null) {
-//            startActivityForResult(takePictureIntent, Constants.REQUEST_CODE.REQUEST_IMAGE_CAPTURE);
+//    private void openDialogSource(){
+//        final Dialog privacyDialog = new Dialog(getBaseActivity());
+//        privacyDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        privacyDialog.setContentView(R.layout.dialog_camera_photo);
+//        TextView camera = (TextView) privacyDialog.findViewById(R.id.tv_camera);
+//        TextView gallery = (TextView) privacyDialog.findViewById(R.id.tv_gallery);
+//        final DialogSelectListener listener = new DialogSelectListener() {
+//            @Override
+//            public void onClick(boolean isCamera) {
+//                if (Build.VERSION.SDK_INT >= M) {
+//                    if (isCamera)
+//                        checkCameraPermission();
+//                    else
+//                        checkGalleryPermission();
+//                } else {
+//                    if (isCamera) {
+//                        openCamera();
+//                    } else
+//                        mCapturedImageURI = BitmapUtils.onOpenGallery(ImageFragment.this);
+//                }
+//            }
+//        };
+//        camera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.onClick(true);
+//                privacyDialog.dismiss();
+//            }
+//        });
+//        gallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.onClick(false);
+//                privacyDialog.dismiss();
+//            }
+//        });
+//        privacyDialog.show();
+//    }
+//
+//    private void dispatchTakePictureIntent() {
+////        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+////        if (takePictureIntent.resolveActivity(getBaseActivity().getPackageManager()) != null) {
+////            startActivityForResult(takePictureIntent, Constants.REQUEST_CODE.REQUEST_IMAGE_CAPTURE);
+////        }
+//        final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+//        root.mkdirs();
+//        final String fname = "img_"+ System.currentTimeMillis() + ".jpg";
+//        final File sdImageMainDirectory = new File(root, fname);
+//        outputFileUri = Uri.fromFile(sdImageMainDirectory);
+//
+//        final List<Intent> cameraIntents = new ArrayList<Intent>();
+//        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        final PackageManager packageManager = getBaseActivity().getPackageManager();
+//        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+//        for(ResolveInfo res : listCam) {
+//            final String packageName = res.activityInfo.packageName;
+//            final Intent intent = new Intent(captureIntent);
+//            intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
+//            intent.setPackage(packageName);
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+//            cameraIntents.add(intent);
 //        }
-        final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
-        root.mkdirs();
-        final String fname = "img_"+ System.currentTimeMillis() + ".jpg";
-        final File sdImageMainDirectory = new File(root, fname);
-        outputFileUri = Uri.fromFile(sdImageMainDirectory);
+//
+//
+//        Intent imageIntent = new Intent();
+//        imageIntent.setType("image/*");
+//        imageIntent.setAction(Intent.ACTION_GET_CONTENT);
+//        Intent chooserIntent = Intent.createChooser(imageIntent, "Select Source");
+//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
+//        startActivityForResult(chooserIntent, Constants.REQUEST_CODE.REQUEST_IMAGE_CAPTURE);
+//    }
+//
+//    public void checkCameraPermission(Context context) {
+//        String[] whatPermission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//        if (ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission[0]) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(getBaseActivity(),
+//                    whatPermission,
+//                    Constants.REQUEST_CODE.CAMERA_PERMISSION);
+//        } else {
+//            openCamera();
+//        }
+//    }
+//
+//    private void checkGalleryPermission() {
+//        String whatPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+//        if (ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(getBaseActivity(),
+//                    new String[]{whatPermission},
+//                    Constants.REQUEST_CODE.WRITE_EXTERNAL_PERMISSION);
+//        } else {
+//            outputFileUri = BitmapUtils.onOpenGallery(this);
+//        }
+//    }
+//
+//    private void openCamera() {
+//        selectedImagePath = Environment.getExternalStorageDirectory() + "/heyoo" + Calendar.getInstance().getTimeInMillis() + ".jpeg";
+//        File file = new File(selectedImagePath);
+//        Uri outputFileUri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getApplicationContext().getPackageName() + ".provider", file);
+//        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+//        startActivityForResult(intent, Constants.REQUEST_CODE.CAPTURE_IMAGE);
+//    }
 
-        final List<Intent> cameraIntents = new ArrayList<Intent>();
-        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        final PackageManager packageManager = getBaseActivity().getPackageManager();
-        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for(ResolveInfo res : listCam) {
-            final String packageName = res.activityInfo.packageName;
-            final Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
-            intent.setPackage(packageName);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            cameraIntents.add(intent);
-        }
-
-
-        Intent imageIntent = new Intent();
-        imageIntent.setType("image/*");
-        imageIntent.setAction(Intent.ACTION_GET_CONTENT);
-        Intent chooserIntent = Intent.createChooser(imageIntent, "Select Source");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
-        startActivityForResult(chooserIntent, Constants.REQUEST_CODE.REQUEST_IMAGE_CAPTURE);
-    }
-
-    private void checkCameraPermission() {
-        String[] whatPermission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission[0]) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getBaseActivity(),
-                    whatPermission,
-                    Constants.REQUEST_CODE.CAMERA_PERMISSION);
-        } else {
-            openCamera();
-        }
-    }
-
-    private void checkGalleryPermission() {
-        String whatPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-        if (ContextCompat.checkSelfPermission(getBaseActivity(), whatPermission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getBaseActivity(),
-                    new String[]{whatPermission},
-                    Constants.REQUEST_CODE.WRITE_EXTERNAL_PERMISSION);
-        } else {
-            outputFileUri = BitmapUtils.onOpenGallery(this);
-        }
-    }
-
-    private void openCamera() {
-        selectedImagePath = Environment.getExternalStorageDirectory() + "/heyoo" + Calendar.getInstance().getTimeInMillis() + ".jpeg";
-        File file = new File(selectedImagePath);
-        Uri outputFileUri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getApplicationContext().getPackageName() + ".provider", file);
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-        startActivityForResult(intent, Constants.REQUEST_CODE.CAPTURE_IMAGE);
-    }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        mCapturedImageURI = CameraControl.getPictureUri(getContext(), requestCode, resultCode, data);
+        if (mCapturedImageURI != null) {
+            selectedImagePath = mCapturedImageURI.toString();
+            //Get temporary Input Stream
+            mProfilePictureInputStream = CameraControl.
+                    getInputStreamFromResult(getContext(), requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case Constants.REQUEST_CODE.CAPTURE_IMAGE:
-                    if (selectedImagePath != null) {
-                        showProgress();
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Bitmap myBitmap = BitmapFactory.decodeFile(selectedImagePath);
-                                if (myBitmap != null) {
-                                    Bitmap bitmap = BitmapUtils.imageOrientationValidator(BitmapUtils.getScaledBitmap(myBitmap), selectedImagePath);
-                                    final File galleryPathFile = BitmapUtils.saveBitmap(bitmap);
-                                    view.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            hideProgress();
-                                            Picasso.with(getContext()).load(galleryPathFile.getAbsolutePath()).into(mImage);
-                                        }
-                                    });
-                                }
-                            }
-                        }).start();
-                    }
-                    break;
-                case Constants.REQUEST_CODE.GALLERY_IMAGE:
-                    galleryImagePath = BitmapUtils.getPath(getContext(), data, outputFileUri);
-                    if (galleryImagePath == null) {
-                        galleryImagePath = data.getData().getPath();
-                    }
-//                    showProgress();
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Bitmap myBitmap = BitmapFactory.decodeFile(galleryImagePath);
-                            if (myBitmap != null) {
-                                Bitmap bitmap = BitmapUtils.imageOrientationValidator(BitmapUtils.getScaledBitmap(myBitmap), galleryImagePath);
-                                mBitmap = bitmap;
-//                                final File galleryPathFile = BitmapUtils.saveBitmap(bitmap);
-//                                view.post(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        hideProgress();
-//                                        Picasso.with(getContext()).load(galleryPathFile.getAbsolutePath()).into(mImage);
-//                                    }
-//                                });
-                            }
-                        }
-                    }).start();
-                    break;
-            }
+
+            //Dev
+            Log.i(TAG, "onActivityResult: PICTURE URI: " + mCapturedImageURI);
+            Picasso.with(getContext()).load(mCapturedImageURI).placeholder(R.drawable.pandapic).into(mImage);
         }
 
-
-//        ImagePicker.getImageFromResultAsync(getActivity(), requestCode, resultCode, data,
-//                new ImagePicker.Properties(Files.getTempFile(getContext())),
-//                new Procedure<ImagePicker.ImageResult>() {
-//                    @Override
-//                    public void apply(ImagePicker.ImageResult imageResult) {
-////                        Bitmap bmp = BitmapFactory.decodeFile(imageResult.file.getAbsolutePath());
-////                        mImage.setImageBitmap(imageResult.bitmap);
-//                        Picasso.with(getContext()).load(new File(imageResult.file.toString())).into(mImage);
-//                        chosenFile = imageResult.file;
-//                    }
-//                },
-//                new Procedure<ImagePicker.ImageResult>() {
-//                    @Override
-//                    public void apply(ImagePicker.ImageResult imageResult) {
-//                        ImagePicker.ImageResult x = imageResult;
-//                        Bitmap y = imageResult.bitmap;
-//                        File z = imageResult.file;
-//                    }
-//                });
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

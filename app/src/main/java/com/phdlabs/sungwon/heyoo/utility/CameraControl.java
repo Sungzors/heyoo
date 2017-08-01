@@ -43,6 +43,8 @@ public final class CameraControl {
     public static final int DEFAULT_HEIGHT = 1800;
     public static int minWidth = DEFAULT_WIDTH;
     public static int minHeight = DEFAULT_HEIGHT;
+
+    private Activity mActivity;
     //TAG
     private static final String TAG = "CameraControl";
 
@@ -88,6 +90,7 @@ public final class CameraControl {
         intentList = addIntent(context, intentList, galleryIntent);
 
         /*Check camera permission before adding intent or if the user has granted camera access*/
+
         if (!validateProfilePicturePermissions(context, android.Manifest.permission.CAMERA) ||
                 hasCameraAccess(context)) {
             //Add Image Intent
@@ -104,6 +107,7 @@ public final class CameraControl {
         }
         return chooserIntent;
     }
+
 
     /**
      * Intent list used to display available options for a profile picture to the user
@@ -152,7 +156,8 @@ public final class CameraControl {
             //Check requested permissions
             if (requestedPermissions.length > 0) {
                 List<String> permissionsList = Arrays.asList(requestedPermissions);
-                return permissionsList.contains(permission);
+                boolean istrue = permissionsList.contains(permission);
+                return istrue;
             }
 
         } catch (PackageManager.NameNotFoundException e) {
@@ -341,7 +346,7 @@ public final class CameraControl {
      * @param context
      * @return Temporary File to store the profile picture
      */
-    private static File getTemporaryFile(Context context) {
+    public static File getTemporaryFile(Context context) {
         return new File(context.getExternalCacheDir(), TEMPORARY_IMAGE_NAME);
     }
 
