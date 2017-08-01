@@ -29,6 +29,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -52,6 +53,9 @@ public interface HeyooEndpoint {
 
     @PATCH("/users/{id}")
     Call<UserPatchResponse> postProfile(@Path("id") int userID, @Header(TOKEN)String token, @Body UserPatchData data);
+
+    @PUT("/users/{id}/avatar")
+    Call<UserPatchResponse> postAvatar(@Path("id") int userID, @Header(TOKEN)String token, @Body RequestBody body);
 
     @POST("/auth/verify")
     Call<VerifyDataResponse> verify(@Body VerifyData verifyData);
