@@ -3,6 +3,7 @@ package com.phdlabs.sungwon.heyoo.api.rest;
 import com.phdlabs.sungwon.heyoo.api.data.AttendeePostData;
 import com.phdlabs.sungwon.heyoo.api.data.CalendarPostData;
 import com.phdlabs.sungwon.heyoo.api.data.CalendarUserPostData;
+import com.phdlabs.sungwon.heyoo.api.data.ChatTokenData;
 import com.phdlabs.sungwon.heyoo.api.data.EventPatchData;
 import com.phdlabs.sungwon.heyoo.api.data.EventPostData;
 import com.phdlabs.sungwon.heyoo.api.data.LoginData;
@@ -12,6 +13,7 @@ import com.phdlabs.sungwon.heyoo.api.data.VerifyData;
 import com.phdlabs.sungwon.heyoo.api.response.AlertRetrievalResponse;
 import com.phdlabs.sungwon.heyoo.api.response.CalendarPostResponse;
 import com.phdlabs.sungwon.heyoo.api.response.CalendarRetrievalResponse;
+import com.phdlabs.sungwon.heyoo.api.response.ChatTokenResponse;
 import com.phdlabs.sungwon.heyoo.api.response.EventMediaPostResponse;
 import com.phdlabs.sungwon.heyoo.api.response.EventPatchResponse;
 import com.phdlabs.sungwon.heyoo.api.response.EventPostResponse;
@@ -95,6 +97,9 @@ public interface HeyooEndpoint {
 
     @GET("/alerts")
     Call<AlertRetrievalResponse> getAlerts(@Header(TOKEN)String token);
+
+    @POST("/chats/token")
+    Call<ChatTokenResponse> getChatToken(@Header(TOKEN)String token, @Body ChatTokenData device);
 
 
 }
