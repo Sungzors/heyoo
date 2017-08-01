@@ -62,4 +62,10 @@ public class ProfileActivity extends BaseActivity {
         Intent intent = new Intent(context, ProfileActivity.class);
         context.startActivity(intent);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        (getSupportFragmentManager().findFragmentByTag("com.phdlabs.sungwon.heyoo.structure.profile.ProfileFragment")).onActivityResult(requestCode, resultCode, data);
+    }
 }
