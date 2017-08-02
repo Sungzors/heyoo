@@ -15,9 +15,9 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeFragment;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.calendar.CalendarFragment;
 import com.phdlabs.sungwon.heyoo.structure.acevents.eventedit.EventEditFragment;
+import com.phdlabs.sungwon.heyoo.structure.admessages.MessageFragment;
 import com.phdlabs.sungwon.heyoo.structure.aealerts.AlertFragment;
 import com.phdlabs.sungwon.heyoo.structure.core.BaseActivity;
-import com.phdlabs.sungwon.heyoo.structure.login.login.LoginActivity;
 import com.phdlabs.sungwon.heyoo.structure.profile.ProfileActivity;
 import com.squareup.picasso.Picasso;
 
@@ -191,8 +191,7 @@ public abstract class MainActivity<Controller extends MainContract.Controller> e
 
     @Override
     public void showMessagesPage() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        this.startActivity(intent);
+        replaceFragment(MessageFragment.newInstance(),true);
     }
 
     @Override

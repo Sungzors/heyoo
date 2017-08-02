@@ -18,6 +18,7 @@ import com.phdlabs.sungwon.heyoo.R;
 import com.phdlabs.sungwon.heyoo.api.event.CalendarRetrievalEvent;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendar;
 import com.phdlabs.sungwon.heyoo.model.HeyooCalendarManager;
+import com.phdlabs.sungwon.heyoo.model.UserManager;
 import com.phdlabs.sungwon.heyoo.structure.aahome.HomeFragment;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.CalendarContract;
 import com.phdlabs.sungwon.heyoo.structure.abcalender.add.CalendarAddFragment;
@@ -61,6 +62,7 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
     private BaseListRecyclerAdapter<HeyooCalendar, BaseViewHolder> mAdapter;
 
     private HeyooCalendarManager mCalendarManager;
+    private UserManager mUserManager;
 
     @NonNull
     @Override
@@ -114,6 +116,7 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
 
         mCalendarManager = HeyooCalendarManager.getInstance(new Preferences(getContext()).getPreferenceString(Constants.PreferenceConstants.KEY_TOKEN, null));
         mCalendarManager.loadCalendars();
+        mUserManager = UserManager.getInstance();
         mCalendarAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,7 +186,7 @@ public class CalendarFragment extends BaseFragment<CalendarContract.Controller>
         String status;
         if (calendar.getName().equals("Master")){
             status = " (Main)";
-        } else if (calendar.getOwner_id()==7 /*TODO: insert owner id from gotten user*/){
+        } else if (calendar.getOwner_id() == mUserManager.getUser().getId()){
             status = " (Owner)";
         } else {
             status = " (Shared)";
